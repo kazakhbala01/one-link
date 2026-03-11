@@ -148,67 +148,30 @@ function Typing(){const ph=["WhatsApp · Telegram · Instagram → одно ок
 
 function Tag({children}){return<div style={{fontFamily:MONO,fontSize:".58rem",color:"#a1a1aa",letterSpacing:3,textTransform:"uppercase",marginBottom:12,display:"flex",alignItems:"center",gap:10}}><span style={{width:20,height:1,background:"rgba(203,209,219,.2)"}}/>{children}</div>}
 function SafariFrame({url="one-link.kz",src,children,h=420}){
-    const[hov,setHov]=useState(false);
-    const[big,setBig]=useState(false);
-    const[restored,setRestored]=useState(true); // false = invisible after snap-back
-    const timer=useRef(null);
-    const fadeTimer=useRef(null);
-
-    const enter=()=>{
-        clearTimeout(timer.current);
-        clearTimeout(fadeTimer.current);
-        setBig(true);
-        setHov(true);
-        setRestored(true);
-    };
-    const leave=()=>{
-        timer.current=setTimeout(()=>{
-            setHov(false); // fade out at scale(1.55)
-            fadeTimer.current=setTimeout(()=>{
-                setRestored(false); // invisible at scale(1)
-                setBig(false);      // snap back
-                requestAnimationFrame(()=>{
-                    requestAnimationFrame(()=>setRestored(true)); // fade in original
-                });
-            },250);
-        },100);
-    };
-
-    const scaled = hov || big;
+    const[open,setOpen]=useState(false);
 
     return<>
-        {createPortal(<div style={{
+        {open&&createPortal(<div style={{
             position:"fixed",inset:0,zIndex:9998,
             background:"rgba(0,0,0,.85)",
-            opacity:hov?1:0,
-            pointerEvents:hov?"auto":"none",
-            transition:"opacity .4s ease",
-        }} onMouseEnter={leave}/>, document.body)}
+            animation:"fadeIn .3s ease",
+        }} onClick={()=>setOpen(false)}/>, document.body)}
 
         <div
-            onMouseEnter={enter}
-            onMouseLeave={leave}
+            onClick={()=>setOpen(!open)}
             style={{
                 position:"relative",
-                zIndex:scaled?9999:1,
+                zIndex:open?9999:1,
                 clipPath:"inset(0 round 16px)",
                 WebkitClipPath:"inset(0 round 16px)",
-                border:"1px solid "+(hov?"rgba(255,255,255,.12)":"rgba(255,255,255,.08)"),
+                border:"1px solid "+(open?"rgba(255,255,255,.12)":"rgba(255,255,255,.08)"),
                 borderRadius:16,
                 background:"#1a1a1e",
-                transform:scaled?"scale(1.58)":"scale(1)",
-                opacity: hov ? 1 : big ? 0 : restored ? 1 : 0,
+                transform:open?"scale(1.58)":"scale(1)",
                 transformOrigin:"center center",
-                transition: hov
-                    ? "transform .55s cubic-bezier(.22,1,.36,1), box-shadow .55s cubic-bezier(.22,1,.36,1), border-color .3s, opacity .1s"
-                    : big
-                        ? "opacity .25s ease"          // fade out enlarged
-                        : restored
-                            ? "opacity .3s ease"  // fade in original
-                            : "none",                  // invisible snap
-                willChange:"transform,opacity",
+                transition:"transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s cubic-bezier(.22,1,.36,1), border-color .3s",
                 cursor:"pointer",
-                boxShadow:hov
+                boxShadow:open
                     ?"0 60px 200px rgba(0,0,0,.8),0 0 140px rgba(139,92,246,.08)"
                     :"0 25px 80px rgba(0,0,0,.4)",
             }}
@@ -221,6 +184,7 @@ function SafariFrame({url="one-link.kz",src,children,h=420}){
             </div>
             <div style={{background:"#0e0e14"}}>{src?<img src={src} style={{width:"100%",display:"block"}} alt={url} loading="lazy"/>:children||<div style={{height:h,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontFamily:MONO,fontSize:".65rem",color:"rgba(255,255,255,.1)",letterSpacing:1}}>SCREENSHOT</span></div>}</div>
         </div>
+        <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
     </>;
 }
 
