@@ -505,11 +505,16 @@ function RevealFooter(){
 export default function App(){
     const{outerRef,innerRef,scrollY}=useSmoothScroll();
     const[nav,setNav]=useState(false);
+    const navRef=useRef(false);
 
     useEffect(()=>{
         let raf;
         const check=()=>{
-            setNav(scrollY.current>50);
+            const shouldShow=scrollY.current>50;
+            if(shouldShow!==navRef.current){
+                navRef.current=shouldShow;
+                setNav(shouldShow);
+            }
             raf=requestAnimationFrame(check);
         };
         raf=requestAnimationFrame(check);
