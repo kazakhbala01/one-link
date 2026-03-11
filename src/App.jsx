@@ -319,20 +319,7 @@ function useSmoothScroll(){
     const lastY=useRef(0);
     const scrollY=useRef(0);
 
-    useEffect(()=>{
-        let raf;
-        const check=()=>{
-            if(innerRef.current){
-                const t=innerRef.current.style.transform;
-                const m=t.match(/translate3d\(0[^,]*,\s*(-?[\d.]+)px/);
-                const y=m?Math.abs(parseFloat(m[1])):0;
-                setNav(y>50);
-            }
-            raf=requestAnimationFrame(check);
-        };
-        raf=requestAnimationFrame(check);
-        return()=>cancelAnimationFrame(raf);
-    },[]);
+
 
     useEffect(()=>{
         const outer=outerRef.current;
@@ -523,6 +510,20 @@ export default function App(){
 
     const FOOTER_H=950;
 
+    useEffect(()=>{
+        let raf;
+        const check=()=>{
+            if(innerRef.current){
+                const t=innerRef.current.style.transform;
+                const m=t.match(/translate3d\(0[^,]*,\s*(-?[\d.]+)px/);
+                const y=m?Math.abs(parseFloat(m[1])):0;
+                setNav(y>50);
+            }
+            raf=requestAnimationFrame(check);
+        };
+        raf=requestAnimationFrame(check);
+        return()=>cancelAnimationFrame(raf);
+    },[]);
     return<div ref={outerRef} style={{position:"fixed",inset:0,overflow:"hidden",zIndex:0}}>
         <style>{CSS}</style>
         <RevealFooter/>
