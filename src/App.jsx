@@ -244,7 +244,7 @@ function SafariFrame({url="one-link.kz",src,children,h=420}){
                 border:"1px solid rgba(255,255,255,.08)",
                 background:"#1a1a1e",
                 // FIX: responsive scale — smaller on mobile
-                transform:open?"scale(1.3)":"scale(1)",
+                transform:open?"scale(1.56)":"scale(1)",
                 transformOrigin:"center center",
                 transition:"transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s ease",
                 cursor:"pointer",
@@ -528,83 +528,193 @@ function MobileTimeline(){
     </div>
 }
 
-function RevealFooter(){
+function RevealFooter({scrollY,innerRef}){
     const footerRef=useRef(null);
+    const layersRef=useRef([]);
+    const glowRef=useRef(null);
+    const wmRef=useRef(null);
+    const curtainRef=useRef(null);
 
-    return<footer ref={footerRef} style={{
+    useEffect(()=>{
+        const footer=footerRef.current;
+        const inner=innerRef?.current;
+        if(!footer||!inner)return;
+
+        let raf;
+        let prevProgress=-1;
+
+        const ease=(t)=>t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1; // cubic ease in-out
+
+        const update=()=>{
+            raf=requestAnimationFrame(update);
+
+            const viewH=window.innerHeight;
+            const footerH=footer.offsetHeight;
+            // The solid-bg content ends, then the transparent spacer begins
+            // Content div height = innerRef.scrollHeight - spacer (footerH)
+            const contentH=inner.scrollHeight-footerH;
+            const revealStart=contentH-viewH; // scroll pos when footer top edge enters
+            const y=scrollY.current;
+
+            // raw progress: 0 = footer just starting to peek, 1 = fully revealed
+            const rawP=Math.max(0,Math.min(1,(y-revealStart)/footerH));
+
+            // Skip DOM writes if nothing changed (perf)
+            if(Math.abs(rawP-prevProgress)<0.001)return;
+            prevProgress=rawP;
+
+            const p=rawP; // use raw for smooth parallax, ease for opacity
+
+            /*
+             * Layer config:
+             *  speed  — how fast it reaches final position (>1 = arrives early)
+             *  yStart — initial translateY offset (px)
+             *  yEnd   — final translateY (px), 0 = resting position
+             *  oStart — initial opacity
+             */
+            const layers=[
+                {speed:1.6, yStart:120, yEnd:0, oStart:0},   // L0: CTA — fastest
+                {speed:1.2, yStart:80,  yEnd:0, oStart:0},   // L1: Links — medium
+                {speed:0.9, yStart:50,  yEnd:0, oStart:0},   // L2: Bottom — slow
+            ];
+
+            layers.forEach((cfg,i)=>{
+                const el=layersRef.current[i];
+                if(!el)return;
+                const lp=Math.min(1,p*cfg.speed);           // layer progress
+                const ep=ease(lp);                            // eased
+                const ty=cfg.yStart+(cfg.yEnd-cfg.yStart)*ep; // translateY
+                const op=cfg.oStart+(1-cfg.oStart)*ep;        // opacity
+                el.style.transform=`translate3d(0,${ty}px,0)`;
+                el.style.opacity=op;
+            });
+
+            // Layer 3: Watermark — strong parallax, scale + slight overshoot
+            if(wmRef.current){
+                const wmP=Math.min(1,p*0.7);   // slowest layer
+                const wmE=ease(wmP);
+                const wmY=60*(1-wmE);           // 60px → 0
+                const wmScale=0.88+0.12*wmE;    // 0.88 → 1.0
+                const wmOp=wmE*0.8;             // max 0.8 opacity
+                wmRef.current.style.transform=`translate3d(0,${wmY}px,0) scale(${wmScale})`;
+                wmRef.current.style.opacity=wmOp;
+            }
+
+            // Glow orb — intensifies and shifts
+            if(glowRef.current){
+                const gp=ease(Math.min(1,p*1.3));
+                glowRef.current.style.opacity=gp*0.6;
+                glowRef.current.style.transform=`translate(-50%,${-10*gp}%) scale(${0.8+0.4*gp})`;
+            }
+
+            // Curtain shadow — fades out as footer is fully revealed
+            if(curtainRef.current){
+                const cp=1-ease(Math.min(1,p*2)); // fast fade
+                curtainRef.current.style.opacity=cp;
+            }
+        };
+
+        raf=requestAnimationFrame(update);
+        return()=>cancelAnimationFrame(raf);
+    },[scrollY,innerRef]);
+
+    const setLayerRef=(i)=>(el)=>{layersRef.current[i]=el};
+
+    return<footer ref={footerRef} id="parallax-footer" style={{
         position:"absolute",bottom:0,left:0,right:0,zIndex:0,
-        background:"linear-gradient(180deg,#0a0a0f 0%,#111118 50%,#0a0a0f 100%)",
-        backgroundSize:"200% 200%",
-        animation:"footerGradient 12s ease infinite",
+        background:"#08080c",
+        overflow:"hidden",
     }}>
-        <div style={{position:"absolute",inset:0,opacity:.06,backgroundImage:"url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",backgroundRepeat:"repeat",backgroundSize:180,pointerEvents:"none"}}/>
+        {/* Noise overlay */}
+        <div style={{position:"absolute",inset:0,opacity:.04,backgroundImage:"url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",backgroundRepeat:"repeat",backgroundSize:180,pointerEvents:"none"}}/>
+
+        {/* Radial glow — parallax-driven */}
+        <div ref={glowRef} style={{position:"absolute",top:"5%",left:"50%",transform:"translate(-50%,0) scale(0.8)",width:"100%",height:"50%",borderRadius:"50%",background:"radial-gradient(ellipse,rgba(139,92,246,.12),rgba(203,209,219,.04) 45%,transparent 70%)",pointerEvents:"none",opacity:0}}/>
+
+        {/* Curtain shadow — dark gradient at top that fades as footer reveals */}
+        <div ref={curtainRef} style={{position:"absolute",top:0,left:0,right:0,height:200,background:"linear-gradient(to bottom,rgba(8,8,12,1) 0%,rgba(8,8,12,.6) 40%,transparent 100%)",pointerEvents:"none",zIndex:5}}/>
+
+        {/* Horizontal light beam at top edge */}
+        <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:"linear-gradient(90deg,transparent 10%,rgba(139,92,246,.2) 30%,rgba(255,255,255,.15) 50%,rgba(139,92,246,.2) 70%,transparent 90%)",zIndex:6}}/>
 
         <div style={{position:"relative",zIndex:1}}>
-            {/* Big CTA area */}
-            <div className="footer-cta" style={{padding:"80px 32px 48px",maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:40}}>
-                <div style={{maxWidth:500}}>
-                    <h2 style={{fontSize:"clamp(2rem,5vw,3.6rem)",fontWeight:800,lineHeight:1.05,letterSpacing:-1,color:"#fff",marginBottom:16}}>Перестаньте терять<br/>клиентов.</h2>
-                    <p style={{fontSize:".95rem",color:"rgba(255,255,255,.6)",lineHeight:1.7,maxWidth:380}}>Запросите демо — покажем платформу и разберём ваш кейс за 15 минут.</p>
-                </div>
-                <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:10}}>
-                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
-                        <div style={{width:32,height:32,borderRadius:8,background:"rgba(255,255,255,.1)",display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontSize:".65rem",fontWeight:800,color:"#fff"}}>OL</span></div>
-                        <span style={{fontWeight:700,fontSize:"1.1rem",color:"#fff"}}>One-Link</span>
+
+            {/* ── Layer 0: CTA — fastest reveal ── */}
+            <div ref={setLayerRef(0)} style={{opacity:0,transform:"translate3d(0,120px,0)",willChange:"transform,opacity"}}>
+                <div className="footer-cta" style={{padding:"80px 32px 48px",maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:40}}>
+                    <div style={{maxWidth:500}}>
+                        <h2 style={{fontSize:"clamp(2rem,5vw,3.6rem)",fontWeight:800,lineHeight:1.05,letterSpacing:-1,color:"#fff",marginBottom:16}}>Перестаньте терять<br/>клиентов.</h2>
+                        <p style={{fontSize:".95rem",color:"rgba(255,255,255,.6)",lineHeight:1.7,maxWidth:380}}>Запросите демо — покажем платформу и разберём ваш кейс за 15 минут.</p>
                     </div>
-                    <p style={{fontSize:".85rem",color:"rgba(255,255,255,.5)",lineHeight:1.7,maxWidth:280}}>Мессенджеры, CRM и ИИ-агент в единой системе для бизнеса в Казахстане.</p>
-                    <div style={{display:"flex",gap:8,marginTop:4,flexWrap:"wrap"}}>
-                        {[
-                            {href:"https://wa.me/77001234567",label:"WhatsApp",bg:"#25d366"},
-                            {href:"https://t.me/onelinkkz",label:"Telegram",bg:"rgba(255,255,255,.12)"},
-                            {href:"mailto:contact@one-link.kz",label:"Email",bg:"rgba(255,255,255,.12)"},
-                        ].map((s,i)=><a key={i} href={s.href} target="_blank" rel="noreferrer" style={{
-                            padding:"10px 20px",borderRadius:8,background:s.bg,color:"#fff",
-                            fontWeight:600,fontSize:".85rem",transition:"opacity .2s, transform .2s",
-                        }} onMouseEnter={e=>{e.currentTarget.style.opacity=".8";e.currentTarget.style.transform="translateY(-2px)"}}
-                                        onMouseLeave={e=>{e.currentTarget.style.opacity="1";e.currentTarget.style.transform="none"}}
-                        >{s.label}</a>)}
+                    <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:10}}>
+                        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                            <div style={{width:32,height:32,borderRadius:8,background:"rgba(255,255,255,.1)",display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontSize:".65rem",fontWeight:800,color:"#fff"}}>OL</span></div>
+                            <span style={{fontWeight:700,fontSize:"1.1rem",color:"#fff"}}>One-Link</span>
+                        </div>
+                        <p style={{fontSize:".85rem",color:"rgba(255,255,255,.5)",lineHeight:1.7,maxWidth:280}}>Мессенджеры, CRM и ИИ-агент в единой системе для бизнеса в Казахстане.</p>
+                        <div style={{display:"flex",gap:8,marginTop:4,flexWrap:"wrap"}}>
+                            {[
+                                {href:"https://wa.me/77001234567",label:"WhatsApp",bg:"#25d366"},
+                                {href:"https://t.me/onelinkkz",label:"Telegram",bg:"rgba(255,255,255,.12)"},
+                                {href:"mailto:contact@one-link.kz",label:"Email",bg:"rgba(255,255,255,.12)"},
+                            ].map((s,i)=><a key={i} href={s.href} target="_blank" rel="noreferrer" style={{
+                                padding:"10px 20px",borderRadius:8,background:s.bg,color:"#fff",
+                                fontWeight:600,fontSize:".85rem",transition:"opacity .2s, transform .2s",
+                            }} onMouseEnter={e=>{e.currentTarget.style.opacity=".8";e.currentTarget.style.transform="translateY(-2px)"}}
+                                            onMouseLeave={e=>{e.currentTarget.style.opacity="1";e.currentTarget.style.transform="none"}}
+                            >{s.label}</a>)}
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div style={{maxWidth:1100,margin:"0 auto",padding:"0 32px"}}><div style={{height:1,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)"}}/></div>
+            {/* ── Layer 1: Divider + Links — medium reveal ── */}
+            <div ref={setLayerRef(1)} style={{opacity:0,transform:"translate3d(0,80px,0)",willChange:"transform,opacity"}}>
+                <div style={{maxWidth:1100,margin:"0 auto",padding:"0 32px"}}><div style={{height:1,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)"}}/></div>
 
-            {/* Links grid */}
-            <div className="footer-links" style={{maxWidth:1100,margin:"0 auto",padding:"40px 32px",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:32}}>
-                {[
-                    {h:"Платформа",l:[["#solution","Каналы"],["#solution","CRM"],["#solution","ИИ-агент"],["#solution","Guardrails"],["#solution","Аналитика"]]},
-                    {h:"Решения",l:[["#","Клиники"],["#","Онлайн-школы"],["#","Рестораны"],["#","E-commerce"],["#","Недвижимость"]]},
-                    {h:"Компания",l:[["#pricing","Veritas Consult"],["#pricing","Цены"],["#faq","FAQ"],["#cta","Контакты"],["#","Блог"]]},
-                    {h:"Правовая",l:[["https://www.vconsult.kz/one-link/privacy","Конфиденциальность"],["https://www.vconsult.kz/one-link/terms","Условия"],["https://www.vconsult.kz/one-link/privacy","Обработка данных"]]}
-                ].map(col=><div key={col.h}>
-                    <div style={{fontFamily:MONO,fontSize:".6rem",color:"rgba(255,255,255,.35)",letterSpacing:1.5,textTransform:"uppercase",marginBottom:14,fontWeight:600}}>{col.h}</div>
-                    {col.l.map(([href,t])=><a key={t} href={href} style={{
-                        display:"block",fontSize:".85rem",color:"rgba(255,255,255,.5)",
-                        marginBottom:9,transition:"color .2s, transform .2s",
-                    }} onMouseEnter={e=>{e.currentTarget.style.color="#fff";e.currentTarget.style.transform="translateX(4px)"}}
-                                              onMouseLeave={e=>{e.currentTarget.style.color="rgba(255,255,255,.5)";e.currentTarget.style.transform="none"}}
-                    >{t}</a>)}
-                </div>)}
-            </div>
-
-            <div style={{maxWidth:1100,margin:"0 auto",padding:"0 32px"}}><div style={{height:1,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)"}}/></div>
-
-            <div style={{maxWidth:1100,margin:"0 auto",padding:"20px 32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
-                <span style={{fontSize:".72rem",color:"rgba(255,255,255,.3)"}}>© 2026 One-Link · Veritas Consult · Астана, Казахстан</span>
-                <div style={{display:"flex",alignItems:"center",gap:5}}>
-                    <span style={{width:5,height:5,borderRadius:"50%",background:T.green}}/>
-                    <span style={{fontSize:".72rem",color:"rgba(255,255,255,.3)"}}>Все системы работают</span>
+                <div className="footer-links" style={{maxWidth:1100,margin:"0 auto",padding:"40px 32px",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:32}}>
+                    {[
+                        {h:"Платформа",l:[["#solution","Каналы"],["#solution","CRM"],["#solution","ИИ-агент"],["#solution","Guardrails"],["#solution","Аналитика"]]},
+                        {h:"Решения",l:[["#","Клиники"],["#","Онлайн-школы"],["#","Рестораны"],["#","E-commerce"],["#","Недвижимость"]]},
+                        {h:"Компания",l:[["#pricing","Veritas Consult"],["#pricing","Цены"],["#faq","FAQ"],["#cta","Контакты"],["#","Блог"]]},
+                        {h:"Правовая",l:[["https://www.vconsult.kz/one-link/privacy","Конфиденциальность"],["https://www.vconsult.kz/one-link/terms","Условия"],["https://www.vconsult.kz/one-link/privacy","Обработка данных"]]}
+                    ].map(col=><div key={col.h}>
+                        <div style={{fontFamily:MONO,fontSize:".6rem",color:"rgba(255,255,255,.35)",letterSpacing:1.5,textTransform:"uppercase",marginBottom:14,fontWeight:600}}>{col.h}</div>
+                        {col.l.map(([href,t])=><a key={t} href={href} style={{
+                            display:"block",fontSize:".85rem",color:"rgba(255,255,255,.5)",
+                            marginBottom:9,transition:"color .2s, transform .2s",
+                        }} onMouseEnter={e=>{e.currentTarget.style.color="#fff";e.currentTarget.style.transform="translateX(4px)"}}
+                                                  onMouseLeave={e=>{e.currentTarget.style.color="rgba(255,255,255,.5)";e.currentTarget.style.transform="none"}}
+                        >{t}</a>)}
+                    </div>)}
                 </div>
             </div>
 
-            <div style={{textAlign:"center",padding:"20px 0 40px",overflow:"hidden"}}>
-                <span style={{
-                    fontSize:"clamp(4rem,18vw,16rem)",fontWeight:900,letterSpacing:"-.04em",lineHeight:.85,
-                    background:"linear-gradient(180deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,.02) 100%)",
-                    WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
-                    display:"block",userSelect:"none",fontFamily:FONT
-                }}>ONE-LINK</span>
+            {/* ── Layer 2: Bottom bar — slow reveal ── */}
+            <div ref={setLayerRef(2)} style={{opacity:0,transform:"translate3d(0,50px,0)",willChange:"transform,opacity"}}>
+                <div style={{maxWidth:1100,margin:"0 auto",padding:"0 32px"}}><div style={{height:1,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)"}}/></div>
+
+                <div style={{maxWidth:1100,margin:"0 auto",padding:"20px 32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
+                    <span style={{fontSize:".72rem",color:"rgba(255,255,255,.3)"}}>© 2026 One-Link · Veritas Consult · Астана, Казахстан</span>
+                    <div style={{display:"flex",alignItems:"center",gap:5}}>
+                        <span style={{width:5,height:5,borderRadius:"50%",background:T.green}}/>
+                        <span style={{fontSize:".72rem",color:"rgba(255,255,255,.3)"}}>Все системы работают</span>
+                    </div>
+                </div>
             </div>
+
+            {/* ── Layer 3: Watermark — slowest, scale + depth ── */}
+            <div ref={wmRef} style={{opacity:0,transform:"translate3d(0,60px,0) scale(0.88)",willChange:"transform,opacity"}}>
+                <div style={{textAlign:"center",padding:"20px 0 40px",overflow:"hidden"}}>
+                    <span style={{
+                        fontSize:"clamp(4rem,18vw,16rem)",fontWeight:900,letterSpacing:"-.04em",lineHeight:.85,
+                        background:"linear-gradient(180deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,.02) 100%)",
+                        WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
+                        display:"block",userSelect:"none",fontFamily:FONT
+                    }}>ONE-LINK</span>
+                </div>
+            </div>
+
         </div>
     </footer>;
 }
@@ -613,26 +723,7 @@ export default function App(){
     const{outerRef,innerRef,scrollY}=useSmoothScroll();
     const[menuOpen,setMenuOpen]=useState(false);
 
-    // FIX: Single RAF for nav — removed dead nav state + duplicate RAF
-    useEffect(()=>{
-        let raf;
-        let prev=false;
-        const check=()=>{
-            const navEl=document.getElementById("main-nav");
-            const show=scrollY.current>50;
-            if(show!==prev&&navEl){
-                prev=show;
-                navEl.style.background=show?"rgba(8,8,12,.95)":"transparent";
-                navEl.style.borderBottom=show?"1px solid rgba(255,255,255,.06)":"1px solid transparent";
-                navEl.style.padding=show?"9px 0":"15px 0";
-            }
-            raf=requestAnimationFrame(check);
-        };
-        raf=requestAnimationFrame(check);
-        return()=>cancelAnimationFrame(raf);
-    },[scrollY]);
-
-    // FIX: Measure footer height dynamically
+    // Measure footer height dynamically
     const[footerH,setFooterH]=useState(950);
     useEffect(()=>{
         const footer=document.querySelector('footer');
@@ -642,9 +733,56 @@ export default function App(){
         return()=>ro.disconnect();
     },[]);
 
+    // Nav visibility + lift-shadow RAF
+    useEffect(()=>{
+        let raf;
+        let prevNav=false;
+        let prevShadow=-1;
+        const ease=(t)=>t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1;
+
+        const check=()=>{
+            const navEl=document.getElementById("main-nav");
+            const y=scrollY.current;
+
+            // Nav background
+            const show=y>50;
+            if(show!==prevNav&&navEl){
+                prevNav=show;
+                navEl.style.background=show?"rgba(8,8,12,.95)":"transparent";
+                navEl.style.borderBottom=show?"1px solid rgba(255,255,255,.06)":"1px solid transparent";
+                navEl.style.padding=show?"9px 0":"15px 0";
+            }
+
+            // Lift-shadow on main content as footer reveals
+            const inner=innerRef.current;
+            const footer=document.getElementById("parallax-footer");
+            if(inner&&footer){
+                const viewH=window.innerHeight;
+                const fH=footer.offsetHeight;
+                const contentH=inner.scrollHeight-fH;
+                const revealStart=contentH-viewH;
+                const rawP=Math.max(0,Math.min(1,(y-revealStart)/fH));
+
+                if(Math.abs(rawP-prevShadow)>0.003){
+                    prevShadow=rawP;
+                    const liftEl=document.getElementById("lift-shadow");
+                    if(liftEl){
+                        const ep=ease(Math.min(1,rawP*2.5));
+                        liftEl.style.opacity=String(ep*0.85);
+                    }
+                }
+            }
+
+            raf=requestAnimationFrame(check);
+        };
+        raf=requestAnimationFrame(check);
+        return()=>cancelAnimationFrame(raf);
+    },[scrollY,innerRef]);
+
+
     return<div ref={outerRef} style={{position:"fixed",inset:0,overflow:"hidden",zIndex:0}}>
         <style>{CSS}</style>
-        <RevealFooter/>
+        <RevealFooter scrollY={scrollY} innerRef={innerRef}/>
         <MobileMenu open={menuOpen} onClose={()=>setMenuOpen(false)}/>
 
         <nav id="main-nav" style={{position:"fixed",top:0,left:0,right:0,zIndex:9990,background:"transparent",borderBottom:"1px solid transparent",transition:"all .35s",padding:"15px 0"}}>
@@ -667,7 +805,7 @@ export default function App(){
         </nav>
 
         <div ref={innerRef} style={{position:"relative",zIndex:1,pointerEvents:"none"}}>
-            <div style={{pointerEvents:"auto",background:T.bg}}>
+            <div id="content-body" style={{pointerEvents:"auto",background:T.bg,position:"relative",borderRadius:"0 0 24px 24px",overflow:"hidden",boxShadow:"0 40px 100px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03)"}}>
 
                 {/* ═══════════ HERO ═══════════ */}
                 <section style={{paddingTop:145,paddingBottom:60,position:"relative",overflow:"hidden",minHeight:"100vh"}}><HeroBg/>{[...Array(4)].map((_,i)=><div key={i} style={{position:"absolute",width:100+i*30,height:1,background:"linear-gradient(90deg,rgba(139,92,246,.3),transparent)",transform:"rotate(-35deg)",animation:`meteor ${5+i*2}s ${i*1.5}s linear infinite`,opacity:0,top:(10+i*18)+"%",left:(5+i*12)+"%",zIndex:0,pointerEvents:"none"}}/>)}<div className="w" style={{textAlign:"center"}}><R d={.06}><h1 style={{fontSize:"clamp(2.4rem,7vw,5.2rem)",fontWeight:800,lineHeight:1.05,letterSpacing:"clamp(-1px,-.3vw,-2px)",marginBottom:14,background:"linear-gradient(180deg,#f4f4f8 30%,#52525b 100%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>Перестаньте терять<br/>входящие сообщения.</h1></R><R d={.12}><p style={{fontSize:"clamp(.95rem,1.5vw,1.15rem)",color:T.gr,lineHeight:1.6,maxWidth:540,margin:"0 auto 8px"}}>CRM + мессенджеры + ИИ-агент в единой системе.</p></R><R d={.14}><div style={{margin:"8px auto 24px"}}><Typing/></div></R><R d={.24}><div className="hero-btns" style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}><a href="#cta" style={{display:"inline-flex",alignItems:"center",gap:7,background:T.wt,color:T.bg,padding:"15px 34px",borderRadius:10,fontWeight:600,fontSize:"1.02rem",position:"relative",overflow:"hidden",boxShadow:"0 0 20px rgba(255,255,255,.08),0 0 60px rgba(203,209,219,.06)",transition:"box-shadow .3s,transform .3s"}} onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 0 30px rgba(255,255,255,.15),0 0 80px rgba(203,209,219,.1)";e.currentTarget.style.transform="translateY(-1px)"}} onMouseLeave={e=>{e.currentTarget.style.boxShadow="0 0 20px rgba(255,255,255,.08),0 0 60px rgba(203,209,219,.06)";e.currentTarget.style.transform="none"}}><span style={{position:"absolute",inset:0,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent)",transform:"translateX(-100%)",animation:"shimmerSlide 3s 1s infinite"}}/><Sparkles size={15}/>Запросить демо</a><a href="#solution" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"14px 30px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:"1rem",background:"rgba(255,255,255,.015)",transition:"border-color .2s"}} onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.15)"} onMouseLeave={e=>e.currentTarget.style.borderColor=T.bd}>Как это работает <ChevronDown size={15}/></a></div></R></div><div style={{maxWidth:1100,margin:"0 auto",padding:"0 32px",position:"relative",zIndex:1,marginTop:80}}><R d={.3}><ChatApp/></R></div>
@@ -1039,6 +1177,20 @@ export default function App(){
 
                     <p style={{fontFamily:MONO,fontSize:".58rem",color:T.gr2,marginTop:14,letterSpacing:1}}>БЕСПЛАТНО · БЕЗ ОБЯЗАТЕЛЬСТВ · ДЕМО ЗА 15 МИНУТ</p>
                 </R></div></section>
+
+                {/* Lift-off shadow — parallax-driven, intensifies as footer reveals */}
+                <div id="lift-shadow" style={{
+                    position:"absolute",bottom:0,left:0,right:0,height:200,
+                    background:"linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.3) 30%,rgba(0,0,0,.8) 100%)",
+                    pointerEvents:"none",zIndex:10,opacity:0,
+                    borderRadius:"0 0 24px 24px",
+                }}/>
+                {/* Bottom edge highlight */}
+                <div style={{
+                    position:"absolute",bottom:0,left:"5%",right:"5%",height:1,
+                    background:"linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent)",
+                    pointerEvents:"none",zIndex:11,borderRadius:"0 0 24px 24px",
+                }}/>
             </div>
 
             <div style={{height:footerH}}/>
