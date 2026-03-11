@@ -496,11 +496,17 @@ export default function App(){
 
     useEffect(()=>{
         let raf;
+        let prev=false;
+        const navEl=document.getElementById("main-nav");
         const check=()=>{
-            const shouldShow=scrollY.current>50;
-            if(shouldShow!==navRef.current){
-                navRef.current=shouldShow;
-                setNav(shouldShow);
+            const show=scrollY.current>50;
+            if(show!==prev){
+                prev=show;
+                if(navEl){
+                    navEl.style.background=show?"rgba(8,8,12,.95)":"transparent";
+                    navEl.style.borderBottom=show?"1px solid rgba(255,255,255,.06)":"1px solid transparent";
+                    navEl.style.padding=show?"9px 0":"15px 0";
+                }
             }
             raf=requestAnimationFrame(check);
         };
@@ -527,7 +533,7 @@ export default function App(){
     return<div ref={outerRef} style={{position:"fixed",inset:0,overflow:"hidden",zIndex:0}}>
         <style>{CSS}</style>
         <RevealFooter/>
-        <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:9990,background:nav?"rgba(8,8,12,.95)":"transparent",borderBottom:nav?"1px solid "+T.bd:"1px solid transparent",transition:"all .35s",padding:nav?"9px 0":"15px 0"}}><div className="w" style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}><a href="#" style={{display:"flex",alignItems:"center",gap:8,fontWeight:700,fontSize:".92rem",letterSpacing:-.3}}><div style={{width:27,height:27,borderRadius:7,background:T.wt,display:"flex",alignItems:"center",justifyContent:"center",fontSize:".55rem",fontWeight:800,color:T.bg}}>OL</div>One-Link</a><div className="nav-r" style={{display:"flex",alignItems:"center",gap:20}}>{[["#problem","Проблема"],["#solution","Решение"],["#pricing","Цены"],["#faq","FAQ"]].map(([h,t])=><a key={t} href={h} style={{fontSize:".92rem",color:T.gr,fontWeight:500,transition:"color .2s"}} onMouseEnter={e=>e.currentTarget.style.color=T.wt} onMouseLeave={e=>e.currentTarget.style.color=T.gr}>{t}</a>)}<a href="tel:+77001234567" style={{fontFamily:MONO,fontSize:".8rem",color:T.wt,fontWeight:500}}>+7 700 123 45 67</a><a href="#cta" style={{background:T.wt,color:T.bg,padding:"9px 22px",borderRadius:7,fontSize:".92rem",fontWeight:600,transition:"opacity .2s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".88"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>Получить демо</a></div></div></nav>
+        <nav id="main-nav" style={{position:"fixed",top:0,left:0,right:0,zIndex:9990,background:"transparent",borderBottom:"1px solid transparent",transition:"all .35s",padding:"15px 0"}}><div className="w" style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}><a href="#" style={{display:"flex",alignItems:"center",gap:8,fontWeight:700,fontSize:".92rem",letterSpacing:-.3}}><div style={{width:27,height:27,borderRadius:7,background:T.wt,display:"flex",alignItems:"center",justifyContent:"center",fontSize:".55rem",fontWeight:800,color:T.bg}}>OL</div>One-Link</a><div className="nav-r" style={{display:"flex",alignItems:"center",gap:20}}>{[["#problem","Проблема"],["#solution","Решение"],["#pricing","Цены"],["#faq","FAQ"]].map(([h,t])=><a key={t} href={h} style={{fontSize:".92rem",color:T.gr,fontWeight:500,transition:"color .2s"}} onMouseEnter={e=>e.currentTarget.style.color=T.wt} onMouseLeave={e=>e.currentTarget.style.color=T.gr}>{t}</a>)}<a href="tel:+77001234567" style={{fontFamily:MONO,fontSize:".8rem",color:T.wt,fontWeight:500}}>+7 700 123 45 67</a><a href="#cta" style={{background:T.wt,color:T.bg,padding:"9px 22px",borderRadius:7,fontSize:".92rem",fontWeight:600,transition:"opacity .2s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".88"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>Получить демо</a></div></div></nav>
 
         <div ref={innerRef} style={{position:"relative",zIndex:1,pointerEvents:"none"}}>
             <div style={{pointerEvents:"auto",background:T.bg}}>
