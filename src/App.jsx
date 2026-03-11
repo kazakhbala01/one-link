@@ -493,7 +493,7 @@ function MobileMenu({open,onClose}){
                 }}>{t}</a>)}
 
             <div style={{marginTop:"auto",display:"flex",flexDirection:"column",gap:10,paddingTop:24}}>
-                <a href="tel:+77001234567" style={{fontFamily:MONO,fontSize:".85rem",color:T.wt,fontWeight:500,padding:"10px 0"}}>+7 700 123 45 67</a>
+                <a href="tel:+77056162603" style={{fontFamily:MONO,fontSize:".85rem",color:T.wt,fontWeight:500,padding:"10px 0"}}>+7 705 616 26 03</a>
                 <a href="#cta" onClick={onClose} style={{
                     background:T.wt,color:T.bg,padding:"13px 24px",borderRadius:8,
                     fontSize:".95rem",fontWeight:600,textAlign:"center"
@@ -654,9 +654,9 @@ function RevealFooter({scrollY,innerRef}){
                         <p style={{fontSize:".85rem",color:"rgba(255,255,255,.5)",lineHeight:1.7,maxWidth:280}}>Мессенджеры, CRM и ИИ-агент в единой системе для бизнеса в Казахстане.</p>
                         <div style={{display:"flex",gap:8,marginTop:4,flexWrap:"wrap"}}>
                             {[
-                                {href:"https://wa.me/77001234567",label:"WhatsApp",bg:"#25d366"},
-                                {href:"https://t.me/onelinkkz",label:"Telegram",bg:"rgba(255,255,255,.12)"},
-                                {href:"mailto:contact@one-link.kz",label:"Email",bg:"rgba(255,255,255,.12)"},
+                                {href:"https://wa.me/77056162603",label:"WhatsApp",bg:"#25d366"},
+                                {href:"https://t.me/khamzauly",label:"Telegram",bg:"rgba(255,255,255,.12)"},
+                                {href:"mailto:info@one-link.kz",label:"Email",bg:"rgba(255,255,255,.12)"},
                             ].map((s,i)=><a key={i} href={s.href} target="_blank" rel="noreferrer" style={{
                                 padding:"10px 20px",borderRadius:8,background:s.bg,color:"#fff",
                                 fontWeight:600,fontSize:".85rem",transition:"opacity .2s, transform .2s",
@@ -792,7 +792,7 @@ export default function App(){
                 </a>
                 <div className="nav-r" style={{display:"flex",alignItems:"center",gap:20}}>
                     {[["#problem","Проблема"],["#solution","Решение"],["#pricing","Цены"],["#faq","FAQ"]].map(([h,t])=><a key={t} href={h} style={{fontSize:".92rem",color:T.gr,fontWeight:500,transition:"color .2s"}} onMouseEnter={e=>e.currentTarget.style.color=T.wt} onMouseLeave={e=>e.currentTarget.style.color=T.gr}>{t}</a>)}
-                    <a href="tel:+77001234567" style={{fontFamily:MONO,fontSize:".8rem",color:T.wt,fontWeight:500}}>+7 700 123 45 67</a>
+                    <a href="tel:+77056162603" style={{fontFamily:MONO,fontSize:".8rem",color:T.wt,fontWeight:500}}>+7 705 616 2603</a>
                     <a href="#cta" style={{background:T.wt,color:T.bg,padding:"9px 22px",borderRadius:7,fontSize:".92rem",fontWeight:600,transition:"opacity .2s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".88"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>Получить демо</a>
                 </div>
                 {/* FIX: Burger button for mobile */}
@@ -1014,8 +1014,8 @@ export default function App(){
                 {/* ═══════════ VARIANTS ═══════════ */}
                 <section style={{paddingTop:96,paddingBottom:72,borderTop:"1px solid "+T.bd}}><div className="w"><R><Tag>Внедрение</Tag><h2 style={{fontSize:"clamp(1.8rem,3.5vw,2.8rem)",fontWeight:800,letterSpacing:-.5,marginBottom:40}}>2 формата — <span style={{color:T.gr}}>запуск от 3 дней</span></h2></R>
                     <div className="g2">
-                        <R><Card s={{height:"100%"}}><div style={{fontFamily:MONO,fontSize:".6rem",color:T.gr2,letterSpacing:2,textTransform:"uppercase",marginBottom:12}}>Вариант A · от 3 дней</div><h3 style={{fontSize:"1.26rem",fontWeight:700,marginBottom:8}}>Интеграция в ваш контур</h3><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.7,marginBottom:14}}>Подключаем коммуникации и ИИ к вашей существующей ИС.</p>{["Данные в вашей инфраструктуре","Подключение к существующей ИС","Коммуникации + ИИ"].map(it=><div key={it} style={{display:"flex",alignItems:"center",gap:8,fontSize:".9rem",color:"rgba(255,255,255,.7)",padding:"4px 0"}}><Check size={12} color={T.ac}/>{it}</div>)}</Card></R>
-                        <R d={.08}><Card glow s={{height:"100%",position:"relative"}}><div style={{position:"absolute",top:12,right:12,fontFamily:MONO,fontSize:".53rem",fontWeight:600,background:T.ac,color:"#fff",padding:"2px 8px",borderRadius:5}}>РЕКОМЕНДУЕМ</div><div style={{fontFamily:MONO,fontSize:".6rem",color:T.ac,letterSpacing:2,textTransform:"uppercase",marginBottom:12}}>Вариант B · 2–4 недели</div><h3 style={{fontSize:"1.26rem",fontWeight:700,marginBottom:8}}>Полное развёртывание</h3><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.7,marginBottom:14}}>Разворачиваем One Link как единое ядро под ключ.</p>{["Инфраструктура с нуля","CRM + все каналы нативно","ИИ + Guardrails + Техподдержка 24/7"].map(it=><div key={it} style={{display:"flex",alignItems:"center",gap:8,fontSize:".9rem",color:"rgba(255,255,255,.7)",padding:"4px 0"}}><Check size={12} color={T.ac}/>{it}</div>)}</Card></R>
+                        <R><Card s={{height:"100%"}}><div style={{fontFamily:MONO,fontSize:".6rem",color:T.gr2,letterSpacing:2,textTransform:"uppercase",marginBottom:12}}>Вариант A · от 3 дней</div><h3 style={{fontSize:"1.26rem",fontWeight:700,marginBottom:8}}>Интеграция в ваш контур</h3><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.7,marginBottom:14}}>Подключаем коммуникации и ИИ к вашей существующей ИС.</p>{["Данные в вашей инфраструктуре","Подключение к существующей ИС","Коммуникации + ИИ"].map(it=><div key={it} style={{display:"flex",alignItems:"center",gap:8,fontSize:".9rem",color:"rgba(255,255,255,0.7)",padding:"4px 0"}}><Check size={12} color={T.ac}/>{it}</div>)}</Card></R>
+                        <R d={.08}><Card glow s={{height:"100%",position:"relative"}}><div style={{position:"absolute",top:12,right:12,fontFamily:MONO,fontSize:".53rem",fontWeight:600,background:T.ac,color:"#000000B3",padding:"2px 8px",borderRadius:5}}>РЕКОМЕНДУЕМ</div><div style={{fontFamily:MONO,fontSize:".6rem",color:T.ac,letterSpacing:2,textTransform:"uppercase",marginBottom:12}}>Вариант B · 2–4 недели</div><h3 style={{fontSize:"1.26rem",fontWeight:700,marginBottom:8}}>Полное развёртывание</h3><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.7,marginBottom:14}}>Разворачиваем One Link как единое ядро под ключ.</p>{["Инфраструктура с нуля","CRM + все каналы нативно","ИИ + Guardrails + Техподдержка 24/7"].map(it=><div key={it} style={{display:"flex",alignItems:"center",gap:8,fontSize:".9rem",color:"rgba(255,255,255,0.7)",padding:"4px 0"}}><Check size={12} color={T.ac}/>{it}</div>)}</Card></R>
                     </div>
                 </div></section>
 
@@ -1170,9 +1170,9 @@ export default function App(){
                     </div>
 
                     <div className="cta-btns" style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap",marginBottom:18}}>
-                        <a href="https://wa.me/77001234567" target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:7,background:"#25D366",color:"#fff",padding:"12px 24px",borderRadius:8,fontWeight:600,fontSize:".92rem"}}><MessageCircle size={14}/>WhatsApp</a>
-                        <a href="https://t.me/onelinkkz" target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"12px 24px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:".92rem",background:"rgba(255,255,255,.015)"}}><Send size={14}/>Telegram</a>
-                        <a href="mailto:contact@one-link.kz" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"12px 24px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:".92rem",background:"rgba(255,255,255,.015)"}}><Mail size={14}/>Email</a>
+                        <a href="https://wa.me/77056162603" target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:7,background:"#25D366",color:"#fff",padding:"12px 24px",borderRadius:8,fontWeight:600,fontSize:".92rem"}}><MessageCircle size={14}/>WhatsApp</a>
+                        <a href="https://t.me/khamzauly" target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"12px 24px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:".92rem",background:"rgba(255,255,255,.015)"}}><Send size={14}/>Telegram</a>
+                        <a href="mailto:info@one-link.kz" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"12px 24px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:".92rem",background:"rgba(255,255,255,.015)"}}><Mail size={14}/>Email</a>
                     </div>
 
                     <p style={{fontFamily:MONO,fontSize:".58rem",color:T.gr2,marginTop:14,letterSpacing:1}}>БЕСПЛАТНО · БЕЗ ОБЯЗАТЕЛЬСТВ · ДЕМО ЗА 15 МИНУТ</p>
