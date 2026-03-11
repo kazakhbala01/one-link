@@ -177,13 +177,13 @@ function SafariFrame({url="one-link.kz",src,children,h=420}){
     const scaled = hov || big;
 
     return<>
-        <div style={{
+        {createPortal(<div style={{
             position:"fixed",inset:0,zIndex:9998,
             background:"rgba(0,0,0,.85)",
             opacity:hov?1:0,
             pointerEvents:hov?"auto":"none",
             transition:"opacity .4s ease",
-        }} onMouseEnter={leave}/>
+        }} onMouseEnter={leave}/>, document.body)}
 
         <div
             onMouseEnter={enter}
