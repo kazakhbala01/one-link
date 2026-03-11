@@ -758,7 +758,7 @@ export default function App(){
                 <div style={{display:"flex",flexDirection:"column",gap:0}}>
                     {[
                         {n:"1. Фильтр достоверности",d:"Агент никогда не выдумывает факты. Работает строго в рамках вашей базы знаний."},
-                        {n:"2. Фильтр компетентности",d:"Не скажет «я не знаю». Переформулирует запрос или бесшовно переключит на менеджера."},
+                        {n:"2. Фильтр компетентности",d:"Не скажет «Я не знаю». Переформулирует запрос или бесшовно переключит на менеджера."},
                         {n:"3. Фильтр безопасности",d:"Блокировка нецензурной лексики и защита конфиденциальных данных."}
                     ].map((f,i)=><div key={i} style={{display:"flex",gap:16,alignItems:"flex-start",padding:"16px 0",borderBottom:i<2?"1px solid "+T.bd:"none"}}>
                         <div style={{width:32,height:32,borderRadius:8,background:"rgba(139,92,246,.08)",border:"1px solid rgba(139,92,246,.15)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,marginTop:2}}>
