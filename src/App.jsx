@@ -147,8 +147,7 @@ function WaveBg(){
 function Typing(){const ph=["WhatsApp · Telegram · Instagram → одно окно","CRM без AmoCRM и Bitrix — нативно","ИИ-агент: одна кнопка — вкл / выкл","Guardrails: не выдумывает, не галлюцинирует","Один сервер. Ноль лишних подписок."];const[txt,setTxt]=useState("");const pi=useRef(0);const ci=useRef(0);const del=useRef(false);useEffect(()=>{function tick(){const p=ph[pi.current];if(!del.current){ci.current++;setTxt(p.slice(0,ci.current));if(ci.current>=p.length){del.current=true;return setTimeout(tick,2200)}return setTimeout(tick,38)}else{ci.current--;setTxt(p.slice(0,ci.current));if(ci.current<=0){del.current=false;pi.current=(pi.current+1)%ph.length;return setTimeout(tick,400)}return setTimeout(tick,18)}}const t=setTimeout(tick,600);return()=>clearTimeout(t)},[]);return<span style={{fontFamily:MONO,fontSize:"clamp(.78rem,1.1vw,.9rem)",color:T.gr}}>{txt}<span style={{display:"inline-block",width:2,height:"1em",background:T.ac,verticalAlign:"text-bottom",marginLeft:3,animation:"blink .55s step-end infinite"}}/></span>}
 
 function Tag({children}){return<div style={{fontFamily:MONO,fontSize:".58rem",color:"#a1a1aa",letterSpacing:3,textTransform:"uppercase",marginBottom:12,display:"flex",alignItems:"center",gap:10}}><span style={{width:20,height:1,background:"rgba(203,209,219,.2)"}}/>{children}</div>}
-Проблема — backdrop через createPortal внутри transform-контейнера не работает правильно. Упрости SafariFrame максимально:
-    jsx
+
 
 function SafariFrame({url="one-link.kz",src,children,h=420}){
     const[open,setOpen]=useState(false);
