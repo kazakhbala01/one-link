@@ -9,26 +9,100 @@ import {
 } from "lucide-react";
 
 const T = {
-    bg:"#08080c", bg2:"#0c0c14", surf:"rgba(255,255,255,.02)",
-    wt:"#f4f4f8", gr:"#b4b4b4", gr2:"#737373",
-    bd:"rgba(255,255,255,.06)", ac:"#cbd1db",
+    bg:"var(--bg)", bg2:"var(--bg2)", surf:"var(--surf)",
+    wt:"var(--wt)", gr:"var(--gr)", gr2:"var(--gr2)",
+    bd:"var(--bd)", ac:"var(--ac)",
     red:"#ef4444", green:"#22c55e",
+    // Semantic tokens
+    cardBg:"var(--card-bg)", cardBd:"var(--card-bd)", cardGlow:"var(--card-glow)",
+    navBg:"var(--nav-bg)", heroBg:"var(--hero-bg)",
+    surfHover:"var(--surf-hover)", textSub:"var(--text-sub)",
+    chatBg:"var(--chat-bg)", chatSide:"var(--chat-side)", chatInput:"var(--chat-input)",
+    bubbleIn:"var(--bubble-in)", bubbleInBd:"var(--bubble-in-bd)",
+    bubbleOut:"var(--bubble-out)", bubbleOutText:"var(--bubble-out-text)",
+    glowPurple:"var(--glow-purple)",
 };
 const FONT = "'Plus Jakarta Sans',-apple-system,sans-serif";
 const MONO = "'JetBrains Mono',monospace";
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ═══ DARK THEME (default — brighter than before) ═══ */
+:root, [data-theme="dark"] {
+  --bg:#101018;--bg2:#14141e;--surf:rgba(255,255,255,.035);
+  --wt:#f0f0f6;--gr:#c0c0c8;--gr2:#8a8a96;
+  --bd:rgba(255,255,255,.08);--ac:#cbd1db;
+  --card-bg:rgba(255,255,255,.03);--card-bd:rgba(255,255,255,.08);--card-glow:rgba(203,209,219,.08);
+  --nav-bg:rgba(16,16,24,.95);--hero-bg:#101018;
+  --surf-hover:rgba(255,255,255,.14);--text-sub:rgba(255,255,255,.7);
+  --chat-bg:#0e0e1a;--chat-side:#0c0c16;--chat-input:rgba(255,255,255,.05);
+  --bubble-in:rgba(255,255,255,.07);--bubble-in-bd:rgba(255,255,255,.08);
+  --bubble-out:#f0f0f6;--bubble-out-text:#101018;
+  --glow-purple:rgba(139,92,246,.08);
+  --tag-bg:rgba(255,255,255,.03);--tag-bd:rgba(255,255,255,.08);
+  --issue-bg:rgba(239,68,68,.06);--issue-bd:rgba(239,68,68,.12);
+  --section-bd:rgba(255,255,255,.08);
+  --grad-text-from:#f0f0f6;--grad-text-to:#6a6a7a;
+  --shimmer:rgba(255,255,255,.18);
+  --foot-bg:#101018;--foot-text:rgba(255,255,255,.5);--foot-text2:rgba(255,255,255,.35);--foot-text3:rgba(255,255,255,.3);
+  --scrollbar-track:#101018;--scrollbar-thumb:#333;
+  --beam-line:rgba(255,255,255,.06);--beam-dot:#ffffff;
+  --node-icon-bg:rgba(255,255,255,.04);--node-icon-bd:rgba(255,255,255,.07);
+  --faq-divider:rgba(255,255,255,.08);
+  --pricing-pop-bg:rgba(139,92,246,.04);--pricing-pop-bd:rgba(139,92,246,.16);
+  --input-bg:rgba(255,255,255,.05);--input-bd:rgba(255,255,255,.10);
+  --input-focus:rgba(139,92,246,.35);
+  --guardrail-bg:rgba(139,92,246,.08);--guardrail-bd:rgba(139,92,246,.14);
+  --guardrail-check-bg:rgba(139,92,246,.06);--guardrail-check-bd:rgba(139,92,246,.10);
+  --meteor-color:rgba(139,92,246,.3);
+  --cta-shadow:0 40px 80px rgba(0,0,0,.8);
+  --content-shadow:0 40px 100px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03);
+  color-scheme:dark;
+}
+
+/* ═══ LIGHT THEME ═══ */
+[data-theme="light"] {
+  --bg:#f5f5fa;--bg2:#eeeef4;--surf:rgba(0,0,0,.02);
+  --wt:#1a1a2e;--gr:#4a4a5e;--gr2:#7a7a90;
+  --bd:rgba(0,0,0,.08);--ac:#5b5fc7;
+  --card-bg:rgba(255,255,255,.8);--card-bd:rgba(0,0,0,.08);--card-glow:rgba(91,95,199,.08);
+  --nav-bg:rgba(245,245,250,.95);--hero-bg:#f5f5fa;
+  --surf-hover:rgba(0,0,0,.08);--text-sub:rgba(0,0,0,.6);
+  --chat-bg:#ffffff;--chat-side:#f0f0f6;--chat-input:rgba(0,0,0,.04);
+  --bubble-in:rgba(0,0,0,.05);--bubble-in-bd:rgba(0,0,0,.08);
+  --bubble-out:#1a1a2e;--bubble-out-text:#f5f5fa;
+  --glow-purple:rgba(91,95,199,.06);
+  --tag-bg:rgba(0,0,0,.03);--tag-bd:rgba(0,0,0,.08);
+  --issue-bg:rgba(239,68,68,.06);--issue-bd:rgba(239,68,68,.12);
+  --section-bd:rgba(0,0,0,.06);
+  --grad-text-from:#1a1a2e;--grad-text-to:#8a8a9e;
+  --shimmer:rgba(0,0,0,.06);
+  --foot-bg:#1a1a2e;--foot-text:rgba(255,255,255,.6);--foot-text2:rgba(255,255,255,.4);--foot-text3:rgba(255,255,255,.3);
+  --scrollbar-track:#f5f5fa;--scrollbar-thumb:#ccc;
+  --beam-line:rgba(0,0,0,.06);--beam-dot:#1a1a2e;
+  --node-icon-bg:rgba(0,0,0,.04);--node-icon-bd:rgba(0,0,0,.07);
+  --faq-divider:rgba(0,0,0,.08);
+  --pricing-pop-bg:rgba(91,95,199,.04);--pricing-pop-bd:rgba(91,95,199,.16);
+  --input-bg:rgba(0,0,0,.03);--input-bd:rgba(0,0,0,.10);
+  --input-focus:rgba(91,95,199,.35);
+  --guardrail-bg:rgba(91,95,199,.06);--guardrail-bd:rgba(91,95,199,.12);
+  --guardrail-check-bg:rgba(91,95,199,.05);--guardrail-check-bd:rgba(91,95,199,.10);
+  --meteor-color:rgba(91,95,199,.15);
+  --cta-shadow:0 20px 60px rgba(0,0,0,.08);
+  --content-shadow:0 20px 60px -10px rgba(0,0,0,.1),0 0 0 1px rgba(0,0,0,.04);
+  color-scheme:light;
+}
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:#08080c;color:#f4f4f8;margin:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:'Plus Jakarta Sans',-apple-system,sans-serif}
+body{background:var(--bg);color:var(--wt);margin:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:'Plus Jakarta Sans',-apple-system,sans-serif;transition:background .4s,color .4s}
 a{color:inherit;text-decoration:none}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:#08080c}::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--scrollbar-track)}::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:2px}
 .w{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes msgPop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes dotBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-@keyframes heroBlobA{0%,100%{transform:translate(0,0) scale(1);opacity:.7}25%{transform:translate(8%,5%) scale(1.15);opacity:.9}50%{transform:translate(-3%,8%) scale(.95);opacity:.6}75%{transform:translate(5%,-3%) scale(1.08);opacity:.8}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes footerGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
@@ -37,20 +111,21 @@ a{color:inherit;text-decoration:none}
 @keyframes borderBeam{0%{--ba:0deg}100%{--ba:360deg}}
 @property --ba{syntax:'<angle>';initial-value:0deg;inherits:false}
 .border-beam{position:relative;overflow:hidden}
-.border-beam::before{content:'';position:absolute;inset:0;border-radius:16px;padding:1px;background:conic-gradient(from var(--ba),transparent 70%,#8b5cf633,transparent);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:borderBeam 5s linear infinite;pointer-events:none;z-index:1}
+.border-beam::before{content:'';position:absolute;inset:0;border-radius:16px;padding:1px;background:conic-gradient(from var(--ba),transparent 70%,var(--glow-purple),transparent);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:borderBeam 5s linear infinite;pointer-events:none;z-index:1}
 
 @keyframes meteor{0%{transform:translateX(-100px) translateY(-100px) rotate(-45deg);opacity:0}5%{opacity:.6}30%{opacity:0}100%{transform:translateX(500px) translateY(500px) rotate(-45deg);opacity:0}}
 
 @keyframes shimmerSlide{0%{transform:translateX(-100%)}50%,100%{transform:translateX(200%)}}
-.shimmer-btn{position:relative;overflow:hidden}
-.shimmer-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transform:translateX(-100%);animation:shimmerSlide 3s 1s infinite}
 
-@keyframes glowPulse{0%,100%{box-shadow:0 0 20px #8b5cf608}50%{box-shadow:0 0 50px #8b5cf618}}
-@keyframes beamDash{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
 @keyframes placeholderShimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
-.glass{background:rgba(255,255,255,.04)!important}
-.ph{background:linear-gradient(110deg,rgba(255,255,255,.02) 30%,rgba(255,255,255,.06) 50%,rgba(255,255,255,.02) 70%);background-size:400px 100%;animation:placeholderShimmer 3s ease-in-out infinite;border-radius:16px;border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.glass{background:var(--card-bg)!important}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* ═══ THEME TOGGLE ═══ */
+.theme-toggle{position:fixed;bottom:24px;right:24px;z-index:9999;width:44px;height:44px;border-radius:50%;border:1px solid var(--bd);background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--wt);transition:transform .3s,border-color .3s,background .3s,box-shadow .3s;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.theme-toggle:hover{transform:scale(1.1);border-color:var(--ac);box-shadow:0 8px 30px rgba(0,0,0,.2)}
+.theme-toggle svg{transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.theme-toggle:hover svg{transform:rotate(180deg)}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:900px){
@@ -70,6 +145,7 @@ a{color:inherit;text-decoration:none}
   .vision-strip{flex-direction:column!important;text-align:center}
   .vision-nums{justify-content:center!important}
   .w{padding:0 20px}
+  .theme-toggle{bottom:16px;right:16px;width:40px;height:40px}
 }
 @media(max-width:640px){
   .hero-btns{flex-direction:column;align-items:stretch}
@@ -94,7 +170,7 @@ html{overscroll-behavior:none}
 function GradH({children,as="h2",s={}}){
     const Tag=as;
     return<Tag style={{
-        background:"linear-gradient(180deg,#f4f4f8 0%,#737373 100%)",
+        background:"linear-gradient(180deg,var(--grad-text-from) 0%,var(--grad-text-to) 100%)",
         WebkitBackgroundClip:"text",
         WebkitTextFillColor:"transparent",
         backgroundClip:"text",
@@ -119,8 +195,8 @@ function R({children,d=0,s={}}){
 }
 
 function HeroBg(){return<div style={{position:"absolute",inset:0,overflow:"hidden",pointerEvents:"none",zIndex:0}}>
-    <div style={{position:"absolute",top:"-20%",left:"10%",width:"80%",height:"70%",borderRadius:"50%",background:"radial-gradient(ellipse at 50% 60%,rgba(203,209,219,.12),rgba(180,190,210,.04) 40%,transparent 70%)",filter:"blur(60px)"}}/>
-    <div style={{position:"absolute",bottom:0,left:0,right:0,height:"30%",background:"linear-gradient(to bottom,transparent,#08080c)"}}/>
+    <div style={{position:"absolute",top:"-20%",left:"10%",width:"80%",height:"70%",borderRadius:"50%",background:"radial-gradient(ellipse at 50% 60%,var(--glow-purple),rgba(180,190,210,.04) 40%,transparent 70%)",filter:"blur(60px)"}}/>
+    <div style={{position:"absolute",bottom:0,left:0,right:0,height:"30%",background:"linear-gradient(to bottom,transparent,var(--bg))"}}/>
 </div>}
 
 function WaveBg(){
@@ -208,10 +284,10 @@ function Typing(){
         return()=>clearTimeout(tidRef.current) // FIX: proper cleanup
     },[]);
 
-    return<span style={{fontFamily:MONO,fontSize:"clamp(.72rem,1.1vw,.9rem)",color:T.gr}}>{txt}<span style={{display:"inline-block",width:2,height:"1em",background:T.ac,verticalAlign:"text-bottom",marginLeft:3,animation:"blink .55s step-end infinite"}}/></span>
+    return<span style={{fontFamily:MONO,fontSize:"clamp(.72rem,1.1vw,.9rem)",color:T.gr}}>{txt}<span style={{display:"inline-block",width:2,height:"1em",background:"var(--ac)",verticalAlign:"text-bottom",marginLeft:3,animation:"blink .55s step-end infinite"}}/></span>
 }
 
-function Tag({children}){return<div style={{fontFamily:MONO,fontSize:".58rem",color:"#a1a1aa",letterSpacing:3,textTransform:"uppercase",marginBottom:12,display:"flex",alignItems:"center",gap:10}}><span style={{width:20,height:1,background:"rgba(203,209,219,.2)"}}/>{children}</div>}
+function Tag({children}){return<div style={{fontFamily:MONO,fontSize:".58rem",color:"#a1a1aa",letterSpacing:3,textTransform:"uppercase",marginBottom:12,display:"flex",alignItems:"center",gap:10}}><span style={{width:20,height:1,background:"var(--card-glow)"}}/>{children}</div>}
 
 
 function SafariFrame({url="one-link.kz",src,children,h=420}){
@@ -241,10 +317,10 @@ function SafariFrame({url="one-link.kz",src,children,h=420}){
                 clipPath:"inset(0 round 16px)",
                 WebkitClipPath:"inset(0 round 16px)",
                 borderRadius:16,
-                border:"1px solid rgba(255,255,255,.08)",
-                background:"#1a1a1e",
+                border:"1px solid var(--bd)",
+                background:"var(--bg2)",
                 // FIX: responsive scale — smaller on mobile
-                transform:open?"scale(1.56)":"scale(1)",
+                transform:open?"scale(1.3)":"scale(1)",
                 transformOrigin:"center center",
                 transition:"transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s ease",
                 cursor:"pointer",
@@ -253,20 +329,20 @@ function SafariFrame({url="one-link.kz",src,children,h=420}){
                     :"0 25px 80px rgba(0,0,0,.4)",
             }}
         >
-            <div style={{display:"flex",alignItems:"center",padding:"12px 16px",background:"#2a2a2e",borderBottom:"1px solid rgba(255,255,255,.06)",gap:10}}>
+            <div style={{display:"flex",alignItems:"center",padding:"12px 16px",background:"var(--surf)",borderBottom:"1px solid var(--bd)",gap:10}}>
                 <div style={{display:"flex",gap:7,flexShrink:0}}>{["#ff5f57","#febc2e","#28c840"].map(c=><span key={c} style={{width:12,height:12,borderRadius:"50%",background:c}}/>)}</div>
                 <div style={{display:"flex",gap:4,flexShrink:0,marginLeft:8}}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth="2.2" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth="2.2" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-                <div style={{flex:1,textAlign:"center",background:"rgba(255,255,255,.06)",borderRadius:8,padding:"7px 16px",fontFamily:MONO,fontSize:".72rem",color:"rgba(255,255,255,.35)",display:"flex",alignItems:"center",justifyContent:"center",gap:6,overflow:"hidden",whiteSpace:"nowrap"}}><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{opacity:.6,flexShrink:0}}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>{url}</div>
+                <div style={{flex:1,textAlign:"center",background:"var(--card-bg)",borderRadius:8,padding:"7px 16px",fontFamily:MONO,fontSize:".72rem",color:"var(--foot-text2)",display:"flex",alignItems:"center",justifyContent:"center",gap:6,overflow:"hidden",whiteSpace:"nowrap"}}><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{opacity:.6,flexShrink:0}}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>{url}</div>
                 <div style={{display:"flex",gap:10,flexShrink:0}}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
             </div>
-            <div style={{background:"#0e0e14"}}>{src?<img src={src} style={{width:"100%",display:"block"}} alt={url} loading="lazy"/>:children||<div style={{height:h,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontFamily:MONO,fontSize:".65rem",color:"rgba(255,255,255,.1)",letterSpacing:1}}>SCREENSHOT</span></div>}</div>
+            <div style={{background:"var(--chat-bg)"}}>{src?<img src={src} style={{width:"100%",display:"block"}} alt={url} loading="lazy"/>:children||<div style={{height:h,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontFamily:MONO,fontSize:".65rem",color:"var(--bd)",letterSpacing:1}}>SCREENSHOT</span></div>}</div>
         </div>
     </>;
 }
 
 function Card({children,glow,s={}}){return<div style={{
-    background:glow?"rgba(203,209,219,.02)":"rgba(255,255,255,.02)",
-    border:"1px solid "+(glow?"rgba(203,209,219,.08)":"rgba(255,255,255,.06)"),
+    background:glow?"var(--card-bg)":"var(--card-bg)",
+    border:"1px solid "+(glow?"var(--card-glow)":"var(--card-bd)"),
     borderRadius:20,
     padding:"38px 32px",
     position:"relative",
@@ -274,15 +350,15 @@ function Card({children,glow,s={}}){return<div style={{
     transition:"border-color .4s,transform .4s,box-shadow .4s",
     ...s
 }} onMouseEnter={e=>{
-    e.currentTarget.style.borderColor="rgba(255,255,255,.12)";
+    e.currentTarget.style.borderColor="var(--surf-hover)";
     e.currentTarget.style.transform="translateY(-3px)";
-    e.currentTarget.style.boxShadow="0 8px 40px rgba(0,0,0,.3),0 0 60px rgba(203,209,219,.04)"
+    e.currentTarget.style.boxShadow="0 8px 40px rgba(0,0,0,.15),0 0 60px var(--glow-purple)"
 }} onMouseLeave={e=>{
-    e.currentTarget.style.borderColor=glow?"rgba(203,209,219,.08)":"rgba(255,255,255,.06)";
+    e.currentTarget.style.borderColor=glow?"var(--card-glow)":"var(--card-bd)";
     e.currentTarget.style.transform="none";
     e.currentTarget.style.boxShadow="none"
 }}>
-    {glow&&<div style={{position:"absolute",top:-1,left:"10%",right:"10%",height:1,background:"linear-gradient(90deg,transparent,rgba(203,209,219,.15),transparent)"}}/>}
+    {glow&&<div style={{position:"absolute",top:-1,left:"10%",right:"10%",height:1,background:"linear-gradient(90deg,transparent,var(--card-glow),transparent)"}}/>}
     {children}
 </div>}
 
@@ -331,26 +407,26 @@ function ChatApp(){
         setTimeout(()=>{setTyp(false);setExt(p=>({...p,[ai]:[...(p[ai]||[]),{f:"c",t:REPLIES[Math.floor(Math.random()*REPLIES.length)],tm}]}))},1200+Math.random()*800);
     },[inp,ai]);
 
-    const Bubble=({m})=>{const ic=m.f==="c",ia=m.f==="a",io=m.f==="o",is=m.f==="s";return<div style={{maxWidth:"78%",padding:is?"6px 12px":"11px 15px",borderRadius:14,alignSelf:ic?"flex-start":"flex-end",background:ic?"rgba(255,255,255,.06)":(ia||io)?T.wt:"rgba(255,255,255,.03)",color:(ia||io)?T.bg:is?T.gr:T.wt,borderBottomLeftRadius:ic?4:14,borderBottomRightRadius:!ic?4:14,border:is?"1px solid rgba(255,255,255,.08)":ic?"1px solid rgba(255,255,255,.07)":"none",fontFamily:is?MONO:FONT,fontSize:is?".68rem":".86rem",lineHeight:1.55}}>{ia&&<div style={{fontSize:".55rem",fontWeight:800,color:"rgba(0,0,0,.3)",background:"rgba(0,0,0,.06)",padding:"2px 6px",borderRadius:3,display:"inline-block",marginBottom:4,letterSpacing:.5}}>AI AGENT</div>}{io&&<div style={{fontSize:".55rem",fontWeight:800,color:"rgba(0,0,0,.3)",background:"rgba(0,0,0,.06)",padding:"2px 6px",borderRadius:3,display:"inline-block",marginBottom:4,letterSpacing:.5}}>ОПЕРАТОР</div>}{is&&<span style={{opacity:.55,marginRight:4}}>→</span>}<div style={{whiteSpace:"pre-wrap"}}>{m.t}</div>{m.tm&&<div style={{fontSize:".58rem",marginTop:3,color:(ia||io)?"rgba(0,0,0,.2)":"rgba(255,255,255,.12)"}}>{m.tm}</div>}</div>};
+    const Bubble=({m})=>{const ic=m.f==="c",ia=m.f==="a",io=m.f==="o",is=m.f==="s";return<div style={{maxWidth:"78%",padding:is?"6px 12px":"11px 15px",borderRadius:14,alignSelf:ic?"flex-start":"flex-end",background:ic?"var(--bubble-in)":(ia||io)?"var(--bubble-out)":"var(--card-bg)",color:(ia||io)?"var(--bubble-out-text)":is?"var(--gr)":"var(--wt)",borderBottomLeftRadius:ic?4:14,borderBottomRightRadius:!ic?4:14,border:is?"1px solid var(--bd)":ic?"1px solid var(--bubble-in-bd)":"none",fontFamily:is?MONO:FONT,fontSize:is?".68rem":".86rem",lineHeight:1.55}}>{ia&&<div style={{fontSize:".55rem",fontWeight:800,color:"var(--gr2)",background:"var(--surf)",padding:"2px 6px",borderRadius:3,display:"inline-block",marginBottom:4,letterSpacing:.5}}>AI AGENT</div>}{io&&<div style={{fontSize:".55rem",fontWeight:800,color:"var(--gr2)",background:"var(--surf)",padding:"2px 6px",borderRadius:3,display:"inline-block",marginBottom:4,letterSpacing:.5}}>ОПЕРАТОР</div>}{is&&<span style={{opacity:.55,marginRight:4}}>→</span>}<div style={{whiteSpace:"pre-wrap"}}>{m.t}</div>{m.tm&&<div style={{fontSize:".58rem",marginTop:3,color:(ia||io)?"var(--gr2)":"var(--gr2)"}}>{m.tm}</div>}</div>};
 
-    return<div className="border-beam" style={{background:"#0c0c14",borderRadius:18,border:"1px solid rgba(255,255,255,.1)",overflow:"hidden",height:"min(640px,80vh)",display:"flex",flexDirection:"column",boxShadow:"0 0 0 1px rgba(255,255,255,.03),0 40px 120px -20px rgba(0,0,0,.8),0 0 80px -20px #8b5cf618",position:"relative",zIndex:2}}><div style={{position:"absolute",top:-1,left:"15%",right:"15%",height:1,background:"linear-gradient(90deg,transparent,#8b5cf655,transparent)",zIndex:10}}/>
+    return<div className="border-beam" style={{background:"var(--chat-bg)",borderRadius:18,border:"1px solid var(--bd)",overflow:"hidden",height:"min(640px,80vh)",display:"flex",flexDirection:"column",boxShadow:"0 0 0 1px rgba(255,255,255,.03),0 40px 120px -20px rgba(0,0,0,.8),0 0 80px -20px #8b5cf618",position:"relative",zIndex:2}}><div style={{position:"absolute",top:-1,left:"15%",right:"15%",height:1,background:"linear-gradient(90deg,transparent,#8b5cf655,transparent)",zIndex:10}}/>
         {/* Title bar */}
-        <div style={{padding:"0 16px",height:46,display:"flex",alignItems:"center",gap:7,borderBottom:"1px solid rgba(255,255,255,.1)",flexShrink:0,background:"rgba(255,255,255,.02)"}}>{["#ff5f57","#febc2e","#28c840"].map(c=><span key={c} style={{width:11,height:11,borderRadius:"50%",background:c}}/>)}<div style={{marginLeft:12,flex:1,textAlign:"center",background:"rgba(255,255,255,.04)",borderRadius:7,padding:"5px 16px",fontFamily:MONO,fontSize:".68rem",color:T.gr2,display:"flex",alignItems:"center",justifyContent:"center",gap:6,border:"1px solid rgba(255,255,255,.05)",overflow:"hidden",whiteSpace:"nowrap"}}><Globe size={11} style={{opacity:.55,flexShrink:0}}/>app.one-link.kz</div></div>
+        <div style={{padding:"0 16px",height:46,display:"flex",alignItems:"center",gap:7,borderBottom:"1px solid var(--bd)",flexShrink:0,background:"var(--surf)"}}>{["#ff5f57","#febc2e","#28c840"].map(c=><span key={c} style={{width:11,height:11,borderRadius:"50%",background:c}}/>)}<div style={{marginLeft:12,flex:1,textAlign:"center",background:"var(--card-bg)",borderRadius:7,padding:"5px 16px",fontFamily:MONO,fontSize:".68rem",color:T.gr2,display:"flex",alignItems:"center",justifyContent:"center",gap:6,border:"1px solid var(--bd)",overflow:"hidden",whiteSpace:"nowrap"}}><Globe size={11} style={{opacity:.55,flexShrink:0}}/>app.one-link.kz</div></div>
         {/* Body */}
         <div style={{display:"flex",flex:1,overflow:"hidden"}}>
             {/* Sidebar */}
-            <div className="chat-sb" style={{width:280,borderRight:"1px solid rgba(255,255,255,.1)",overflowY:"auto",flexShrink:0,background:"#0a0a12"}}><div style={{padding:"14px 16px",fontWeight:600,fontSize:"1rem",display:"flex",justifyContent:"space-between",borderBottom:"1px solid rgba(255,255,255,.08)"}}>Входящие<span style={{fontSize:".6rem",fontWeight:700,background:T.wt,color:T.bg,padding:"3px 8px",borderRadius:100}}>12</span></div><div style={{padding:"8px 12px"}}><div style={{display:"flex",alignItems:"center",gap:6,padding:"8px 10px",background:"rgba(255,255,255,.03)",border:"1px solid rgba(255,255,255,.07)",borderRadius:8,fontSize:".68rem",color:T.gr2}}><Search size={12} style={{opacity:.5}}/>Поиск</div></div>{CHATS.map((c,i)=>{const I=c.ic;return<div key={i} onClick={()=>setAi(i)} style={{padding:"12px 16px",display:"flex",gap:10,alignItems:"center",cursor:"pointer",background:i===ai?"rgba(255,255,255,.05)":"transparent",borderLeft:i===ai?"2px solid "+T.wt:"2px solid transparent",borderBottom:"1px solid rgba(255,255,255,.04)",transition:"all .12s"}}><div style={{width:36,height:36,borderRadius:9,background:c.c+"18",display:"flex",alignItems:"center",justifyContent:"center",color:c.c,border:"1px solid "+c.c+"30",flexShrink:0}}><I size={15}/></div><div style={{flex:1,minWidth:0}}><div style={{fontSize:".82rem",fontWeight:600,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.n}</div><div style={{fontSize:".65rem",color:T.gr2,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.m[0]?.t?.slice(0,28)}...</div></div>{i===0&&<span style={{minWidth:19,height:19,borderRadius:100,background:T.wt,color:T.bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:".48rem",fontWeight:800}}>2</span>}</div>})}</div>
+            <div className="chat-sb" style={{width:280,borderRight:"1px solid var(--bd)",overflowY:"auto",flexShrink:0,background:"var(--chat-side)"}}><div style={{padding:"14px 16px",fontWeight:600,fontSize:"1rem",display:"flex",justifyContent:"space-between",borderBottom:"1px solid var(--bd)"}}>Входящие<span style={{fontSize:".6rem",fontWeight:700,background:T.wt,color:T.bg,padding:"3px 8px",borderRadius:100}}>12</span></div><div style={{padding:"8px 12px"}}><div style={{display:"flex",alignItems:"center",gap:6,padding:"8px 10px",background:"var(--surf)",border:"1px solid var(--bd)",borderRadius:8,fontSize:".68rem",color:T.gr2}}><Search size={12} style={{opacity:.5}}/>Поиск</div></div>{CHATS.map((c,i)=>{const I=c.ic;return<div key={i} onClick={()=>setAi(i)} style={{padding:"12px 16px",display:"flex",gap:10,alignItems:"center",cursor:"pointer",background:i===ai?"var(--card-bg)":"transparent",borderLeft:i===ai?"2px solid var(--wt)":"2px solid transparent",borderBottom:"1px solid var(--bd)",transition:"all .12s"}}><div style={{width:36,height:36,borderRadius:9,background:c.c+"18",display:"flex",alignItems:"center",justifyContent:"center",color:c.c,border:"1px solid "+c.c+"30",flexShrink:0}}><I size={15}/></div><div style={{flex:1,minWidth:0}}><div style={{fontSize:".82rem",fontWeight:600,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.n}</div><div style={{fontSize:".65rem",color:T.gr2,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.m[0]?.t?.slice(0,28)}...</div></div>{i===0&&<span style={{minWidth:19,height:19,borderRadius:100,background:T.wt,color:T.bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:".48rem",fontWeight:800}}>2</span>}</div>})}</div>
             {/* Chat panel */}
-            <div style={{flex:1,display:"flex",flexDirection:"column",minWidth:0,background:"#0e0e18"}}>
+            <div style={{flex:1,display:"flex",flexDirection:"column",minWidth:0,background:"var(--chat-bg)"}}>
                 {/* Chat header */}
-                <div style={{padding:"0 16px",height:56,display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(255,255,255,.1)",flexShrink:0,background:"rgba(255,255,255,.015)"}}><div style={{display:"flex",alignItems:"center",gap:10}}><div style={{width:32,height:32,borderRadius:8,background:chat.c+"18",display:"flex",alignItems:"center",justifyContent:"center",color:chat.c,border:"1px solid "+chat.c+"30"}}><Icon size={14}/></div><div><div style={{fontWeight:600,fontSize:"1rem"}}>{chat.n}</div><div style={{fontSize:".65rem",color:T.gr2}}>{chat.st}</div></div></div><span style={{fontFamily:MONO,fontSize:".65rem",padding:"4px 10px",borderRadius:100,border:"1px solid rgba(255,255,255,.1)",color:T.gr2,background:"rgba(255,255,255,.03)",whiteSpace:"nowrap"}}>{chat.ch}</span></div>
+                <div style={{padding:"0 16px",height:56,display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid var(--bd)",flexShrink:0,background:"var(--surf)"}}><div style={{display:"flex",alignItems:"center",gap:10}}><div style={{width:32,height:32,borderRadius:8,background:chat.c+"18",display:"flex",alignItems:"center",justifyContent:"center",color:chat.c,border:"1px solid "+chat.c+"30"}}><Icon size={14}/></div><div><div style={{fontWeight:600,fontSize:"1rem"}}>{chat.n}</div><div style={{fontSize:".65rem",color:T.gr2}}>{chat.st}</div></div></div><span style={{fontFamily:MONO,fontSize:".65rem",padding:"4px 10px",borderRadius:100,border:"1px solid var(--bd)",color:T.gr2,background:"var(--surf)",whiteSpace:"nowrap"}}>{chat.ch}</span></div>
                 {/* Messages */}
-                <div ref={sr} style={{flex:1,overflowY:"auto",padding:"16px 18px",display:"flex",flexDirection:"column",gap:8}}>{all.map((m,i)=><Bubble key={ai+"-"+i} m={m}/>)}{typ&&<div style={{alignSelf:"flex-start",display:"flex",alignItems:"center",gap:6,padding:"8px 14px",background:"rgba(255,255,255,.06)",borderRadius:14,borderBottomLeftRadius:4,fontSize:".68rem",color:T.gr,border:"1px solid rgba(255,255,255,.05)"}}><div style={{display:"flex",gap:3}}>{[0,1,2].map(j=><span key={j} style={{width:5,height:5,borderRadius:"50%",background:T.gr,animation:"dotBounce 1.2s "+j*.2+"s infinite"}}/>)}</div>печатает...</div>}</div>
+                <div ref={sr} style={{flex:1,overflowY:"auto",padding:"16px 18px",display:"flex",flexDirection:"column",gap:8}}>{all.map((m,i)=><Bubble key={ai+"-"+i} m={m}/>)}{typ&&<div style={{alignSelf:"flex-start",display:"flex",alignItems:"center",gap:6,padding:"8px 14px",background:"var(--bubble-in)",borderRadius:14,borderBottomLeftRadius:4,fontSize:".68rem",color:T.gr,border:"1px solid var(--bd)"}}><div style={{display:"flex",gap:3}}>{[0,1,2].map(j=><span key={j} style={{width:5,height:5,borderRadius:"50%",background:T.gr,animation:"dotBounce 1.2s "+j*.2+"s infinite"}}/>)}</div>печатает...</div>}</div>
                 {/* Input */}
-                <div style={{padding:"10px 14px 12px",borderTop:"1px solid rgba(255,255,255,.1)",display:"flex",gap:8,alignItems:"center",position:"relative",zIndex:5,background:"rgba(255,255,255,.02)"}}><input type="text" value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")send()}} placeholder="Написать сообщение..." aria-label="Написать сообщение" style={{flex:1,background:"rgba(255,255,255,.04)",border:"1px solid rgba(255,255,255,.1)",borderRadius:10,padding:"12px 16px",fontSize:".82rem",color:T.wt,outline:"none",fontFamily:FONT,transition:"border-color .2s"}} onFocus={e=>e.target.style.borderColor="rgba(255,255,255,.2)"} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,.1)"}/><button onClick={send} aria-label="Отправить" style={{width:38,height:38,background:T.wt,borderRadius:9,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}><Send size={15} color={T.bg}/></button></div></div></div></div>
+                <div style={{padding:"10px 14px 12px",borderTop:"1px solid var(--bd)",display:"flex",gap:8,alignItems:"center",position:"relative",zIndex:5,background:"var(--surf)"}}><input type="text" value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")send()}} placeholder="Написать сообщение..." aria-label="Написать сообщение" style={{flex:1,background:"var(--card-bg)",border:"1px solid var(--bd)",borderRadius:10,padding:"12px 16px",fontSize:".82rem",color:T.wt,outline:"none",fontFamily:FONT,transition:"border-color .2s"}} onFocus={e=>e.target.style.borderColor="var(--input-focus)"} onBlur={e=>e.target.style.borderColor="var(--input-bd)"}/><button onClick={send} aria-label="Отправить" style={{width:38,height:38,background:T.wt,borderRadius:9,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}><Send size={15} color={T.bg}/></button></div></div></div></div>
 }
 
-function Faq({q,a}){const[o,setO]=useState(false);return<div style={{borderBottom:"1px solid "+T.bd}}><button onClick={()=>setO(p=>!p)} aria-expanded={o} style={{width:"100%",textAlign:"left",background:"none",border:"none",padding:"19px 0",fontSize:"1.01rem",fontWeight:600,color:T.wt,display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer",fontFamily:FONT,gap:16}}><span>{q}</span><span style={{width:23,height:23,borderRadius:6,border:"1px solid "+T.bd,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all .3s",background:o?T.wt:"transparent",transform:o?"rotate(45deg)":"none"}}><Plus size={12} color={o?T.bg:T.gr}/></span></button><div style={{maxHeight:o?250:0,overflow:"hidden",transition:"max-height .5s cubic-bezier(.16,1,.3,1)"}}><p style={{padding:"0 0 19px",fontSize:".97rem",color:T.gr,lineHeight:1.75}}>{a}</p></div></div>}
+function Faq({q,a}){const[o,setO]=useState(false);return<div style={{borderBottom:"1px solid var(--faq-divider)"}}><button onClick={()=>setO(p=>!p)} aria-expanded={o} style={{width:"100%",textAlign:"left",background:"none",border:"none",padding:"19px 0",fontSize:"1.01rem",fontWeight:600,color:T.wt,display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer",fontFamily:FONT,gap:16}}><span>{q}</span><span style={{width:23,height:23,borderRadius:6,border:"1px solid "+T.bd,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all .3s",background:o?T.wt:"transparent",transform:o?"rotate(45deg)":"none"}}><Plus size={12} color={o?T.bg:T.gr}/></span></button><div style={{maxHeight:o?250:0,overflow:"hidden",transition:"max-height .5s cubic-bezier(.16,1,.3,1)"}}><p style={{padding:"0 0 19px",fontSize:".97rem",color:T.gr,lineHeight:1.75}}>{a}</p></div></div>}
 
 function useSmoothScroll(){
     const outerRef=useRef(null);
@@ -458,6 +534,15 @@ function useSmoothScroll(){
 }
 
 /* ═══ MOBILE BURGER MENU ═══ */
+/* ═══ THEME TOGGLE ═══ */
+function ThemeToggle({theme,toggle}){
+    return<button className="theme-toggle" onClick={toggle} aria-label={theme==="dark"?"Светлая тема":"Тёмная тема"}>
+        {theme==="dark"
+            ?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            :<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
+    </button>
+}
+
 function MobileMenu({open,onClose}){
     useEffect(()=>{
         if(!open)return;
@@ -473,7 +558,7 @@ function MobileMenu({open,onClose}){
         <div style={{position:"absolute",inset:0,background:"rgba(0,0,0,.8)",opacity:open?1:0,transition:"opacity .3s"}} onClick={onClose}/>
         <div style={{
             position:"absolute",top:0,right:0,bottom:0,width:"min(320px,80vw)",
-            background:"#0c0c14",borderLeft:"1px solid rgba(255,255,255,.08)",
+            background:"var(--chat-bg)",borderLeft:"1px solid var(--bd)",
             transform:open?"translateX(0)":"translateX(100%)",
             transition:"transform .35s cubic-bezier(.22,1,.36,1)",
             padding:"80px 28px 40px",
@@ -482,14 +567,14 @@ function MobileMenu({open,onClose}){
         }}>
             <button onClick={onClose} aria-label="Закрыть меню" style={{
                 position:"absolute",top:20,right:20,width:36,height:36,
-                background:"rgba(255,255,255,.05)",border:"1px solid rgba(255,255,255,.08)",
+                background:"var(--card-bg)",border:"1px solid var(--bd)",
                 borderRadius:8,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:T.wt
             }}><X size={18}/></button>
 
             {[["#problem","Проблема"],["#solution","Решение"],["#pricing","Цены"],["#faq","FAQ"],["#cta","Контакты"]].map(([h,t])=>
                 <a key={t} href={h} onClick={onClose} style={{
                     fontSize:"1.1rem",fontWeight:600,color:T.gr,padding:"16px 0",
-                    borderBottom:"1px solid rgba(255,255,255,.06)",transition:"color .2s"
+                    borderBottom:"1px solid var(--bd)",transition:"color .2s"
                 }}>{t}</a>)}
 
             <div style={{marginTop:"auto",display:"flex",flexDirection:"column",gap:10,paddingTop:24}}>
@@ -513,7 +598,7 @@ function MobileTimeline(){
         ].map((s,i)=><div key={i} style={{display:"flex",gap:16,alignItems:"flex-start"}}>
             {/* Vertical line + circle */}
             <div style={{display:"flex",flexDirection:"column",alignItems:"center",flexShrink:0}}>
-                <div style={{width:48,height:48,borderRadius:"50%",border:`1.5px solid ${s.color}`,background:"#0e0e18",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                <div style={{width:48,height:48,borderRadius:"50%",border:`1.5px solid ${s.color}`,background:"var(--chat-bg)",display:"flex",alignItems:"center",justifyContent:"center"}}>
                     <span style={{fontFamily:MONO,fontSize:".75rem",fontWeight:700,color:s.color}}>{s.step}</span>
                 </div>
                 {i<2&&<div style={{width:1,height:40,background:`linear-gradient(to bottom,${s.color}33,transparent)`}}/>}
@@ -528,7 +613,7 @@ function MobileTimeline(){
     </div>
 }
 
-function RevealFooter({scrollY,innerRef}){
+function RevealFooter({scrollY,innerRef,theme}){
     const footerRef=useRef(null);
     const layersRef=useRef([]);
     const glowRef=useRef(null);
@@ -622,7 +707,7 @@ function RevealFooter({scrollY,innerRef}){
 
     return<footer ref={footerRef} id="parallax-footer" style={{
         position:"absolute",bottom:0,left:0,right:0,zIndex:0,
-        background:"#08080c",
+        background:"var(--foot-bg)",
         overflow:"hidden",
     }}>
         {/* Noise overlay */}
@@ -632,7 +717,7 @@ function RevealFooter({scrollY,innerRef}){
         <div ref={glowRef} style={{position:"absolute",top:"5%",left:"50%",transform:"translate(-50%,0) scale(0.8)",width:"100%",height:"50%",borderRadius:"50%",background:"radial-gradient(ellipse,rgba(139,92,246,.12),rgba(203,209,219,.04) 45%,transparent 70%)",pointerEvents:"none",opacity:0}}/>
 
         {/* Curtain shadow — dark gradient at top that fades as footer reveals */}
-        <div ref={curtainRef} style={{position:"absolute",top:0,left:0,right:0,height:200,background:"linear-gradient(to bottom,rgba(8,8,12,1) 0%,rgba(8,8,12,.6) 40%,transparent 100%)",pointerEvents:"none",zIndex:5}}/>
+        <div ref={curtainRef} style={{position:"absolute",top:0,left:0,right:0,height:200,background:"linear-gradient(to bottom,var(--foot-bg) 0%,transparent 100%)",pointerEvents:"none",zIndex:5}}/>
 
         {/* Horizontal light beam at top edge */}
         <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:"linear-gradient(90deg,transparent 10%,rgba(139,92,246,.2) 30%,rgba(255,255,255,.15) 50%,rgba(139,92,246,.2) 70%,transparent 90%)",zIndex:6}}/>
@@ -644,14 +729,14 @@ function RevealFooter({scrollY,innerRef}){
                 <div className="footer-cta" style={{padding:"80px 32px 48px",maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:40}}>
                     <div style={{maxWidth:500}}>
                         <h2 style={{fontSize:"clamp(2rem,5vw,3.6rem)",fontWeight:800,lineHeight:1.05,letterSpacing:-1,color:"#fff",marginBottom:16}}>Перестаньте терять<br/>клиентов.</h2>
-                        <p style={{fontSize:".95rem",color:"rgba(255,255,255,.6)",lineHeight:1.7,maxWidth:380}}>Запросите демо — покажем платформу и разберём ваш кейс за 15 минут.</p>
+                        <p style={{fontSize:".95rem",color:"var(--foot-text)",lineHeight:1.7,maxWidth:380}}>Запросите демо — покажем платформу и разберём ваш кейс за 15 минут.</p>
                     </div>
                     <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:10}}>
                         <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
                             <div style={{width:32,height:32,borderRadius:8,background:"rgba(255,255,255,.1)",display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontSize:".65rem",fontWeight:800,color:"#fff"}}>OL</span></div>
                             <span style={{fontWeight:700,fontSize:"1.1rem",color:"#fff"}}>One-Link</span>
                         </div>
-                        <p style={{fontSize:".85rem",color:"rgba(255,255,255,.5)",lineHeight:1.7,maxWidth:280}}>Мессенджеры, CRM и ИИ-агент в единой системе для бизнеса в Казахстане.</p>
+                        <p style={{fontSize:".85rem",color:"var(--foot-text)",lineHeight:1.7,maxWidth:280}}>Мессенджеры, CRM и ИИ-агент в единой системе для бизнеса в Казахстане.</p>
                         <div style={{display:"flex",gap:8,marginTop:4,flexWrap:"wrap"}}>
                             {[
                                 {href:"https://wa.me/77056162603",label:"WhatsApp",bg:"#25d366"},
@@ -679,9 +764,9 @@ function RevealFooter({scrollY,innerRef}){
                         {h:"Компания",l:[["#pricing","Veritas Consult"],["#pricing","Цены"],["#faq","FAQ"],["#cta","Контакты"],["#","Блог"]]},
                         {h:"Правовая",l:[["https://www.vconsult.kz/one-link/privacy","Конфиденциальность"],["https://www.vconsult.kz/one-link/terms","Условия"],["https://www.vconsult.kz/one-link/privacy","Обработка данных"]]}
                     ].map(col=><div key={col.h}>
-                        <div style={{fontFamily:MONO,fontSize:".6rem",color:"rgba(255,255,255,.35)",letterSpacing:1.5,textTransform:"uppercase",marginBottom:14,fontWeight:600}}>{col.h}</div>
+                        <div style={{fontFamily:MONO,fontSize:".6rem",color:"var(--foot-text2)",letterSpacing:1.5,textTransform:"uppercase",marginBottom:14,fontWeight:600}}>{col.h}</div>
                         {col.l.map(([href,t])=><a key={t} href={href} style={{
-                            display:"block",fontSize:".85rem",color:"rgba(255,255,255,.5)",
+                            display:"block",fontSize:".85rem",color:"var(--foot-text)",
                             marginBottom:9,transition:"color .2s, transform .2s",
                         }} onMouseEnter={e=>{e.currentTarget.style.color="#fff";e.currentTarget.style.transform="translateX(4px)"}}
                                                   onMouseLeave={e=>{e.currentTarget.style.color="rgba(255,255,255,.5)";e.currentTarget.style.transform="none"}}
@@ -695,10 +780,10 @@ function RevealFooter({scrollY,innerRef}){
                 <div style={{maxWidth:1100,margin:"0 auto",padding:"0 32px"}}><div style={{height:1,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)"}}/></div>
 
                 <div style={{maxWidth:1100,margin:"0 auto",padding:"20px 32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
-                    <span style={{fontSize:".72rem",color:"rgba(255,255,255,.3)"}}>© 2026 One-Link · Veritas Consult · Астана, Казахстан</span>
+                    <span style={{fontSize:".72rem",color:"var(--foot-text3)"}}>© 2026 One-Link · Veritas Consult · Астана, Казахстан</span>
                     <div style={{display:"flex",alignItems:"center",gap:5}}>
                         <span style={{width:5,height:5,borderRadius:"50%",background:T.green}}/>
-                        <span style={{fontSize:".72rem",color:"rgba(255,255,255,.3)"}}>Все системы работают</span>
+                        <span style={{fontSize:".72rem",color:"var(--foot-text3)"}}>Все системы работают</span>
                     </div>
                 </div>
             </div>
@@ -722,6 +807,26 @@ function RevealFooter({scrollY,innerRef}){
 export default function App(){
     const{outerRef,innerRef,scrollY}=useSmoothScroll();
     const[menuOpen,setMenuOpen]=useState(false);
+
+    // ═══ Theme ═══
+    const[theme,setTheme]=useState(()=>{
+        if(typeof window!=="undefined"){
+            const saved=window.localStorage?.getItem?.("ol-theme");
+            if(saved)return saved;
+            if(window.matchMedia?.("(prefers-color-scheme:light)").matches)return"light";
+        }
+        return"dark";
+    });
+    const toggleTheme=useCallback(()=>{
+        setTheme(prev=>{
+            const next=prev==="dark"?"light":"dark";
+            try{window.localStorage?.setItem?.("ol-theme",next)}catch{}
+            return next;
+        });
+    },[]);
+    useEffect(()=>{
+        document.documentElement.setAttribute("data-theme",theme);
+    },[theme]);
 
     // Measure footer height dynamically
     const[footerH,setFooterH]=useState(950);
@@ -748,8 +853,8 @@ export default function App(){
             const show=y>50;
             if(show!==prevNav&&navEl){
                 prevNav=show;
-                navEl.style.background=show?"rgba(8,8,12,.95)":"transparent";
-                navEl.style.borderBottom=show?"1px solid rgba(255,255,255,.06)":"1px solid transparent";
+                navEl.style.background=show?"var(--nav-bg)":"transparent";
+                navEl.style.borderBottom=show?"1px solid var(--bd)":"1px solid transparent";
                 navEl.style.padding=show?"9px 0":"15px 0";
             }
 
@@ -782,8 +887,9 @@ export default function App(){
 
     return<div ref={outerRef} style={{position:"fixed",inset:0,overflow:"hidden",zIndex:0}}>
         <style>{CSS}</style>
-        <RevealFooter scrollY={scrollY} innerRef={innerRef}/>
+        <RevealFooter scrollY={scrollY} innerRef={innerRef} theme={theme}/>
         <MobileMenu open={menuOpen} onClose={()=>setMenuOpen(false)}/>
+        <ThemeToggle theme={theme} toggle={toggleTheme}/>
 
         <nav id="main-nav" style={{position:"fixed",top:0,left:0,right:0,zIndex:9990,background:"transparent",borderBottom:"1px solid transparent",transition:"all .35s",padding:"15px 0"}}>
             <div className="w" style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
@@ -792,27 +898,27 @@ export default function App(){
                 </a>
                 <div className="nav-r" style={{display:"flex",alignItems:"center",gap:20}}>
                     {[["#problem","Проблема"],["#solution","Решение"],["#pricing","Цены"],["#faq","FAQ"]].map(([h,t])=><a key={t} href={h} style={{fontSize:".92rem",color:T.gr,fontWeight:500,transition:"color .2s"}} onMouseEnter={e=>e.currentTarget.style.color=T.wt} onMouseLeave={e=>e.currentTarget.style.color=T.gr}>{t}</a>)}
-                    <a href="tel:+77056162603" style={{fontFamily:MONO,fontSize:".8rem",color:T.wt,fontWeight:500}}>+7 705 616 2603</a>
+                    <a href="tel:+77056162603" style={{fontFamily:MONO,fontSize:".8rem",color:T.wt,fontWeight:500}}>+7 705 616 26 03</a>
                     <a href="#cta" style={{background:T.wt,color:T.bg,padding:"9px 22px",borderRadius:7,fontSize:".92rem",fontWeight:600,transition:"opacity .2s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".88"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>Получить демо</a>
                 </div>
                 {/* FIX: Burger button for mobile */}
                 <button className="burger-btn" onClick={()=>setMenuOpen(true)} aria-label="Открыть меню" style={{
                     display:"none",width:36,height:36,
-                    background:"rgba(255,255,255,.05)",border:"1px solid rgba(255,255,255,.1)",
+                    background:"var(--card-bg)",border:"1px solid var(--bd)",
                     borderRadius:8,cursor:"pointer",alignItems:"center",justifyContent:"center",color:T.wt
                 }}><Menu size={18}/></button>
             </div>
         </nav>
 
         <div ref={innerRef} style={{position:"relative",zIndex:1,pointerEvents:"none"}}>
-            <div id="content-body" style={{pointerEvents:"auto",background:T.bg,position:"relative",borderRadius:"0 0 24px 24px",overflow:"hidden",boxShadow:"0 40px 100px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03)"}}>
+            <div id="content-body" style={{pointerEvents:"auto",background:"var(--bg)",position:"relative",borderRadius:"0 0 24px 24px",overflow:"hidden",boxShadow:"var(--content-shadow)"}}>
 
                 {/* ═══════════ HERO ═══════════ */}
-                <section style={{paddingTop:145,paddingBottom:60,position:"relative",overflow:"hidden",minHeight:"100vh"}}><HeroBg/>{[...Array(4)].map((_,i)=><div key={i} style={{position:"absolute",width:100+i*30,height:1,background:"linear-gradient(90deg,rgba(139,92,246,.3),transparent)",transform:"rotate(-35deg)",animation:`meteor ${5+i*2}s ${i*1.5}s linear infinite`,opacity:0,top:(10+i*18)+"%",left:(5+i*12)+"%",zIndex:0,pointerEvents:"none"}}/>)}<div className="w" style={{textAlign:"center"}}><R d={.06}><h1 style={{fontSize:"clamp(2.4rem,7vw,5.2rem)",fontWeight:800,lineHeight:1.05,letterSpacing:"clamp(-1px,-.3vw,-2px)",marginBottom:14,background:"linear-gradient(180deg,#f4f4f8 30%,#52525b 100%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>Перестаньте терять<br/>входящие сообщения.</h1></R><R d={.12}><p style={{fontSize:"clamp(.95rem,1.5vw,1.15rem)",color:T.gr,lineHeight:1.6,maxWidth:540,margin:"0 auto 8px"}}>CRM + мессенджеры + ИИ-агент в единой системе.</p></R><R d={.14}><div style={{margin:"8px auto 24px"}}><Typing/></div></R><R d={.24}><div className="hero-btns" style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}><a href="#cta" style={{display:"inline-flex",alignItems:"center",gap:7,background:T.wt,color:T.bg,padding:"15px 34px",borderRadius:10,fontWeight:600,fontSize:"1.02rem",position:"relative",overflow:"hidden",boxShadow:"0 0 20px rgba(255,255,255,.08),0 0 60px rgba(203,209,219,.06)",transition:"box-shadow .3s,transform .3s"}} onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 0 30px rgba(255,255,255,.15),0 0 80px rgba(203,209,219,.1)";e.currentTarget.style.transform="translateY(-1px)"}} onMouseLeave={e=>{e.currentTarget.style.boxShadow="0 0 20px rgba(255,255,255,.08),0 0 60px rgba(203,209,219,.06)";e.currentTarget.style.transform="none"}}><span style={{position:"absolute",inset:0,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent)",transform:"translateX(-100%)",animation:"shimmerSlide 3s 1s infinite"}}/><Sparkles size={15}/>Запросить демо</a><a href="#solution" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"14px 30px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:"1rem",background:"rgba(255,255,255,.015)",transition:"border-color .2s"}} onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.15)"} onMouseLeave={e=>e.currentTarget.style.borderColor=T.bd}>Как это работает <ChevronDown size={15}/></a></div></R></div><div style={{maxWidth:1100,margin:"0 auto",padding:"0 32px",position:"relative",zIndex:1,marginTop:80}}><R d={.3}><ChatApp/></R></div>
+                <section style={{paddingTop:145,paddingBottom:60,position:"relative",overflow:"hidden",minHeight:"100vh"}}><HeroBg/>{[...Array(4)].map((_,i)=><div key={i} style={{position:"absolute",width:100+i*30,height:1,background:"linear-gradient(90deg,var(--meteor-color),transparent)",transform:"rotate(-35deg)",animation:`meteor ${5+i*2}s ${i*1.5}s linear infinite`,opacity:0,top:(10+i*18)+"%",left:(5+i*12)+"%",zIndex:0,pointerEvents:"none"}}/>)}<div className="w" style={{textAlign:"center"}}><R d={.06}><h1 style={{fontSize:"clamp(2.4rem,7vw,5.2rem)",fontWeight:800,lineHeight:1.05,letterSpacing:"clamp(-1px,-.3vw,-2px)",marginBottom:14,background:"linear-gradient(180deg,var(--grad-text-from) 30%,var(--grad-text-to) 100%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>Перестаньте терять<br/>входящие сообщения.</h1></R><R d={.12}><p style={{fontSize:"clamp(.95rem,1.5vw,1.15rem)",color:T.gr,lineHeight:1.6,maxWidth:540,margin:"0 auto 8px"}}>CRM + мессенджеры + ИИ-агент в единой системе.</p></R><R d={.14}><div style={{margin:"8px auto 24px"}}><Typing/></div></R><R d={.24}><div className="hero-btns" style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}><a href="#cta" style={{display:"inline-flex",alignItems:"center",gap:7,background:T.wt,color:T.bg,padding:"15px 34px",borderRadius:10,fontWeight:600,fontSize:"1.02rem",position:"relative",overflow:"hidden",boxShadow:"0 0 20px var(--glow-purple),0 0 60px var(--glow-purple)",transition:"box-shadow .3s,transform .3s"}} onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 0 30px var(--glow-purple),0 0 80px var(--glow-purple)";e.currentTarget.style.transform="translateY(-1px)"}} onMouseLeave={e=>{e.currentTarget.style.boxShadow="0 0 20px var(--glow-purple),0 0 60px var(--glow-purple)";e.currentTarget.style.transform="none"}}><span style={{position:"absolute",inset:0,background:"linear-gradient(90deg,transparent,var(--shimmer),transparent)",transform:"translateX(-100%)",animation:"shimmerSlide 3s 1s infinite"}}/><Sparkles size={15}/>Запросить демо</a><a href="#solution" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"14px 30px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:"1rem",background:"var(--surf)",transition:"border-color .2s"}} onMouseEnter={e=>e.currentTarget.style.borderColor="var(--surf-hover)"} onMouseLeave={e=>e.currentTarget.style.borderColor=T.bd}>Как это работает <ChevronDown size={15}/></a></div></R></div><div style={{maxWidth:1100,margin:"0 auto",padding:"0 32px",position:"relative",zIndex:1,marginTop:80}}><R d={.3}><ChatApp/></R></div>
 
                     {/* Stats bar */}
                     <div className="w" style={{position:"relative",zIndex:1,marginTop:48,paddingBottom:8}}><R d={.35}>
-                        <div style={{borderRadius:18,border:"1px solid rgba(255,255,255,.06)",background:"rgba(255,255,255,.02)",padding:"36px 32px 32px",overflow:"hidden",position:"relative"}}>
+                        <div style={{borderRadius:18,border:"1px solid var(--bd)",background:"var(--surf)",padding:"36px 32px 32px",overflow:"hidden",position:"relative"}}>
                             <div style={{position:"absolute",top:-1,left:"15%",right:"15%",height:1,background:"linear-gradient(90deg,transparent,#8b5cf633,transparent)"}}/>
                             <div className="stats-row" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16,marginBottom:28}}>
                                 {[
@@ -821,15 +927,15 @@ export default function App(){
                                     {target:3,suffix:" дня",prefix:"",label:"подключение с нуля",color:T.ac},
                                     {target:5,suffix:"→1",prefix:"",label:"систем в одной платформе",color:T.ac}
                                 ].map((s,i)=>
-                                    <div key={i} style={{textAlign:"center",padding:"20px 12px",borderRadius:12,background:"rgba(255,255,255,.02)",border:"1px solid rgba(255,255,255,.04)"}}>
+                                    <div key={i} style={{textAlign:"center",padding:"20px 12px",borderRadius:12,background:"var(--surf)",border:"1px solid var(--bd)"}}>
                                         <NumberTicker target={s.target} suffix={s.suffix} prefix={s.prefix}/>
                                         <div style={{fontSize:".75rem",color:T.gr,marginTop:6,letterSpacing:.3,lineHeight:1.4}}>{s.label}</div>
                                     </div>)}
                             </div>
-                            <div style={{height:1,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)",marginBottom:20}}/>
+                            <div style={{height:1,background:"linear-gradient(90deg,transparent,var(--bd),transparent)",marginBottom:20}}/>
                             <p style={{fontFamily:MONO,fontSize:".6rem",color:T.gr2,letterSpacing:2,textTransform:"uppercase",marginBottom:12,textAlign:"center"}}>Компании уже используют One-Link</p>
                             <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
-                                {["Клиники","Онлайн-школы","Рестораны","Недвижимость","E-commerce"].map((n,i)=><span key={i} style={{fontSize:".82rem",color:T.gr2,fontWeight:500,padding:"7px 16px",borderRadius:100,border:"1px solid rgba(255,255,255,.06)",background:"rgba(255,255,255,.02)",transition:"border-color .2s,color .2s"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(139,92,246,.2)";e.currentTarget.style.color=T.wt}} onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.06)";e.currentTarget.style.color=T.gr2}}>{n}</span>)}
+                                {["Клиники","Онлайн-школы","Рестораны","Недвижимость","E-commerce"].map((n,i)=><span key={i} style={{fontSize:".82rem",color:T.gr2,fontWeight:500,padding:"7px 16px",borderRadius:100,border:"1px solid var(--bd)",background:"var(--surf)",transition:"border-color .2s,color .2s"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(139,92,246,.2)";e.currentTarget.style.color=T.wt}} onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--bd)";e.currentTarget.style.color=T.gr2}}>{n}</span>)}
                             </div>
                         </div>
                     </R></div>
@@ -838,10 +944,10 @@ export default function App(){
                 {/* ═══════════ PROBLEM ═══════════ */}
                 <section id="problem" style={{paddingTop:40,paddingBottom:72}}><div className="w">
                     <div style={{position:"relative"}}>
-                        <R><h2 style={{fontSize:"clamp(2rem,4.5vw,3.4rem)",fontWeight:800,letterSpacing:"-0.03em",lineHeight:1.08,marginBottom:14,background:"linear-gradient(180deg,#f4f4f8 20%,#737373 100%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>Проблема не в людях.</h2><p style={{fontSize:"clamp(.92rem,1.3vw,1.03rem)",color:T.gr,lineHeight:1.75,maxWidth:520,marginBottom:32,position:"relative",zIndex:1}}>CRM, каналы, МИС, база данных, ИИ — пять узлов. Одна обновляется — другая ломается. Каждый разрыв между мессенджером и CRM — это потерянный клиент.</p></R>
+                        <R><h2 style={{fontSize:"clamp(2rem,4.5vw,3.4rem)",fontWeight:800,letterSpacing:"-0.03em",lineHeight:1.08,marginBottom:14,background:"linear-gradient(180deg,var(--grad-text-from) 20%,var(--grad-text-to) 100%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>Проблема не в людях.</h2><p style={{fontSize:"clamp(.92rem,1.3vw,1.03rem)",color:T.gr,lineHeight:1.75,maxWidth:520,marginBottom:32,position:"relative",zIndex:1}}>CRM, каналы, МИС, база данных, ИИ — пять узлов. Одна обновляется — другая ломается. Каждый разрыв между мессенджером и CRM — это потерянный клиент.</p></R>
 
                         {/* ── Broken Infrastructure Diagram ── */}
-                        <R d={.1}><div style={{position:"relative",margin:"0 auto 48px",padding:"48px 20px",borderRadius:20,border:"1px solid rgba(239,68,68,.08)",background:"rgba(255,255,255,.01)",overflow:"hidden"}}>
+                        <R d={.1}><div style={{position:"relative",margin:"0 auto 48px",padding:"48px 20px",borderRadius:20,border:"1px solid rgba(239,68,68,.08)",background:"var(--surf)",overflow:"hidden"}}>
                             <div style={{position:"absolute",top:"40%",left:"50%",transform:"translate(-50%,-50%)",width:600,height:300,borderRadius:"50%",background:"radial-gradient(ellipse,rgba(239,68,68,.06),transparent 65%)",pointerEvents:"none"}}/>
                             <div style={{textAlign:"center",marginBottom:40}}>
                                 <span style={{fontFamily:MONO,fontSize:".6rem",color:"rgba(239,68,68,.4)",letterSpacing:3,textTransform:"uppercase"}}>Текущая инфраструктура</span>
@@ -858,11 +964,11 @@ export default function App(){
                                 ].map((node,i,arr)=><div key={i} className="infra-node" style={{display:"flex",alignItems:"center",flex:1}}>
                                     <div style={{
                                         flex:1,padding:"24px 16px",borderRadius:14,
-                                        border:"1px solid rgba(255,255,255,.06)",background:"rgba(255,255,255,.02)",
+                                        border:"1px solid var(--bd)",background:"var(--surf)",
                                         textAlign:"center",position:"relative",transition:"border-color .3s,transform .3s",
                                     }} onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(239,68,68,.2)";e.currentTarget.style.transform="translateY(-3px)"}}
-                                         onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.06)";e.currentTarget.style.transform="none"}}>
-                                        <div style={{width:44,height:44,borderRadius:10,background:"rgba(255,255,255,.03)",border:"1px solid rgba(255,255,255,.06)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px",color:T.gr}}>{node.icon}</div>
+                                         onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--bd)";e.currentTarget.style.transform="none"}}>
+                                        <div style={{width:44,height:44,borderRadius:10,background:"var(--surf)",border:"1px solid var(--bd)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px",color:T.gr}}>{node.icon}</div>
                                         <div style={{fontFamily:MONO,fontSize:".82rem",fontWeight:700,color:T.wt,marginBottom:2}}>{node.name}</div>
                                         <div style={{fontSize:".7rem",color:T.gr2,marginBottom:10}}>{node.role}</div>
                                         <div style={{display:"inline-flex",alignItems:"center",gap:4,padding:"4px 10px",borderRadius:100,background:"rgba(239,68,68,.06)",border:"1px solid rgba(239,68,68,.12)"}}>
@@ -890,27 +996,27 @@ export default function App(){
                             </div>
                         </div></R>
 
-                        <div className="g3">{[{icon:<AlertTriangle size={20}/>,num:"30%",ti:"Потерянные обращения",de:"Клиент пишет в WhatsApp, звонит повторно — попадает на менеджера, который ничего не знает."},{icon:<Link2 size={20}/>,num:"5×",ti:"Точки отказа",de:"Обновилась одна система — сломалась интеграция. Упала другая — встала вся цепочка."},{icon:<TrendingUp size={20}/>,num:"₸₸₸",ti:"Скрытые расходы",de:"AmoCRM + Wazzup + ChatGPT API = ~200 000 ₸/мес. Плюс расходы на интеграцию и поддержку."}].map((x,i)=><R key={i} d={i*.08}><Card><div style={{color:T.red,marginBottom:14,opacity:.7}}>{x.icon}</div><div style={{fontFamily:MONO,fontSize:"2rem",fontWeight:800,color:"rgba(255,255,255,.1)",lineHeight:1,marginBottom:10}}>{x.num}</div><h4 style={{fontSize:"1.15rem",fontWeight:700,marginBottom:6}}>{x.ti}</h4><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.65}}>{x.de}</p></Card></R>)}</div>
+                        <div className="g3">{[{icon:<AlertTriangle size={20}/>,num:"30%",ti:"Потерянные обращения",de:"Клиент пишет в WhatsApp, звонит повторно — попадает на менеджера, который ничего не знает."},{icon:<Link2 size={20}/>,num:"5×",ti:"Точки отказа",de:"Обновилась одна система — сломалась интеграция. Упала другая — встала вся цепочка."},{icon:<TrendingUp size={20}/>,num:"₸₸₸",ti:"Скрытые расходы",de:"AmoCRM + Wazzup + ChatGPT API = ~200 000 ₸/мес. Плюс расходы на интеграцию и поддержку."}].map((x,i)=><R key={i} d={i*.08}><Card><div style={{color:T.red,marginBottom:14,opacity:.7}}>{x.icon}</div><div style={{fontFamily:MONO,fontSize:"2rem",fontWeight:800,color:"var(--bd)",lineHeight:1,marginBottom:10}}>{x.num}</div><h4 style={{fontSize:"1.15rem",fontWeight:700,marginBottom:6}}>{x.ti}</h4><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.65}}>{x.de}</p></Card></R>)}</div>
 
-                        <R d={.1} s={{marginTop:40}}><Card glow><Tag>Реальный кейс · Медцентр в Актобе · Январь 2025</Tag><p style={{fontSize:"1.01rem",color:"rgba(255,255,255,.7)",lineHeight:1.8,maxWidth:700}}>Первый прототип — ИИ-агент для медцентра. CRM, телефония, МИС, БД, агент — пять узлов от разных вендоров. Обновление API в одной системе рушило всю цепь. <strong style={{color:T.wt}}>Мы поняли: зоопарк из чужих систем — хрупко, дорого и не масштабируется.</strong> И начали строить единый контур.</p></Card></R>
+                        <R d={.1} s={{marginTop:40}}><Card glow><Tag>Реальный кейс · Медцентр в Актобе · Январь 2025</Tag><p style={{fontSize:"1.01rem",color:"var(--text-sub)",lineHeight:1.8,maxWidth:700}}>Первый прототип — ИИ-агент для медцентра. CRM, телефония, МИС, БД, агент — пять узлов от разных вендоров. Обновление API в одной системе рушило всю цепь. <strong style={{color:T.wt}}>Мы поняли: зоопарк из чужих систем — хрупко, дорого и не масштабируется.</strong> И начали строить единый контур.</p></Card></R>
                     </div></div></section>
 
                 {/* ═══════════ SOLUTION ═══════════ */}
-                <section id="solution" style={{paddingTop:96,paddingBottom:72,borderTop:"1px solid "+T.bd}}><div className="w"><R><Tag>Решение</Tag><h2 style={{fontSize:"clamp(1.8rem,4vw,3.1rem)",fontWeight:800,letterSpacing:"-.03em",lineHeight:1.1,marginBottom:14}}>Мы перестали строить<br/><span style={{color:T.gr}}>из чужих кубиков.</span></h2><p style={{fontSize:"clamp(.92rem,1.3vw,1.03rem)",color:T.gr,lineHeight:1.75,maxWidth:520,marginBottom:48}}>Все модули — внутри одной платформы. Один сервер. Ноль лишних подписок.</p></R>
+                <section id="solution" style={{paddingTop:96,paddingBottom:72,borderTop:"1px solid var(--section-bd)"}}><div className="w"><R><Tag>Решение</Tag><h2 style={{fontSize:"clamp(1.8rem,4vw,3.1rem)",fontWeight:800,letterSpacing:"-.03em",lineHeight:1.1,marginBottom:14}}>Мы перестали строить<br/><span style={{color:T.gr}}>из чужих кубиков.</span></h2><p style={{fontSize:"clamp(.92rem,1.3vw,1.03rem)",color:T.gr,lineHeight:1.75,maxWidth:520,marginBottom:48}}>Все модули — внутри одной платформы. Один сервер. Ноль лишних подписок.</p></R>
 
                     {/* ── Animated Beam: Integration Map ── */}
-                    <R d={.1}><div style={{position:"relative",maxWidth:1000,margin:"0 auto 64px",borderRadius:20,border:"1px solid rgba(255,255,255,.08)",overflow:"hidden",background:"rgba(255,255,255,.02)",padding:"60px 24px"}}>
+                    <R d={.1}><div style={{position:"relative",maxWidth:1000,margin:"0 auto 64px",borderRadius:20,border:"1px solid var(--bd)",overflow:"hidden",background:"var(--surf)",padding:"60px 24px"}}>
                         <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:300,height:300,borderRadius:"50%",background:"radial-gradient(ellipse,rgba(255,255,255,.04),transparent 70%)",pointerEvents:"none"}}/>
 
                         {/* FIX: SVG hidden on mobile via className */}
                         <svg className="beam-svg" style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none"}} viewBox="0 0 1000 500" fill="none" preserveAspectRatio="none">
                             <defs><linearGradient id="beamW"><stop offset="0%" stopColor="#ffffff00"/><stop offset="50%" stopColor="#ffffff"/><stop offset="100%" stopColor="#ffffff00"/></linearGradient></defs>
-                            <path d="M160,125 C320,125 350,250 500,250" stroke="rgba(255,255,255,.06)" strokeWidth="1"/>
-                            <path d="M160,250 C280,250 320,200 400,200 C440,200 470,250 500,250" stroke="rgba(255,255,255,.06)" strokeWidth="1"/>
-                            <path d="M160,375 C320,375 350,250 500,250" stroke="rgba(255,255,255,.06)" strokeWidth="1"/>
-                            <path d="M500,250 C650,250 680,125 840,125" stroke="rgba(255,255,255,.06)" strokeWidth="1"/>
-                            <path d="M500,250 C540,250 580,300 620,300 C700,300 740,250 840,250" stroke="rgba(255,255,255,.06)" strokeWidth="1"/>
-                            <path d="M500,250 C650,250 680,375 840,375" stroke="rgba(255,255,255,.06)" strokeWidth="1"/>
+                            <path d="M160,125 C320,125 350,250 500,250" stroke="var(--beam-line)" strokeWidth="1"/>
+                            <path d="M160,250 C280,250 320,200 400,200 C440,200 470,250 500,250" stroke="var(--beam-line)" strokeWidth="1"/>
+                            <path d="M160,375 C320,375 350,250 500,250" stroke="var(--beam-line)" strokeWidth="1"/>
+                            <path d="M500,250 C650,250 680,125 840,125" stroke="var(--beam-line)" strokeWidth="1"/>
+                            <path d="M500,250 C540,250 580,300 620,300 C700,300 740,250 840,250" stroke="var(--beam-line)" strokeWidth="1"/>
+                            <path d="M500,250 C650,250 680,375 840,375" stroke="var(--beam-line)" strokeWidth="1"/>
                             <path d="M160,125 C320,125 350,250 500,250" stroke="url(#beamW)" strokeWidth="1.5" strokeDasharray="40 460" strokeLinecap="round"><animate attributeName="stroke-dashoffset" values="500;0" dur="2.5s" repeatCount="indefinite"/></path>
                             <path d="M160,250 C280,250 320,200 400,200 C440,200 470,250 500,250" stroke="url(#beamW)" strokeWidth="1.5" strokeDasharray="40 520" strokeLinecap="round"><animate attributeName="stroke-dashoffset" values="560;0" dur="3s" repeatCount="indefinite" begin=".5s"/></path>
                             <path d="M160,375 C320,375 350,250 500,250" stroke="url(#beamW)" strokeWidth="1.5" strokeDasharray="40 460" strokeLinecap="round"><animate attributeName="stroke-dashoffset" values="500;0" dur="2.8s" repeatCount="indefinite" begin="1s"/></path>
@@ -928,7 +1034,7 @@ export default function App(){
                                     {n:"Telegram",color:"#fff",path:"M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"},
                                     {n:"Instagram",color:"#e1306c",path:"M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 1 0 0-12.324zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405a1.441 1.441 0 0 1-2.88 0 1.441 1.441 0 0 1 2.88 0z"}
                                 ].map((item,i)=><div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-                                    <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(255,255,255,.04)",border:"1px solid rgba(255,255,255,.08)",display:"flex",alignItems:"center",justifyContent:"center",transition:"border-color .3s,transform .3s"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.2)";e.currentTarget.style.transform="scale(1.1)"}} onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.08)";e.currentTarget.style.transform="scale(1)"}}>
+                                    <div style={{width:56,height:56,borderRadius:"50%",background:"var(--card-bg)",border:"1px solid var(--bd)",display:"flex",alignItems:"center",justifyContent:"center",transition:"border-color .3s,transform .3s"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="var(--surf-hover)";e.currentTarget.style.transform="scale(1.1)"}} onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--bd)";e.currentTarget.style.transform="scale(1)"}}>
                                         <svg width="22" height="22" viewBox="0 0 24 24" fill={item.color}><path d={item.path}/></svg>
                                     </div>
                                     <span style={{fontSize:".82rem",fontWeight:600,color:T.gr}}>{item.n}</span>
@@ -937,9 +1043,9 @@ export default function App(){
 
                             {/* Center hub */}
                             <div className="beam-center" style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                                <div style={{width:130,height:130,borderRadius:"50%",background:T.bg,border:"1px solid rgba(255,255,255,.12)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",position:"relative",boxShadow:"0 0 80px rgba(255,255,255,.04),0 0 0 8px rgba(8,8,12,.9)"}}>
+                                <div style={{width:130,height:130,borderRadius:"50%",background:T.bg,border:"1px solid var(--bd)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",position:"relative",boxShadow:"0 0 80px rgba(255,255,255,.04),0 0 0 8px rgba(8,8,12,.9)"}}>
                                     <div style={{position:"absolute",inset:-20,borderRadius:"50%",background:"radial-gradient(circle,"+T.bg+" 55%,transparent 70%)",pointerEvents:"none",zIndex:0}}/>
-                                    <div style={{position:"absolute",inset:-16,borderRadius:"50%",border:"1px dashed rgba(255,255,255,.08)",animation:"spin 20s linear infinite"}}/>
+                                    <div style={{position:"absolute",inset:-16,borderRadius:"50%",border:"1px dashed var(--bd)",animation:"spin 20s linear infinite"}}/>
                                     <span style={{fontFamily:MONO,fontSize:".8rem",fontWeight:800,color:T.wt,letterSpacing:2,lineHeight:1.4,textAlign:"center",position:"relative",zIndex:1}}>ONE<br/>LINK</span>
                                 </div>
                             </div>
@@ -951,7 +1057,7 @@ export default function App(){
                                     {n:"ИИ-агент",icon:<Bot size={22} strokeWidth={1.5}/>},
                                     {n:"Guardrails",icon:<Shield size={22} strokeWidth={1.5}/>}
                                 ].map((item,i)=><div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-                                    <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(255,255,255,.04)",border:"1px solid rgba(255,255,255,.08)",display:"flex",alignItems:"center",justifyContent:"center",color:T.gr,transition:"border-color .3s,transform .3s"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.2)";e.currentTarget.style.transform="scale(1.1)"}} onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.08)";e.currentTarget.style.transform="scale(1)"}}>
+                                    <div style={{width:56,height:56,borderRadius:"50%",background:"var(--card-bg)",border:"1px solid var(--bd)",display:"flex",alignItems:"center",justifyContent:"center",color:T.gr,transition:"border-color .3s,transform .3s"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="var(--surf-hover)";e.currentTarget.style.transform="scale(1.1)"}} onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--bd)";e.currentTarget.style.transform="scale(1)"}}>
                                         {item.icon}
                                     </div>
                                     <span style={{fontSize:".82rem",fontWeight:600,color:T.gr}}>{item.n}</span>
@@ -959,7 +1065,7 @@ export default function App(){
                             </div>
                         </div>
 
-                        <div style={{textAlign:"center",marginTop:24}}><span style={{fontFamily:MONO,fontSize:".6rem",color:"rgba(255,255,255,.15)",letterSpacing:4}}>ЕДИНЫЙ КОНТУР</span></div>
+                        <div style={{textAlign:"center",marginTop:24}}><span style={{fontFamily:MONO,fontSize:".6rem",color:"var(--bd)",letterSpacing:4}}>ЕДИНЫЙ КОНТУР</span></div>
                     </div></R>
 
                     {/* 4 feature cards */}
@@ -986,7 +1092,7 @@ export default function App(){
                         </div>
                         <div style={{marginTop:16,padding:"12px 16px",background:"rgba(139,92,246,.06)",borderRadius:10,border:"1px solid rgba(139,92,246,.1)",display:"flex",alignItems:"center",gap:10}}>
                             <Check size={14} color={T.green} style={{flexShrink:0}}/>
-                            <span style={{fontSize:".88rem",color:"rgba(255,255,255,.7)"}}>Все проверки происходят на одном сервере. Данные не покидают ваш контур.</span>
+                            <span style={{fontSize:".88rem",color:"var(--text-sub)"}}>Все проверки происходят на одном сервере. Данные не покидают ваш контур.</span>
                         </div>
                     </Card></R>
 
@@ -997,14 +1103,14 @@ export default function App(){
                 </div></section>
 
                 {/* ═══════════ TARGET INDUSTRIES ═══════════ */}
-                <section style={{paddingTop:96,paddingBottom:72,borderTop:"1px solid "+T.bd}}><div className="w"><R><Tag>Для кого</Tag><h2 style={{fontSize:"clamp(1.8rem,3.5vw,2.8rem)",fontWeight:800,letterSpacing:-.5,marginBottom:12}}>10+ компаний, где каждый <span style={{color:T.gr}}>клиент на счету</span></h2><p style={{fontSize:"clamp(.92rem,1.3vw,1.03rem)",color:T.gr,lineHeight:1.75,maxWidth:520,marginBottom:40}}>Если ваш бизнес живёт на входящих обращениях — One Link адаптируется под вашу специфику.</p></R><div className="g3">{[
+                <section style={{paddingTop:96,paddingBottom:72,borderTop:"1px solid var(--section-bd)"}}><div className="w"><R><Tag>Для кого</Tag><h2 style={{fontSize:"clamp(1.8rem,3.5vw,2.8rem)",fontWeight:800,letterSpacing:-.5,marginBottom:12}}>10+ компаний, где каждый <span style={{color:T.gr}}>клиент на счету</span></h2><p style={{fontSize:"clamp(.92rem,1.3vw,1.03rem)",color:T.gr,lineHeight:1.75,maxWidth:520,marginBottom:40}}>Если ваш бизнес живёт на входящих обращениях — One Link адаптируется под вашу специфику.</p></R><div className="g3">{[
                     {i:<Stethoscope size={18}/>,n:"Клиники",d:"Запись через мессенджеры, связка с МИС.",cs:"ИИ-агент обрабатывает 80% записей без участия администратора"},
                     {i:<GraduationCap size={18}/>,n:"Онлайн-школы",cs:"Автоответы на вопросы → оплата через Kaspi → рассылка расписания",d:"Конверсия из заявки в оплату — автоматически."},
                     {i:<UtensilsCrossed size={18}/>,n:"Рестораны",d:"Заказы из всех каналов в одном окне.",cs:"Telegram, WhatsApp, Instagram → единая очередь → кухня"},
                     {i:<Home size={18}/>,n:"Недвижимость",d:"Лиды → CRM автоматически, без ручного ввода.",cs:"Квалификация бюджета и района — до разговора с менеджером"},
                     {i:<ShoppingBag size={18}/>,n:"E-commerce",d:"ИИ 24/7, ссылки Kaspi Pay в один клик.",cs:"Автоматическая обработка «есть ли в наличии?» и «какой размер?»"},
                     {i:<Wrench size={18}/>,n:"Сервис",d:"Единая история клиента для всей команды.",cs:"Повторный клиент → агент знает историю → быстрее закрытие"}
-                ].map((x,i)=><R key={i} d={i*.05}><div className="glass" style={{border:"1px solid rgba(255,255,255,.06)",borderRadius:14,padding:"24px 22px",display:"flex",flexDirection:"column",gap:10,transition:"border-color .35s,transform .35s"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.12)";e.currentTarget.style.transform="translateY(-2px)"}} onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(255,255,255,.06)";e.currentTarget.style.transform="none"}}><div style={{display:"flex",gap:12,alignItems:"center"}}><div style={{width:36,height:36,borderRadius:9,background:"rgba(255,255,255,.04)",border:"1px solid rgba(255,255,255,.06)",display:"flex",alignItems:"center",justifyContent:"center",color:T.gr,flexShrink:0}}>{x.i}</div><div><h4 style={{fontSize:"1.1rem",fontWeight:700}}>{x.n}</h4><p style={{fontSize:".82rem",color:T.gr,lineHeight:1.5}}>{x.d}</p></div></div><div style={{padding:"10px 12px",background:"rgba(139,92,246,.03)",borderRadius:8,border:"1px solid rgba(139,92,246,.06)",fontSize:".8rem",color:"rgba(255,255,255,.55)",lineHeight:1.5,fontStyle:"italic"}}><Zap size={10} color={T.ac} style={{display:"inline",verticalAlign:"middle",marginRight:5}}/>{x.cs}</div></div></R>)}</div>
+                ].map((x,i)=><R key={i} d={i*.05}><div className="glass" style={{border:"1px solid var(--bd)",borderRadius:14,padding:"24px 22px",display:"flex",flexDirection:"column",gap:10,transition:"border-color .35s,transform .35s"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="var(--surf-hover)";e.currentTarget.style.transform="translateY(-2px)"}} onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--bd)";e.currentTarget.style.transform="none"}}><div style={{display:"flex",gap:12,alignItems:"center"}}><div style={{width:36,height:36,borderRadius:9,background:"var(--card-bg)",border:"1px solid var(--bd)",display:"flex",alignItems:"center",justifyContent:"center",color:T.gr,flexShrink:0}}>{x.i}</div><div><h4 style={{fontSize:"1.1rem",fontWeight:700}}>{x.n}</h4><p style={{fontSize:".82rem",color:T.gr,lineHeight:1.5}}>{x.d}</p></div></div><div style={{padding:"10px 12px",background:"rgba(139,92,246,.03)",borderRadius:8,border:"1px solid rgba(139,92,246,.06)",fontSize:".8rem",color:"var(--text-sub)",lineHeight:1.5,fontStyle:"italic"}}><Zap size={10} color={T.ac} style={{display:"inline",verticalAlign:"middle",marginRight:5}}/>{x.cs}</div></div></R>)}</div>
 
                     {/* AI Agent screenshot */}
                     <R d={.15} s={{marginTop:48}}><div style={{textAlign:"center",marginBottom:12}}><span style={{fontFamily:MONO,fontSize:".6rem",color:T.gr2,letterSpacing:2,textTransform:"uppercase"}}>ИИ-агент в действии</span></div>
@@ -1012,19 +1118,19 @@ export default function App(){
                 </div></section>
 
                 {/* ═══════════ VARIANTS ═══════════ */}
-                <section style={{paddingTop:96,paddingBottom:72,borderTop:"1px solid "+T.bd}}><div className="w"><R><Tag>Внедрение</Tag><h2 style={{fontSize:"clamp(1.8rem,3.5vw,2.8rem)",fontWeight:800,letterSpacing:-.5,marginBottom:40}}>2 формата — <span style={{color:T.gr}}>запуск от 3 дней</span></h2></R>
+                <section style={{paddingTop:96,paddingBottom:72,borderTop:"1px solid var(--section-bd)"}}><div className="w"><R><Tag>Внедрение</Tag><h2 style={{fontSize:"clamp(1.8rem,3.5vw,2.8rem)",fontWeight:800,letterSpacing:-.5,marginBottom:40}}>2 формата — <span style={{color:T.gr}}>запуск от 3 дней</span></h2></R>
                     <div className="g2">
-                        <R><Card s={{height:"100%"}}><div style={{fontFamily:MONO,fontSize:".6rem",color:T.gr2,letterSpacing:2,textTransform:"uppercase",marginBottom:12}}>Вариант A · от 3 дней</div><h3 style={{fontSize:"1.26rem",fontWeight:700,marginBottom:8}}>Интеграция в ваш контур</h3><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.7,marginBottom:14}}>Подключаем коммуникации и ИИ к вашей существующей ИС.</p>{["Данные в вашей инфраструктуре","Подключение к существующей ИС","Коммуникации + ИИ"].map(it=><div key={it} style={{display:"flex",alignItems:"center",gap:8,fontSize:".9rem",color:"rgba(255,255,255,0.7)",padding:"4px 0"}}><Check size={12} color={T.ac}/>{it}</div>)}</Card></R>
-                        <R d={.08}><Card glow s={{height:"100%",position:"relative"}}><div style={{position:"absolute",top:12,right:12,fontFamily:MONO,fontSize:".53rem",fontWeight:600,background:T.ac,color:"#000000B3",padding:"2px 8px",borderRadius:5}}>РЕКОМЕНДУЕМ</div><div style={{fontFamily:MONO,fontSize:".6rem",color:T.ac,letterSpacing:2,textTransform:"uppercase",marginBottom:12}}>Вариант B · 2–4 недели</div><h3 style={{fontSize:"1.26rem",fontWeight:700,marginBottom:8}}>Полное развёртывание</h3><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.7,marginBottom:14}}>Разворачиваем One Link как единое ядро под ключ.</p>{["Инфраструктура с нуля","CRM + все каналы нативно","ИИ + Guardrails + Техподдержка 24/7"].map(it=><div key={it} style={{display:"flex",alignItems:"center",gap:8,fontSize:".9rem",color:"rgba(255,255,255,0.7)",padding:"4px 0"}}><Check size={12} color={T.ac}/>{it}</div>)}</Card></R>
+                        <R><Card s={{height:"100%"}}><div style={{fontFamily:MONO,fontSize:".6rem",color:T.gr2,letterSpacing:2,textTransform:"uppercase",marginBottom:12}}>Вариант A · от 3 дней</div><h3 style={{fontSize:"1.26rem",fontWeight:700,marginBottom:8}}>Интеграция в ваш контур</h3><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.7,marginBottom:14}}>Подключаем коммуникации и ИИ к вашей существующей ИС.</p>{["Данные в вашей инфраструктуре","Подключение к существующей ИС","Коммуникации + ИИ"].map(it=><div key={it} style={{display:"flex",alignItems:"center",gap:8,fontSize:".9rem",color:"var(--text-sub)",padding:"4px 0"}}><Check size={12} color={T.ac}/>{it}</div>)}</Card></R>
+                        <R d={.08}><Card glow s={{height:"100%",position:"relative"}}><div style={{position:"absolute",top:12,right:12,fontFamily:MONO,fontSize:".53rem",fontWeight:600,background:T.ac,color:"#fff",padding:"2px 8px",borderRadius:5}}>РЕКОМЕНДУЕМ</div><div style={{fontFamily:MONO,fontSize:".6rem",color:T.ac,letterSpacing:2,textTransform:"uppercase",marginBottom:12}}>Вариант B · 2–4 недели</div><h3 style={{fontSize:"1.26rem",fontWeight:700,marginBottom:8}}>Полное развёртывание</h3><p style={{fontSize:".94rem",color:T.gr,lineHeight:1.7,marginBottom:14}}>Разворачиваем One Link как единое ядро под ключ.</p>{["Инфраструктура с нуля","CRM + все каналы нативно","ИИ + Guardrails + Техподдержка 24/7"].map(it=><div key={it} style={{display:"flex",alignItems:"center",gap:8,fontSize:".9rem",color:"var(--text-sub)",padding:"4px 0"}}><Check size={12} color={T.ac}/>{it}</div>)}</Card></R>
                     </div>
                 </div></section>
 
                 {/* ═══════════ HOW IT WORKS ═══════════ */}
-                <section style={{paddingTop:96,paddingBottom:96,borderTop:"1px solid "+T.bd}}><div className="w">
+                <section style={{paddingTop:96,paddingBottom:96,borderTop:"1px solid var(--section-bd)"}}><div className="w">
                     <R><Tag>Как это работает</Tag><h2 style={{fontSize:"clamp(1.8rem,3.5vw,2.8rem)",fontWeight:800,letterSpacing:-.5,marginBottom:48}}>От хаоса к системе <span style={{color:T.gr}}>за 3 шага</span></h2></R>
 
                     {/* Desktop SVG Timeline */}
-                    <R d={.1}><div className="timeline-svg" style={{position:"relative",margin:"0 auto 56px",borderRadius:18,border:"1px solid rgba(255,255,255,.06)",background:"rgba(255,255,255,.015)",overflow:"hidden",padding:"48px 0 40px",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)"}}>
+                    <R d={.1}><div className="timeline-svg" style={{position:"relative",margin:"0 auto 56px",borderRadius:18,border:"1px solid var(--bd)",background:"var(--surf)",overflow:"hidden",padding:"48px 0 40px",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)"}}>
                         <svg viewBox="0 0 1000 260" style={{width:"100%",height:"auto",display:"block"}} fill="none">
                             <defs>
                                 <linearGradient id="timeline" x1="0" y1="0" x2="1" y2="0">
@@ -1033,24 +1139,24 @@ export default function App(){
                                     <stop offset="100%" stopColor="#22c55e" stopOpacity=".5"/>
                                 </linearGradient>
                             </defs>
-                            <line x1="170" y1="90" x2="830" y2="90" stroke="rgba(255,255,255,.04)" strokeWidth="2"/>
+                            <line x1="170" y1="90" x2="830" y2="90" stroke="var(--beam-line)" strokeWidth="2"/>
                             <line x1="170" y1="90" x2="830" y2="90" stroke="url(#timeline)" strokeWidth="2" strokeDasharray="8 6" opacity=".6"/>
 
-                            <circle cx="170" cy="90" r="46" fill="#0e0e18" stroke="#8b5cf6" strokeWidth="1.2"/>
+                            <circle cx="170" cy="90" r="46" fill="var(--bg2)" stroke="#8b5cf6" strokeWidth="1.2"/>
                             <circle cx="164" cy="84" r="12" stroke="#8b5cf6" strokeWidth="2" fill="none"/>
                             <line x1="173" y1="93" x2="181" y2="101" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round"/>
                             <text x="170" y="164" textAnchor="middle" fill="#f4f4f8" fontSize="15" fontFamily="Plus Jakarta Sans" fontWeight="700">Разбор</text>
                             <text x="170" y="186" textAnchor="middle" fill="#9898ab" fontSize="11" fontFamily="JetBrains Mono">Анализ каналов</text>
                             <text x="170" y="206" textAnchor="middle" fill="#6b6b80" fontSize="10" fontFamily="JetBrains Mono">30 мин · бесплатно</text>
 
-                            <circle cx="500" cy="90" r="46" fill="#0e0e18" stroke="#a78bfa" strokeWidth="1.2"/>
+                            <circle cx="500" cy="90" r="46" fill="var(--bg2)" stroke="#a78bfa" strokeWidth="1.2"/>
                             <circle cx="500" cy="90" r="7" stroke="#a78bfa" strokeWidth="2" fill="none"/>
                             <circle cx="500" cy="90" r="15" stroke="#a78bfa" strokeWidth="2" fill="none" strokeDasharray="5 5.5" strokeLinecap="round"/>
                             <text x="500" y="164" textAnchor="middle" fill="#f4f4f8" fontSize="15" fontFamily="Plus Jakarta Sans" fontWeight="700">Настройка</text>
                             <text x="500" y="186" textAnchor="middle" fill="#9898ab" fontSize="11" fontFamily="JetBrains Mono">Каналы + CRM + ИИ</text>
                             <text x="500" y="206" textAnchor="middle" fill="#6b6b80" fontSize="10" fontFamily="JetBrains Mono">от 3 дней</text>
 
-                            <circle cx="830" cy="90" r="46" fill="#0e0e18" stroke="#22c55e" strokeWidth="1.2"/>
+                            <circle cx="830" cy="90" r="46" fill="var(--bg2)" stroke="#22c55e" strokeWidth="1.2"/>
                             <polygon points="833,74 825,92 832,92 827,106 837,88 830,88" stroke="#22c55e" strokeWidth="1.6" fill="#22c55e" fillOpacity=".12" strokeLinejoin="round" strokeLinecap="round"/>
                             <text x="830" y="164" textAnchor="middle" fill="#f4f4f8" fontSize="15" fontFamily="Plus Jakarta Sans" fontWeight="700">Запуск</text>
                             <text x="830" y="186" textAnchor="middle" fill="#9898ab" fontSize="11" fontFamily="JetBrains Mono">Обучаем команду</text>
@@ -1100,7 +1206,7 @@ export default function App(){
                     </Card></R>
 
                     {/* Vision strip */}
-                    <R d={.15} s={{marginTop:32}}><div className="glass vision-strip" style={{padding:"28px 32px",borderRadius:16,border:"1px solid rgba(255,255,255,.06)",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:20}}>
+                    <R d={.15} s={{marginTop:32}}><div className="glass vision-strip" style={{padding:"28px 32px",borderRadius:16,border:"1px solid var(--bd)",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:20}}>
                         <div style={{flex:1,minWidth:260}}>
                             <div style={{fontFamily:MONO,fontSize:".58rem",color:T.ac,letterSpacing:2,textTransform:"uppercase",marginBottom:6}}>Куда мы идём · Agent as a Service</div>
                             <h3 style={{fontSize:"1.2rem",fontWeight:700,marginBottom:4}}>Не помощник. Полноценный агент.</h3>
@@ -1108,7 +1214,7 @@ export default function App(){
                         </div>
                         <div className="vision-nums" style={{display:"flex",gap:24,alignItems:"center",flexWrap:"wrap"}}>
                             <div style={{textAlign:"center"}}>
-                                <div style={{fontFamily:MONO,fontSize:"1.6rem",fontWeight:800,color:"rgba(255,255,255,.15)"}}>50–80%</div>
+                                <div style={{fontFamily:MONO,fontSize:"1.6rem",fontWeight:800,color:"var(--bd)"}}>50–80%</div>
                                 <div style={{fontSize:".68rem",color:T.gr2}}>сейчас · рынок</div>
                             </div>
                             <div style={{fontSize:"1.2rem",color:T.gr2}}>→</div>
@@ -1121,7 +1227,7 @@ export default function App(){
                 </div></section>
 
                 {/* ═══════════ PRICING ═══════════ */}
-                <section id="pricing" style={{paddingTop:96,paddingBottom:96,borderTop:"1px solid "+T.bd}}><div className="w"><R><div style={{textAlign:"center",marginBottom:16}}><h2 style={{fontSize:"clamp(1.8rem,3.5vw,2.9rem)",fontWeight:800,letterSpacing:-.4}}>Запуск системы за 3 дня</h2><p style={{color:T.gr,fontSize:"1.01rem",marginTop:10}}>Прозрачные цены. Расчёт после анализа каналов и объёмов.</p></div></R>
+                <section id="pricing" style={{paddingTop:96,paddingBottom:96,borderTop:"1px solid var(--section-bd)"}}><div className="w"><R><div style={{textAlign:"center",marginBottom:16}}><h2 style={{fontSize:"clamp(1.8rem,3.5vw,2.9rem)",fontWeight:800,letterSpacing:-.4}}>Запуск системы за 3 дня</h2><p style={{color:T.gr,fontSize:"1.01rem",marginTop:10}}>Прозрачные цены. Расчёт после анализа каналов и объёмов.</p></div></R>
 
                     {/* Price anchor */}
                     <R d={.05}><div style={{textAlign:"center",marginBottom:40}}><div className="price-anchor-inner" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"10px 20px",borderRadius:10,border:"1px solid rgba(239,68,68,.15)",background:"rgba(239,68,68,.04)"}}>
@@ -1133,11 +1239,11 @@ export default function App(){
                         {n:"Старт",p:"от 150 000 ₸",per:"/мес",sub:"Малый бизнес · до 500 обращений",pop:false,items:["2 канала (WA + TG)","Встроенная CRM","ИИ-автоответчик","До 3 операторов","Базовая аналитика"],btn:"Начать использование"},
                         {n:"Бизнес",p:"от 350 000 ₸",per:"/мес",sub:"Клиники, школы, рестораны",pop:true,items:["Все каналы + телефония","CRM + расширенная аналитика","ИИ-агент + Guardrails","До 10 операторов","Кастомизация под процессы"],btn:"Запросить демо"},
                         {n:"Энтерпрайз",p:"от 800 000 ₸",per:"/мес",sub:"Свой контур · без ограничений",pop:false,items:["Ваш сервер или наш","Безлимит операторов и каналов","Agent as a Service","SLA + выделенный менеджер","Интеграция с вашей ИС"],btn:"Получить демо"}
-                    ].map((x,i)=><R key={i} d={i*.08}><div className="glass" style={{background:x.pop?"rgba(139,92,246,.03)":"rgba(255,255,255,.02)",border:"1px solid "+(x.pop?"rgba(139,92,246,.15)":"rgba(255,255,255,.06)"),borderRadius:18,padding:"36px 28px",display:"flex",flexDirection:"column",height:"100%",position:"relative",transition:"transform .35s,box-shadow .35s",overflow:"hidden",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)"}} onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=x.pop?"0 8px 40px rgba(139,92,246,.08)":"0 8px 40px rgba(0,0,0,.25)"}} onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="none"}}>{x.pop&&<><div style={{position:"absolute",top:-1,left:"12%",right:"12%",height:1,background:"linear-gradient(90deg,transparent,#8b5cf633,transparent)"}}/><div style={{position:"absolute",top:12,right:12,fontFamily:MONO,fontSize:".53rem",fontWeight:600,background:T.ac,color:"#36454F",padding:"2px 8px",borderRadius:5}}>ЛУЧШИЙ ВЫБОР</div></>}<div style={{fontFamily:MONO,fontSize:".6rem",color:T.gr2,letterSpacing:1.5,textTransform:"uppercase",marginBottom:8}}>{x.n}</div><div style={{fontSize:"clamp(1.3rem,2.5vw,1.7rem)",fontWeight:800,letterSpacing:-.5,marginBottom:2}}>{x.p} <span style={{fontSize:".78rem",fontWeight:400,color:T.gr}}>{x.per}</span></div><div style={{fontSize:".78rem",color:T.gr2,marginBottom:20}}>{x.sub}</div><ul style={{listStyle:"none",flex:1,marginBottom:20}}>{x.items.map(it=><li key={it} style={{display:"flex",alignItems:"center",gap:7,fontSize:".9rem",color:"rgba(255,255,255,.7)",padding:"5px 0"}}><Check size={12} color={T.ac} style={{flexShrink:0}}/>{it}</li>)}</ul><a href="#cta" style={{display:"block",textAlign:"center",padding:12,borderRadius:9,fontSize:".92rem",fontWeight:600,background:x.pop?T.wt:"rgba(255,255,255,.04)",color:x.pop?T.bg:T.wt,border:x.pop?"none":"1px solid rgba(255,255,255,.08)",transition:"opacity .2s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".85"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>{x.btn}</a></div></R>)}</div>
+                    ].map((x,i)=><R key={i} d={i*.08}><div className="glass" style={{background:x.pop?"var(--pricing-pop-bg)":"var(--card-bg)",border:"1px solid "+(x.pop?"rgba(139,92,246,.15)":"rgba(255,255,255,.06)"),borderRadius:18,padding:"36px 28px",display:"flex",flexDirection:"column",height:"100%",position:"relative",transition:"transform .35s,box-shadow .35s",overflow:"hidden",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)"}} onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=x.pop?"0 8px 40px rgba(139,92,246,.08)":"0 8px 40px rgba(0,0,0,.25)"}} onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="none"}}>{x.pop&&<><div style={{position:"absolute",top:-1,left:"12%",right:"12%",height:1,background:"linear-gradient(90deg,transparent,#8b5cf633,transparent)"}}/><div style={{position:"absolute",top:12,right:12,fontFamily:MONO,fontSize:".53rem",fontWeight:600,background:T.ac,color:"#36454F",padding:"2px 8px",borderRadius:5}}>ЛУЧШИЙ ВЫБОР</div></>}<div style={{fontFamily:MONO,fontSize:".6rem",color:T.gr2,letterSpacing:1.5,textTransform:"uppercase",marginBottom:8}}>{x.n}</div><div style={{fontSize:"clamp(1.3rem,2.5vw,1.7rem)",fontWeight:800,letterSpacing:-.5,marginBottom:2}}>{x.p} <span style={{fontSize:".78rem",fontWeight:400,color:T.gr}}>{x.per}</span></div><div style={{fontSize:".78rem",color:T.gr2,marginBottom:20}}>{x.sub}</div><ul style={{listStyle:"none",flex:1,marginBottom:20}}>{x.items.map(it=><li key={it} style={{display:"flex",alignItems:"center",gap:7,fontSize:".9rem",color:"var(--text-sub)",padding:"5px 0"}}><Check size={12} color={T.ac} style={{flexShrink:0}}/>{it}</li>)}</ul><a href="#cta" style={{display:"block",textAlign:"center",padding:12,borderRadius:9,fontSize:".92rem",fontWeight:600,background:x.pop?T.wt:"rgba(255,255,255,.04)",color:x.pop?T.bg:T.wt,border:x.pop?"none":"1px solid rgba(255,255,255,.08)",transition:"opacity .2s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".85"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>{x.btn}</a></div></R>)}</div>
                 </div></section>
 
                 {/* ═══════════ FAQ ═══════════ */}
-                <section id="faq" style={{paddingTop:96,paddingBottom:96,borderTop:"1px solid "+T.bd}}><div className="w" style={{maxWidth:700}}>
+                <section id="faq" style={{paddingTop:96,paddingBottom:96,borderTop:"1px solid var(--section-bd)"}}><div className="w" style={{maxWidth:700}}>
                     <R><h2 style={{textAlign:"center",fontSize:"clamp(1.8rem,3.5vw,2.6rem)",fontWeight:800,letterSpacing:-.4,marginBottom:36}}>Частые вопросы</h2></R>
                     <Faq q="Чем отличается от AmoCRM + Wazzup + ChatGPT?" a="Это 5 систем с 5 точками отказа. One Link — единый контур: CRM, каналы и ИИ нативно на одном сервере."/>
                     <Faq q="ИИ-агент будет выдумывать?" a="Нет. Guardrails: три фильтра, строго по базе знаний. Сложный вопрос → эскалация на менеджера."/>
@@ -1147,18 +1253,18 @@ export default function App(){
                 </div></section>
 
                 {/* ═══════════ CTA ═══════════ */}
-                <section id="cta" style={{paddingTop:116,paddingBottom:100,borderTop:"1px solid "+T.bd,textAlign:"center",boxShadow:"0 40px 80px rgba(0,0,0,.8)",position:"relative",zIndex:2}}><div className="w"><R>
+                <section id="cta" style={{paddingTop:116,paddingBottom:100,borderTop:"1px solid var(--section-bd)",textAlign:"center",boxShadow:"var(--cta-shadow)",position:"relative",zIndex:2}}><div className="w"><R>
                     <Tag>Следующий шаг</Tag>
                     <h2 style={{fontSize:"clamp(1.8rem,4.5vw,3.2rem)",fontWeight:800,letterSpacing:-.8,marginBottom:12}}>Запросите демо<br/>за 30 секунд</h2>
                     <p style={{color:T.gr,fontSize:"1.03rem",maxWidth:440,margin:"0 auto 36px",lineHeight:1.75}}>Оставьте номер — покажем платформу и разберём ваш кейс.</p>
 
                     <div style={{maxWidth:420,margin:"0 auto 32px",display:"flex",flexDirection:"column",gap:10}}>
                         <div className="cta-inputs" style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-                            <input type="text" placeholder="Имя" aria-label="Ваше имя" style={{flex:1,minWidth:120,background:"rgba(255,255,255,.04)",border:"1px solid rgba(255,255,255,.08)",borderRadius:10,padding:"13px 16px",fontSize:".92rem",color:T.wt,outline:"none",fontFamily:FONT,backdropFilter:"blur(12px)",WebkitBackdropFilter:"blur(12px)",transition:"border-color .2s"}} onFocus={e=>e.target.style.borderColor="rgba(139,92,246,.3)"} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,.08)"}/>
-                            <input type="tel" placeholder="+7 ___ ___ __ __" aria-label="Ваш телефон" style={{flex:1,minWidth:160,background:"rgba(255,255,255,.04)",border:"1px solid rgba(255,255,255,.08)",borderRadius:10,padding:"13px 16px",fontSize:".92rem",color:T.wt,outline:"none",fontFamily:FONT,backdropFilter:"blur(12px)",WebkitBackdropFilter:"blur(12px)",transition:"border-color .2s"}} onFocus={e=>e.target.style.borderColor="rgba(139,92,246,.3)"} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,.08)"}/>
+                            <input type="text" placeholder="Имя" aria-label="Ваше имя" style={{flex:1,minWidth:120,background:"var(--card-bg)",border:"1px solid var(--bd)",borderRadius:10,padding:"13px 16px",fontSize:".92rem",color:T.wt,outline:"none",fontFamily:FONT,backdropFilter:"blur(12px)",WebkitBackdropFilter:"blur(12px)",transition:"border-color .2s"}} onFocus={e=>e.target.style.borderColor="var(--input-focus)"} onBlur={e=>e.target.style.borderColor="var(--input-bd)"}/>
+                            <input type="tel" placeholder="+7 ___ ___ __ __" aria-label="Ваш телефон" style={{flex:1,minWidth:160,background:"var(--card-bg)",border:"1px solid var(--bd)",borderRadius:10,padding:"13px 16px",fontSize:".92rem",color:T.wt,outline:"none",fontFamily:FONT,backdropFilter:"blur(12px)",WebkitBackdropFilter:"blur(12px)",transition:"border-color .2s"}} onFocus={e=>e.target.style.borderColor="var(--input-focus)"} onBlur={e=>e.target.style.borderColor="var(--input-bd)"}/>
                         </div>
                         <button style={{background:T.wt,color:T.bg,padding:"14px 30px",borderRadius:10,fontWeight:600,fontSize:"1rem",border:"none",cursor:"pointer",position:"relative",overflow:"hidden",fontFamily:FONT,transition:"opacity .2s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".88"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
-                            <span style={{position:"absolute",inset:0,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent)",transform:"translateX(-100%)",animation:"shimmerSlide 3s 1s infinite"}}/>
+                            <span style={{position:"absolute",inset:0,background:"linear-gradient(90deg,transparent,var(--shimmer),transparent)",transform:"translateX(-100%)",animation:"shimmerSlide 3s 1s infinite"}}/>
                             <span style={{position:"relative",display:"flex",alignItems:"center",justifyContent:"center",gap:7}}><Sparkles size={15}/>Получить демо</span>
                         </button>
                     </div>
@@ -1171,8 +1277,8 @@ export default function App(){
 
                     <div className="cta-btns" style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap",marginBottom:18}}>
                         <a href="https://wa.me/77056162603" target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:7,background:"#25D366",color:"#fff",padding:"12px 24px",borderRadius:8,fontWeight:600,fontSize:".92rem"}}><MessageCircle size={14}/>WhatsApp</a>
-                        <a href="https://t.me/khamzauly" target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"12px 24px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:".92rem",background:"rgba(255,255,255,.015)"}}><Send size={14}/>Telegram</a>
-                        <a href="mailto:info@one-link.kz" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"12px 24px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:".92rem",background:"rgba(255,255,255,.015)"}}><Mail size={14}/>Email</a>
+                        <a href="https://t.me/khamzauly" target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"12px 24px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:".92rem",background:"var(--surf)"}}><Send size={14}/>Telegram</a>
+                        <a href="mailto:info@one-link.kz" style={{display:"inline-flex",alignItems:"center",gap:7,padding:"12px 24px",borderRadius:8,border:"1px solid "+T.bd,color:T.wt,fontWeight:500,fontSize:".92rem",background:"var(--surf)"}}><Mail size={14}/>Email</a>
                     </div>
 
                     <p style={{fontFamily:MONO,fontSize:".58rem",color:T.gr2,marginTop:14,letterSpacing:1}}>БЕСПЛАТНО · БЕЗ ОБЯЗАТЕЛЬСТВ · ДЕМО ЗА 15 МИНУТ</p>
