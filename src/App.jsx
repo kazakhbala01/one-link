@@ -91,7 +91,7 @@ const CSS = `
   --sec-glow: radial-gradient(ellipse at 50% 0%, rgba(139,92,246,.04), transparent 70%);
 
   /* Chatwoot mockup */
-  --cw-sidebar: #1b1340;
+  --cw-sidebar: #0e0e1a;
   --cw-sidebar-icon: rgba(255,255,255,.45);
   --cw-sidebar-active: rgba(255,255,255,.9);
   --cw-sidebar-hover: rgba(255,255,255,.08);
@@ -282,6 +282,16 @@ a { color: inherit; text-decoration: none; }
 .mod-toggle .dot {
   width: 16px; height: 16px; border-radius: 50%;
   background: #fff; position: absolute; top: 2px; transition: left .3s;
+}
+
+/* ─── Subtle Site Background ─── */
+#content-body::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--bd) 1px, transparent 0);
+  background-size: 28px 28px;
+  opacity: .5;
 }
 
 /* ─── Bento Grid ─── */
@@ -1656,22 +1666,28 @@ function RevealFooter({ scrollY, innerRef }) {
                     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 32px" }}>
                         <div style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent)" }} />
                     </div>
-                    <div className="footer-links" style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 32px", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 32 }}>
-                        {[
-                            { h: "Платформа", l: ["Каналы", "CRM", "AI-агент", "Календарь", "Аналитика"] },
-                            { h: "Решения", l: ["Клиники", "Салоны", "Недвижимость", "Образование", "E-commerce"] },
-                            { h: "Компания", l: ["Veritas Consult", "Цены", "FAQ", "Контакты"] },
-                            { h: "Правовая", l: ["Конфиденциальность", "Условия"] },
-                        ].map((col) => (
-                            <div key={col.h}>
-                                <div style={{ fontFamily: MONO, fontSize: ".6rem", color: "var(--foot-text2)", letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 14, fontWeight: 600 }}>{col.h}</div>
-                                {col.l.map((t) => (
-                                    <div key={t} className="foot-link" style={{ fontSize: ".85rem", color: "var(--foot-text)", marginBottom: 9, cursor: "default" }}>
-                                        {t}
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
+                    <div className="footer-links" style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 32px", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 32 }}>
+                        <div>
+                            <div style={{ fontFamily: MONO, fontSize: ".6rem", color: "var(--foot-text2)", letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 14, fontWeight: 600 }}>Платформа</div>
+                            {[
+                                { t: "Возможности", h: "#features" },
+                                { t: "Цены", h: "#pricing" },
+                                { t: "FAQ", h: "#faq" },
+                            ].map((item) => (
+                                <a key={item.t} href={item.h} className="foot-link" style={{ display: "block", fontSize: ".85rem", color: "var(--foot-text)", marginBottom: 9, cursor: "pointer", textDecoration: "none" }}>{item.t}</a>
+                            ))}
+                        </div>
+                        <div>
+                            <div style={{ fontFamily: MONO, fontSize: ".6rem", color: "var(--foot-text2)", letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 14, fontWeight: 600 }}>Контакты</div>
+                            <a href="https://wa.me/77056162603" target="_blank" rel="noreferrer" className="foot-link" style={{ display: "block", fontSize: ".85rem", color: "var(--foot-text)", marginBottom: 9, textDecoration: "none" }}>WhatsApp</a>
+                            <a href="https://t.me/khamzauly" target="_blank" rel="noreferrer" className="foot-link" style={{ display: "block", fontSize: ".85rem", color: "var(--foot-text)", marginBottom: 9, textDecoration: "none" }}>Telegram</a>
+                            <a href="mailto:info@one-link.kz" className="foot-link" style={{ display: "block", fontSize: ".85rem", color: "var(--foot-text)", marginBottom: 9, textDecoration: "none" }}>info@one-link.kz</a>
+                        </div>
+                        <div>
+                            <div style={{ fontFamily: MONO, fontSize: ".6rem", color: "var(--foot-text2)", letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 14, fontWeight: 600 }}>Правовая</div>
+                            <a href="https://vconsult.kz/one-link/privacy" target="_blank" rel="noreferrer" className="foot-link" style={{ display: "block", fontSize: ".85rem", color: "var(--foot-text)", marginBottom: 9, textDecoration: "none" }}>Конфиденциальность</a>
+                            <a href="https://vconsult.kz/one-link/terms" target="_blank" rel="noreferrer" className="foot-link" style={{ display: "block", fontSize: ".85rem", color: "var(--foot-text)", marginBottom: 9, textDecoration: "none" }}>Условия использования</a>
+                        </div>
                     </div>
                 </div>
 
