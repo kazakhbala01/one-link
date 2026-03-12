@@ -284,6 +284,18 @@ a { color: inherit; text-decoration: none; }
   background: #fff; position: absolute; top: 2px; transition: left .3s;
 }
 
+/* ─── Bento Grid ─── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+.bento > * { min-width: 0; }
+@media (max-width: 900px) {
+  .bento { grid-template-columns: 1fr; }
+  .bento > * { grid-column: 1 / -1 !important; grid-row: auto !important; }
+}
+
 /* ─── Performance ─── */
 section { contain: layout style; }
 .will-tf { will-change: transform; }
@@ -336,6 +348,7 @@ section { contain: layout style; }
 /* ─── Responsive ─── */
 @media (max-width: 900px) {
   .g2, .g3 { grid-template-columns: 1fr; }
+  .step-connector { display: none !important; }
   .cw-sidebar { display: none !important; }
   .cw-convlist { display: none !important; }
   .nav-r { display: none !important; }
@@ -1997,8 +2010,9 @@ export default function App() {
                     </section>
 
 
+
                     {/* ════════════════════════════════════
-             SECTION: ОДИН ПРОДУКТ (bento cards)
+             SECTION: ПЛАТФОРМА (merged)
              ════════════════════════════════════ */}
                     <section id="features" style={{ paddingTop: 40, paddingBottom: 72 }}>
                         <div className="w">
@@ -2014,25 +2028,12 @@ export default function App() {
                                 </h2>
                             </Reveal>
 
-                            <div className="g2" style={{ marginTop: 0, gap: 14 }}>
 
-                                {/* ── Каналы ── */}
-                                <Reveal delay={.08}>
-                                    <Card style={{ height: "100%" }}>
-                                        <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: 14 }}>Все каналы. Одно окно.</h3>
-                                        {["WhatsApp + Telegram + Instagram", "TikTok + Facebook + Email", "Все сообщения в одном inbox"].map((t, i) => (
-                                            <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: ".85rem", color: T.gr, padding: "3px 0" }}>
-                                                <Check size={13} color={T.green} style={{ flexShrink: 0 }} />{t}
-                                            </div>
-                                        ))}
-                                        <div style={{ marginTop: 20 }}>
-                                            <InboxMini />
-                                        </div>
-                                    </Card>
-                                </Reveal>
+                            {/* ─── Creative Bento Grid ─── */}
+                            <div className="bento">
 
-                                {/* ── AI-агент ── */}
-                                <Reveal delay={.12}>
+                                {/* AI Agent — wide left (7 cols) */}
+                                <Reveal delay={.08} style={{ gridColumn: "1 / 8" }}>
                                     <Card glow style={{ height: "100%" }}>
                                         <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: 14 }}>AI-агент. Работает 24/7.</h3>
                                         {["Записывает клиентов на приём", "Создаёт сделки в CRM", "Квалифицирует заявки", "Отправляет Kaspi-ссылку"].map((t, i) => (
@@ -2040,32 +2041,12 @@ export default function App() {
                                                 <Check size={13} color={T.ac} style={{ flexShrink: 0 }} />{t}
                                             </div>
                                         ))}
-                                        <div style={{ marginTop: 20 }}>
-                                            <AIChatMini />
-                                        </div>
+                                        <div style={{ marginTop: 20 }}><AIChatMini /></div>
                                     </Card>
                                 </Reveal>
 
-                                {/* ── Ниши ── */}
-                                <Reveal delay={.16}>
-                                    <Card style={{ height: "100%" }}>
-                                        <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: 14 }}>Готовое решение. Под нишу.</h3>
-                                        {["Готовые AI-скрипты", "CRM-интеграции настроены", "Не нужен IT-специалист"].map((t, i) => (
-                                            <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: ".85rem", color: T.gr, padding: "3px 0" }}>
-                                                <Check size={13} color={T.green} style={{ flexShrink: 0 }} />{t}
-                                            </div>
-                                        ))}
-                                        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 20 }}>
-                                            <NicheMini icon={Stethoscope} name="Медцентры" tags="Запись, Altegio" color="#ef4444" />
-                                            <NicheMini icon={Home} name="Недвижимость" tags="MacroCRM" color="#60a5fa" />
-                                            <NicheMini icon={Scissors} name="Салоны красоты" tags="Расписание" color="#f472b6" />
-                                            <NicheMini icon={GraduationCap} name="Образование" tags="Курсы, оплата" color="#fbbf24" />
-                                        </div>
-                                    </Card>
-                                </Reveal>
-
-                                {/* ── Календарь ── */}
-                                <Reveal delay={.2}>
+                                {/* Calendar — narrow right (5 cols) */}
+                                <Reveal delay={.12} style={{ gridColumn: "8 / 13" }}>
                                     <Card style={{ height: "100%" }}>
                                         <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: 14 }}>Календарь и запись.</h3>
                                         {["AI видит свободные слоты", "Записывает автоматически", "Напоминание за час"].map((t, i) => (
@@ -2073,148 +2054,185 @@ export default function App() {
                                                 <Check size={13} color={T.green} style={{ flexShrink: 0 }} />{t}
                                             </div>
                                         ))}
-                                        <div style={{ marginTop: 20 }}>
-                                            <CalendarMini />
+                                        <div style={{ marginTop: 20 }}><CalendarMini /></div>
+                                    </Card>
+                                </Reveal>
+
+                                {/* CRM — narrow left (5 cols) */}
+                                <Reveal delay={.16} style={{ gridColumn: "1 / 6" }}>
+                                    <Card style={{ height: "100%", padding: "32px 28px 0", overflow: "hidden" }}>
+                                        <h3 style={{ fontSize: "1.1rem", fontWeight: 800, marginBottom: 6 }}>Подключите к CRM</h3>
+                                        <p style={{ fontSize: ".78rem", color: T.gr, marginBottom: 14 }}>Единая работа с клиентами</p>
+                                        <div style={{ position: "relative", height: 180, overflow: "visible", borderRadius: 16, background: "var(--bg2)", border: "1px solid var(--bd)", padding: 12 }}>
+                                            {[
+                                                { n: "amoCRM", c: "#339dc9", x: "5%", y: "8%" },
+                                                { n: "Bitrix24", c: "#2fc6f6", x: "52%", y: "0%" },
+                                                { n: "Altegio", c: "#7c3aed", x: "62%", y: "42%" },
+                                                { n: "1С", c: "#ef4444", x: "8%", y: "58%" },
+                                                { n: "Kaspi", c: "#f14635", x: "48%", y: "68%" },
+                                                { n: "MacroCRM", c: "#f59e0b", x: "74%", y: "14%" },
+                                            ].map((crm, i) => (
+                                                <div key={i} style={{ position: "absolute", left: crm.x, top: crm.y, animation: `float 4.5s ${i * .25}s ease-in-out infinite` }}>
+                                                    <div className="node-h" style={{ padding: "6px 14px", borderRadius: 8, background: crm.c + "10", border: `1.5px solid ${crm.c}25`, boxShadow: `0 4px 16px ${crm.c}10` }}>
+                                                        <span style={{ fontFamily: MONO, fontSize: ".72rem", fontWeight: 700, color: crm.c }}>{crm.n}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                            <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)" }}>
+                                                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--bg)", border: "1.5px dashed var(--bd)", display: "flex", alignItems: "center", justifyContent: "center", animation: "spin 20s linear infinite" }}>
+                                                    <div style={{ animation: "spin 20s linear infinite reverse", display: "flex" }}><Users size={16} color={T.ac} /></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style={{ padding: "6px 0 16px", textAlign: "center" }}>
+                                            <span style={{ fontSize: ".72rem", color: T.gr2 }}>Или <strong style={{ color: T.green }}>встроенная CRM</strong></span>
+                                        </div>
+                                    </Card>
+                                </Reveal>
+
+                                {/* Channels — wide right (7 cols) */}
+                                <Reveal delay={.2} style={{ gridColumn: "6 / 13" }}>
+                                    <Card style={{ height: "100%", padding: "32px 28px 0", overflow: "hidden" }}>
+                                        <h3 style={{ fontSize: "1.1rem", fontWeight: 800, marginBottom: 6 }}>Агент отвечает во всех каналах</h3>
+                                        <p style={{ fontSize: ".78rem", color: T.gr, marginBottom: 14 }}>WhatsApp, Telegram, Instagram, TikTok и на сайте</p>
+                                        <div style={{ position: "relative", height: 220, overflow: "visible", borderRadius: 16, background: "var(--bg2)", border: "1px solid var(--bd)", padding: 12 }}>
+                                            {[
+                                                { icon: <WhatsAppIcon size={38} />, c: "#25d366", x: "8%", y: "10%", s: 62 },
+                                                { icon: <TelegramIcon size={38} />, c: "#29b6f6", x: "2%", y: "50%", s: 58 },
+                                                { icon: <InstagramIcon size={38} />, c: "#e1306c", x: "18%", y: "72%", s: 60 },
+                                                { icon: <Globe size={24} color="#4a90d9" />, c: "#4a90d9", x: "72%", y: "6%", s: 50 },
+                                                { icon: <Play size={22} color="#fff" />, c: "#ffffff", x: "78%", y: "55%", s: 48 },
+                                            ].map((item, i) => (
+                                                <div key={i} style={{ position: "absolute", left: item.x, top: item.y, animation: `float 4s ${i * .3}s ease-in-out infinite` }}>
+                                                    <div className="node-h" style={{ width: item.s, height: item.s, borderRadius: 16, background: item.c + "10", border: `1.5px solid ${item.c}25`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 6px 24px ${item.c}20` }}>
+                                                        {item.icon}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                            <div style={{ position: "absolute", left: "50%", top: "48%", transform: "translate(-50%,-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 5 }}>
+                                                <div style={{ width: 64, height: 64, borderRadius: "50%", background: "linear-gradient(135deg, #8b5cf6, #6366f1)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(99,102,241,.35)" }}>
+                                                    <Bot size={28} color="#fff" />
+                                                </div>
+                                                <span style={{ fontFamily: MONO, fontSize: ".55rem", color: T.gr2 }}>AI AGENT</span>
+                                            </div>
+                                        </div>
+                                        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, padding: "8px 0 16px", justifyContent: "center" }}>
+                                            {["Мгновенно", "24/7", "Мультиканальность", "Дожим"].map((t, i) => (
+                                                <span key={i} style={{ fontFamily: MONO, fontSize: ".55rem", padding: "4px 9px", borderRadius: 100, background: "var(--surf)", border: "1px solid var(--bd)", color: T.gr2 }}>{t}</span>
+                                            ))}
+                                        </div>
+                                    </Card>
+                                </Reveal>
+
+                                {/* Niches — full width (12 cols) */}
+                                <Reveal delay={.22} style={{ gridColumn: "1 / 13" }}>
+                                    <Card style={{ padding: "28px 28px" }}>
+                                        <div style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
+                                            <div style={{ flex: 1, minWidth: 200 }}>
+                                                <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: 14 }}>Готовое решение. Под нишу.</h3>
+                                                {["Готовые AI-скрипты", "CRM настроены", "Без IT-специалиста"].map((t, i) => (
+                                                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: ".85rem", color: T.gr, padding: "3px 0" }}>
+                                                        <Check size={13} color={T.green} style={{ flexShrink: 0 }} />{t}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, flex: 2, minWidth: 300 }}>
+                                                <NicheMini icon={Stethoscope} name="Медцентры" tags="Запись, Altegio" color="#ef4444" />
+                                                <NicheMini icon={Home} name="Недвижимость" tags="MacroCRM" color="#60a5fa" />
+                                                <NicheMini icon={Scissors} name="Салоны красоты" tags="Расписание" color="#f472b6" />
+                                                <NicheMini icon={GraduationCap} name="Образование" tags="Курсы, оплата" color="#fbbf24" />
+                                            </div>
+                                        </div>
+                                    </Card>
+                                </Reveal>
+
+                                {/* Small cards: 4 + 4 + 4 cols */}
+                                <Reveal delay={.26} style={{ gridColumn: "1 / 5" }}>
+                                    <Card style={{ height: "100%" }}>
+                                        <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: 4 }}>Дожимные</h3>
+                                        <p style={{ fontSize: ".72rem", color: T.gr2, marginBottom: 10 }}>Авто-напоминания</p>
+                                        <div style={{ padding: "9px 11px", borderRadius: 10, background: "linear-gradient(135deg, rgba(139,92,246,.08), rgba(99,102,241,.04))", border: "1px solid rgba(139,92,246,.12)", fontSize: ".8rem", lineHeight: 1.5, marginBottom: 8 }}>
+                                            Напоминаю про запрос 😊
+                                        </div>
+                                        <div style={{ display: "flex", gap: 4 }}>
+                                            {["1ч", "24ч", "48ч"].map((t, i) => (
+                                                <span key={i} style={{ fontFamily: MONO, fontSize: ".55rem", padding: "2px 7px", borderRadius: 100, background: "var(--surf)", border: "1px solid var(--bd)", color: T.gr2 }}>{t}</span>
+                                            ))}
+                                        </div>
+                                    </Card>
+                                </Reveal>
+
+                                <Reveal delay={.3} style={{ gridColumn: "5 / 9" }}>
+                                    <Card style={{ height: "100%" }}>
+                                        <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: 4 }}>Голос и фото</h3>
+                                        <p style={{ fontSize: ".72rem", color: T.gr2, marginBottom: 10 }}>Понимает всё</p>
+                                        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8 }}>
+                                            <div style={{ width: 38, height: 38, borderRadius: 10, background: "linear-gradient(135deg, #818cf8, #6366f1)", display: "flex", alignItems: "center", justifyContent: "center" }}><Image size={16} color="#fff" /></div>
+                                            <div style={{ width: 38, height: 38, borderRadius: 10, background: "linear-gradient(135deg, #f472b6, #ec4899)", display: "flex", alignItems: "center", justifyContent: "center" }}><Mic size={16} color="#fff" /></div>
+                                        </div>
+                                        <div style={{ padding: "6px 9px", borderRadius: 8, background: "var(--surf)", border: "1px solid var(--bd)", display: "flex", alignItems: "center", gap: 5 }}>
+                                            <Play size={11} color={T.ac} /><WaveformMini /><span style={{ fontFamily: MONO, fontSize: ".55rem", color: T.gr2 }}>0:06</span>
+                                        </div>
+                                    </Card>
+                                </Reveal>
+
+                                <Reveal delay={.34} style={{ gridColumn: "9 / 13" }}>
+                                    <Card style={{ height: "100%" }}>
+                                        <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: 4 }}>150+ языков</h3>
+                                        <p style={{ fontSize: ".72rem", color: T.gr2, marginBottom: 10 }}>Без ограничений</p>
+                                        <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                                            {[{ l: "Русский", c: "#8b5cf6" }, { l: "Қазақша", c: "#22c55e" }, { l: "English", c: "#60a5fa" }, { l: "150+", c: T.gr2 }].map((lang, i) => (
+                                                <span key={i} style={{ padding: "5px 12px", borderRadius: 8, background: lang.c + "10", border: `1px solid ${lang.c}20`, fontSize: ".78rem", fontWeight: 700, color: lang.c }}>{lang.l}</span>
+                                            ))}
                                         </div>
                                     </Card>
                                 </Reveal>
                             </div>
 
-                            {/* ─── Beam SVG: animated integration map ─── */}
+                            {/* ─── Beam SVG ─── */}
                             <Reveal delay={.2} style={{ marginTop: 48 }}>
                                 <div style={{ textAlign: "center", marginBottom: 20 }}>
                                     <span style={{ fontFamily: MONO, fontSize: ".6rem", color: T.gr2, letterSpacing: 3, textTransform: "uppercase" }}>Единый контур</span>
                                     <h3 style={{ fontSize: "clamp(1.4rem,3vw,2rem)", fontWeight: 800, marginTop: 10, color: T.wt }}>Всё подключено. Всё работает вместе.</h3>
                                 </div>
-                                <div style={{
-                                    position: "relative",
-                                    padding: "80px 60px", overflow: "hidden",
-                                    maxWidth: 1100, margin: "0 auto",
-                                }}>
-                                    {/* Center glow */}
+                                <div style={{ position: "relative", padding: "80px 60px", overflow: "hidden", maxWidth: 1100, margin: "0 auto" }}>
                                     <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(139,92,246,.07), transparent 60%)", pointerEvents: "none" }} />
-
-                                    {/* SVG curved paths */}
                                     <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }} viewBox="0 0 1100 480" fill="none" preserveAspectRatio="xMidYMid meet">
                                         <defs>
-                                            {[
-                                                { id: "bG", c: "#25d366" }, { id: "bB", c: "#29b6f6" }, { id: "bP", c: "#e1306c" },
-                                                { id: "bV", c: "#8b5cf6" }, { id: "bS", c: "#60a5fa" }, { id: "bY", c: "#fbbf24" },
-                                            ].map((g) => (
-                                                <linearGradient key={g.id} id={g.id}>
-                                                    <stop offset="0%" stopColor={g.c + "00"} />
-                                                    <stop offset="50%" stopColor={g.c} />
-                                                    <stop offset="100%" stopColor={g.c + "00"} />
-                                                </linearGradient>
+                                            {[{ id: "bG", c: "#25d366" },{ id: "bB", c: "#29b6f6" },{ id: "bP", c: "#e1306c" },{ id: "bV", c: "#8b5cf6" },{ id: "bS", c: "#60a5fa" },{ id: "bY", c: "#fbbf24" }].map((g) => (
+                                                <linearGradient key={g.id} id={g.id}><stop offset="0%" stopColor={g.c + "00"} /><stop offset="50%" stopColor={g.c} /><stop offset="100%" stopColor={g.c + "00"} /></linearGradient>
                                             ))}
                                         </defs>
-
-                                        {/* Static gray paths */}
-                                        {[
-                                            "M160,90 C360,90 420,240 550,240",
-                                            "M160,240 C340,240 420,240 550,240",
-                                            "M160,390 C360,390 420,240 550,240",
-                                            "M550,240 C680,240 720,90 940,90",
-                                            "M550,240 C680,240 760,240 940,240",
-                                            "M550,240 C680,240 720,390 940,390",
-                                        ].map((d, i) => (
-                                            <path key={i} d={d} stroke="var(--beam-line)" strokeWidth="1.5" />
-                                        ))}
-
-                                        {/* Animated colored beams */}
-                                        {[
-                                            { d: "M160,90 C360,90 420,240 550,240", g: "url(#bG)", dur: "2.5s", begin: "0s" },
-                                            { d: "M160,240 C340,240 420,240 550,240", g: "url(#bB)", dur: "2s", begin: ".4s" },
-                                            { d: "M160,390 C360,390 420,240 550,240", g: "url(#bP)", dur: "2.8s", begin: ".8s" },
-                                            { d: "M550,240 C680,240 720,90 940,90", g: "url(#bV)", dur: "2.4s", begin: ".2s" },
-                                            { d: "M550,240 C680,240 760,240 940,240", g: "url(#bS)", dur: "2.2s", begin: ".6s" },
-                                            { d: "M550,240 C680,240 720,390 940,390", g: "url(#bY)", dur: "3s", begin: "1s" },
-                                        ].map((p, i) => (
-                                            <path key={"a" + i} d={p.d} stroke={p.g} strokeWidth="2.5" strokeDasharray="50 550" strokeLinecap="round">
-                                                <animate attributeName="stroke-dashoffset" values={i < 3 ? "600;0" : "0;-600"} dur={p.dur} repeatCount="indefinite" begin={p.begin} />
-                                            </path>
+                                        {["M160,90 C360,90 420,240 550,240","M160,240 C340,240 420,240 550,240","M160,390 C360,390 420,240 550,240","M550,240 C680,240 720,90 940,90","M550,240 C680,240 760,240 940,240","M550,240 C680,240 720,390 940,390"].map((d, i) => <path key={i} d={d} stroke="var(--beam-line)" strokeWidth="1.5" />)}
+                                        {[{ d:"M160,90 C360,90 420,240 550,240",g:"url(#bG)",dur:"2.5s",begin:"0s" },{ d:"M160,240 C340,240 420,240 550,240",g:"url(#bB)",dur:"2s",begin:".4s" },{ d:"M160,390 C360,390 420,240 550,240",g:"url(#bP)",dur:"2.8s",begin:".8s" },{ d:"M550,240 C680,240 720,90 940,90",g:"url(#bV)",dur:"2.4s",begin:".2s" },{ d:"M550,240 C680,240 760,240 940,240",g:"url(#bS)",dur:"2.2s",begin:".6s" },{ d:"M550,240 C680,240 720,390 940,390",g:"url(#bY)",dur:"3s",begin:"1s" }].map((p, i) => (
+                                            <path key={"a"+i} d={p.d} stroke={p.g} strokeWidth="2.5" strokeDasharray="50 550" strokeLinecap="round"><animate attributeName="stroke-dashoffset" values={i<3?"600;0":"0;-600"} dur={p.dur} repeatCount="indefinite" begin={p.begin} /></path>
                                         ))}
                                     </svg>
-
-                                    {/* Node layout */}
                                     <div className="beam-grid" style={{ position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24, alignItems: "center", minHeight: 440 }}>
-
-                                        {/* Left nodes */}
                                         <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center" }}>
-                                            {[
-                                                { n: "WhatsApp", icon: <WhatsAppIcon size={44} /> },
-                                                { n: "Telegram", icon: <TelegramIcon size={44} /> },
-                                                { n: "Instagram", icon: <InstagramIcon size={44} /> },
-                                            ].map((item, i) => (
+                                            {[{ n: "WhatsApp", icon: <WhatsAppIcon size={44} /> },{ n: "Telegram", icon: <TelegramIcon size={44} /> },{ n: "Instagram", icon: <InstagramIcon size={44} /> }].map((item, i) => (
                                                 <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-                                                    <div style={{
-                                                        width: 76, height: 76, borderRadius: "50%",
-                                                        background: "#fff", border: "2px solid var(--bd)",
-                                                        display: "flex", alignItems: "center", justifyContent: "center",
-                                                        boxShadow: "0 0 20px -8px rgba(0,0,0,.3)",
-                                                        transition: "transform .3s, box-shadow .3s",
-                                                        overflow: "hidden",
-                                                    }} className="node-h">
-                                                        {item.icon}
-                                                    </div>
+                                                    <div className="node-h" style={{ width: 76, height: 76, borderRadius: "50%", background: "#fff", border: "2px solid var(--bd)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 20px -8px rgba(0,0,0,.3)", overflow: "hidden" }}>{item.icon}</div>
                                                     <span style={{ fontSize: ".85rem", fontWeight: 600, color: T.gr }}>{item.n}</span>
                                                 </div>
                                             ))}
                                         </div>
-
-                                        {/* Center hub */}
                                         <div className="beam-center" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                             <div style={{ position: "relative" }}>
-                                                {/* Outer glow ring */}
-                                                <div style={{
-                                                    position: "absolute", inset: -30, borderRadius: "50%",
-                                                    background: "radial-gradient(circle, rgba(139,92,246,.14), transparent 70%)",
-                                                    pointerEvents: "none",
-                                                }} />
-                                                {/* Dashed orbit */}
-                                                <div style={{
-                                                    position: "absolute", inset: -18, borderRadius: "50%",
-                                                    border: "1px dashed rgba(139,92,246,.2)",
-                                                    animation: "spin 25s linear infinite",
-                                                }} />
-                                                {/* Core circle */}
-                                                <div style={{
-                                                    width: 130, height: 130, borderRadius: "50%",
-                                                    background: "#fff", border: "2px solid rgba(139,92,246,.25)",
-                                                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6,
-                                                    boxShadow: "0 0 50px rgba(139,92,246,.18), 0 0 100px rgba(139,92,246,.06)",
-                                                    position: "relative", zIndex: 1,
-                                                }}>
-                                                    <div style={{
-                                                        width: 48, height: 48, borderRadius: 12,
-                                                        background: "#101018", display: "flex", alignItems: "center", justifyContent: "center",
-                                                    }}>
-                                                        <span style={{ fontSize: ".7rem", fontWeight: 800, color: "#fff", letterSpacing: 1.5 }}>OL</span>
-                                                    </div>
+                                                <div style={{ position: "absolute", inset: -30, borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,.14), transparent 70%)", pointerEvents: "none" }} />
+                                                <div style={{ position: "absolute", inset: -18, borderRadius: "50%", border: "1px dashed rgba(139,92,246,.2)", animation: "spin 25s linear infinite" }} />
+                                                <div style={{ width: 130, height: 130, borderRadius: "50%", background: "#fff", border: "2px solid rgba(139,92,246,.25)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, boxShadow: "0 0 50px rgba(139,92,246,.18), 0 0 100px rgba(139,92,246,.06)", position: "relative", zIndex: 1 }}>
+                                                    <div style={{ width: 48, height: 48, borderRadius: 12, background: "#101018", display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ fontSize: ".7rem", fontWeight: 800, color: "#fff", letterSpacing: 1.5 }}>OL</span></div>
                                                     <span style={{ fontFamily: MONO, fontSize: ".55rem", fontWeight: 700, color: "#101018", letterSpacing: 2 }}>ONE-LINK</span>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/* Right nodes */}
                                         <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center" }}>
-                                            {[
-                                                { n: "CRM", c: "#8b5cf6", ic: Users },
-                                                { n: "AI-агент", c: "#6366f1", ic: Bot },
-                                                { n: "Календарь", c: "#fbbf24", ic: Calendar },
-                                            ].map((item, i) => {
+                                            {[{ n: "CRM", c: "#8b5cf6", ic: Users },{ n: "AI-агент", c: "#6366f1", ic: Bot },{ n: "Календарь", c: "#fbbf24", ic: Calendar }].map((item, i) => {
                                                 const Icon = item.ic;
                                                 return (
                                                     <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-                                                        <div style={{
-                                                            width: 76, height: 76, borderRadius: "50%",
-                                                            background: "#fff", border: "2px solid var(--bd)",
-                                                            display: "flex", alignItems: "center", justifyContent: "center",
-                                                            boxShadow: "0 0 20px -8px rgba(0,0,0,.3)",
-                                                            transition: "transform .3s, box-shadow .3s",
-                                                        }} className="node-h">
-                                                            <Icon size={30} color={item.c} />
-                                                        </div>
+                                                        <div className="node-h" style={{ width: 76, height: 76, borderRadius: "50%", background: "#fff", border: "2px solid var(--bd)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 20px -8px rgba(0,0,0,.3)" }}><Icon size={30} color={item.c} /></div>
                                                         <span style={{ fontSize: ".85rem", fontWeight: 600, color: T.gr }}>{item.n}</span>
                                                     </div>
                                                 );
@@ -2223,237 +2241,6 @@ export default function App() {
                                     </div>
                                 </div>
                             </Reveal>
-                        </div>
-                    </section>
-
-                    <div className="blur-band"><div className="blur-band-line" /></div>
-
-                    {/* ════════════════════════════════════
-             SECTION: ЧТО УМЕЕТ ИИ-АГЕНТ
-             ════════════════════════════════════ */}
-                    <section className="sec-alt" style={{ paddingTop: 72, paddingBottom: 72 }}>
-                        <div className="w">
-                            <Reveal>
-                                <Tag>ИИ-АГЕНТ</Tag>
-                                <h2 style={{ fontSize: "clamp(1.8rem,4vw,3rem)", fontWeight: 800, letterSpacing: -.5, marginBottom: 40 }}>
-                                    Что умеет <span style={{ color: T.gr }}>ИИ-агент</span>
-                                </h2>
-                            </Reveal>
-
-                            {/* ─── Top row: 2 big visual cards ─── */}
-                            <div className="g2" style={{ gap: 16, marginBottom: 16 }}>
-
-                                {/* Card 1: 24/7 во всех каналах — BIG illustration */}
-                                <Reveal delay={.08}>
-                                    <Card style={{ height: "100%", padding: "32px 28px 0", overflow: "hidden" }}>
-                                        <h3 style={{ fontSize: "1.2rem", fontWeight: 800, lineHeight: 1.2, marginBottom: 6 }}>
-                                            Агент отвечает 24/7<br />во всех каналах
-                                        </h3>
-                                        <p style={{ fontSize: ".85rem", color: T.gr, lineHeight: 1.5, marginBottom: 20 }}>
-                                            AI-агент работает в WhatsApp, Telegram, Instagram и на сайте
-                                        </p>
-
-                                        {/* Illustration area */}
-                                        <div style={{
-                                            position: "relative", height: 220, borderRadius: "16px 16px 0 0",
-                                            background: "linear-gradient(180deg, var(--surf), transparent)",
-                                            overflow: "visible",
-                                        }}>
-                                            {/* Floating messenger icons */}
-                                            {[
-                                                { ic: MessageCircle, c: "#25d366", x: "15%", y: "20%", s: 52, d: 0, label: "WhatsApp" },
-                                                { ic: Send, c: "#29b6f6", x: "8%", y: "55%", s: 44, d: .4, label: "Telegram" },
-                                                { ic: Instagram, c: "#e1306c", x: "25%", y: "75%", s: 48, d: .8, label: "Instagram" },
-                                                { ic: Globe, c: "#4a90d9", x: "70%", y: "15%", s: 36, d: .2, label: "Web" },
-                                                { ic: Play, c: "#fff", x: "78%", y: "60%", s: 38, d: .6, label: "TikTok" },
-                                            ].map((item, i) => {
-                                                const Icon = item.ic;
-                                                return (
-                                                    <div key={i} style={{
-                                                        position: "absolute", left: item.x, top: item.y,
-                                                        animation: `float 4s ${item.d}s ease-in-out infinite`,
-                                                    }}>
-                                                        <div style={{
-                                                            width: item.s, height: item.s, borderRadius: item.s * .28,
-                                                            background: item.c + "14", border: `1.5px solid ${item.c}30`,
-                                                            display: "flex", alignItems: "center", justifyContent: "center",
-                                                            backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
-                                                            boxShadow: `0 8px 24px ${item.c}18`,
-                                                            transition: "transform .3s, box-shadow .3s",
-                                                        }}
-                                                             className="node-h"
-                                                        >
-                                                            <Icon size={item.s * .4} color={item.c} />
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-
-                                            {/* Center: chat bubble + bot */}
-                                            <div style={{
-                                                position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)",
-                                                display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
-                                            }}>
-                                                <div style={{
-                                                    width: 60, height: 60, borderRadius: "50%",
-                                                    background: "linear-gradient(135deg, #8b5cf6, #6366f1)",
-                                                    display: "flex", alignItems: "center", justifyContent: "center",
-                                                    boxShadow: "0 8px 32px rgba(99,102,241,.3)",
-                                                }}>
-                                                    <Bot size={28} color="#fff" />
-                                                </div>
-                                                <span style={{ fontFamily: MONO, fontSize: ".6rem", color: T.gr2 }}>AI AGENT</span>
-                                            </div>
-                                        </div>
-
-                                        {/* Tag pills */}
-                                        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, padding: "12px 0 20px", justifyContent: "center" }}>
-                                            {["Мгновенно", "24/7", "Мультиканальность", "Автоответы", "Дожим"].map((t, i) => (
-                                                <span key={i} style={{
-                                                    fontFamily: MONO, fontSize: ".62rem", padding: "5px 12px",
-                                                    borderRadius: 100, background: "var(--surf)", border: "1px solid var(--bd)",
-                                                    color: T.gr2,
-                                                }}
-                                                >{t}</span>
-                                            ))}
-                                        </div>
-                                    </Card>
-                                </Reveal>
-
-                                {/* Card 2: CRM интеграции — BIG illustration */}
-                                <Reveal delay={.12}>
-                                    <Card style={{ height: "100%", padding: "32px 28px 0", overflow: "hidden" }}>
-                                        <h3 style={{ fontSize: "1.2rem", fontWeight: 800, lineHeight: 1.2, marginBottom: 6 }}>
-                                            Подключите к вашим<br />CRM и ERP системам
-                                        </h3>
-                                        <p style={{ fontSize: ".85rem", color: T.gr, lineHeight: 1.5, marginBottom: 20 }}>
-                                            Единая работа с клиентами, задачами и данными вашего бизнеса
-                                        </p>
-
-                                        {/* Illustration: floating CRM logos */}
-                                        <div style={{
-                                            position: "relative", height: 220, borderRadius: "16px 16px 0 0",
-                                            background: "linear-gradient(180deg, var(--surf), transparent)",
-                                            overflow: "visible",
-                                        }}>
-                                            {[
-                                                { n: "amoCRM", c: "#339dc9", x: "10%", y: "25%", s: 50, d: 0 },
-                                                { n: "Bitrix24", c: "#2fc6f6", x: "55%", y: "10%", s: 48, d: .3 },
-                                                { n: "Altegio", c: "#7c3aed", x: "72%", y: "45%", s: 44, d: .6 },
-                                                { n: "1С", c: "#ef4444", x: "20%", y: "65%", s: 40, d: .2 },
-                                                { n: "Kaspi", c: "#f14635", x: "60%", y: "72%", s: 42, d: .5 },
-                                                { n: "MacroCRM", c: "#f59e0b", x: "82%", y: "20%", s: 38, d: .8 },
-                                            ].map((crm, i) => (
-                                                <div key={i} style={{
-                                                    position: "absolute", left: crm.x, top: crm.y,
-                                                    animation: `float 4.5s ${crm.d}s ease-in-out infinite`,
-                                                }}>
-                                                    <div style={{
-                                                        padding: "8px 16px", borderRadius: 10,
-                                                        background: crm.c + "10", border: `1.5px solid ${crm.c}25`,
-                                                        backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
-                                                        boxShadow: `0 6px 20px ${crm.c}12`,
-                                                    }}
-                                                         className="node-h"
-                                                    >
-                                                        <span style={{ fontFamily: MONO, fontSize: ".78rem", fontWeight: 700, color: crm.c }}>{crm.n}</span>
-                                                    </div>
-                                                </div>
-                                            ))}
-
-                                            {/* Center: sync arrows */}
-                                            <div style={{
-                                                position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)",
-                                            }}>
-                                                <div style={{
-                                                    width: 56, height: 56, borderRadius: "50%",
-                                                    background: "var(--bg)", border: "2px dashed var(--bd)",
-                                                    display: "flex", alignItems: "center", justifyContent: "center",
-                                                    animation: "spin 20s linear infinite",
-                                                }}>
-                                                    <div style={{ animation: "spin 20s linear infinite reverse", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                        <Users size={22} color={T.ac} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Bottom note */}
-                                        <div style={{ padding: "12px 0 20px", textAlign: "center" }}>
-                                            <span style={{ fontSize: ".8rem", color: T.gr2 }}>Или используйте <strong style={{ color: T.green }}>встроенную CRM</strong> — без сторонних сервисов</span>
-                                        </div>
-                                    </Card>
-                                </Reveal>
-                            </div>
-
-                            {/* ─── Bottom row: 3 compact cards ─── */}
-                            <div className="g3" style={{ gap: 16 }}>
-
-                                {/* Follow-ups */}
-                                <Reveal delay={.16}>
-                                    <Card style={{ height: "100%" }}>
-                                        <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: 4 }}>Дожимные сообщения</h3>
-                                        <p style={{ fontSize: ".78rem", color: T.gr2, marginBottom: 14 }}>Автоматические напоминания</p>
-                                        <div style={{
-                                            padding: "12px 14px", borderRadius: 12,
-                                            background: "linear-gradient(135deg, rgba(139,92,246,.08), rgba(99,102,241,.04))",
-                                            border: "1px solid rgba(139,92,246,.12)",
-                                            fontSize: ".85rem", lineHeight: 1.5, marginBottom: 8,
-                                        }}>
-                                            Привет! Напоминаю про запрос — готов помочь 😊
-                                        </div>
-                                        <div style={{ display: "flex", gap: 6 }}>
-                                            {["1ч", "24ч", "48ч"].map((t, i) => (
-                                                <span key={i} style={{ fontFamily: MONO, fontSize: ".6rem", padding: "3px 10px", borderRadius: 100, background: "var(--surf)", border: "1px solid var(--bd)", color: T.gr2 }}>{t}</span>
-                                            ))}
-                                        </div>
-                                    </Card>
-                                </Reveal>
-
-                                {/* Voice + Images */}
-                                <Reveal delay={.2}>
-                                    <Card style={{ height: "100%" }}>
-                                        <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: 4 }}>Изображения и голос</h3>
-                                        <p style={{ fontSize: ".78rem", color: T.gr2, marginBottom: 14 }}>Понимает фото и голосовые</p>
-                                        <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 10 }}>
-                                            <div style={{ width: 44, height: 44, borderRadius: 12, background: "linear-gradient(135deg, #818cf8, #6366f1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                <Image size={20} color="#fff" />
-                                            </div>
-                                            <div style={{ width: 44, height: 44, borderRadius: 12, background: "linear-gradient(135deg, #f472b6, #ec4899)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                <Mic size={20} color="#fff" />
-                                            </div>
-                                        </div>
-                                        <div style={{ padding: "8px 12px", borderRadius: 10, background: "var(--surf)", border: "1px solid var(--bd)", display: "flex", alignItems: "center", gap: 8 }}>
-                                            <Play size={13} color={T.ac} />
-                                            <WaveformMini />
-                                            <span style={{ fontFamily: MONO, fontSize: ".6rem", color: T.gr2 }}>0:06</span>
-                                        </div>
-                                    </Card>
-                                </Reveal>
-
-                                {/* Languages */}
-                                <Reveal delay={.24}>
-                                    <Card style={{ height: "100%" }}>
-                                        <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: 4 }}>Мультиязычность</h3>
-                                        <p style={{ fontSize: ".78rem", color: T.gr2, marginBottom: 14 }}>150+ языков без ограничений</p>
-                                        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                                            {[
-                                                { l: "Русский", c: "#8b5cf6" },
-                                                { l: "Қазақша", c: "#22c55e" },
-                                                { l: "English", c: "#60a5fa" },
-                                                { l: "150+", c: T.gr2 },
-                                            ].map((lang, i) => (
-                                                <span key={i} style={{
-                                                    padding: "7px 16px", borderRadius: 10,
-                                                    background: lang.c + "10", border: `1px solid ${lang.c}20`,
-                                                    fontSize: ".82rem", fontWeight: 700, color: lang.c,
-                                                    animation: `float 3.5s ${i * .3}s ease-in-out infinite`,
-                                                }}>{lang.l}</span>
-                                            ))}
-                                        </div>
-                                    </Card>
-                                </Reveal>
-                            </div>
 
                             {/* AI screenshot */}
                             <Reveal delay={.15} style={{ marginTop: 48 }}>
@@ -2462,6 +2249,101 @@ export default function App() {
                                 </div>
                                 <SafariFrame url="app.one-link.kz" src="https://raw.githubusercontent.com/kazakhbala01/one-link/refs/heads/main/chat.png" />
                             </Reveal>
+                        </div>
+                    </section>
+                    {/* ─── Mini CTA after platform overview ─── */}
+                    <div className="sec-alt" style={{ padding: "40px 0", borderTop: "1px solid var(--bd)", borderBottom: "1px solid var(--bd)" }}>
+                        <div className="w" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+                            <div>
+                                <div style={{ fontSize: "1.1rem", fontWeight: 700 }}>Хотите увидеть как это работает?</div>
+                                <div style={{ fontSize: ".85rem", color: T.gr, marginTop: 4 }}>15-минутный демо — разберём ваш кейс бесплатно</div>
+                            </div>
+                            <a href="#cta" style={{ display: "inline-flex", alignItems: "center", gap: 7, background: T.wt, color: T.bg, padding: "12px 28px", borderRadius: 8, fontWeight: 600, fontSize: ".92rem" }}>
+                                <Sparkles size={14} />Запросить демо
+                            </a>
+                        </div>
+                    </div>
+
+
+                    {/* ════════════════════════════════════
+             SECTION: 3 ШАГА ЗАПУСКА
+             ════════════════════════════════════ */}
+                    <section style={{ paddingTop: 72, paddingBottom: 72 }}>
+                        <div className="w">
+                            <Reveal>
+                                <div style={{ textAlign: "center", marginBottom: 48 }}>
+                                    <Tag>КАК ЭТО РАБОТАЕТ</Tag>
+                                    <h2 style={{ fontSize: "clamp(1.8rem,4vw,3rem)", fontWeight: 800, letterSpacing: -.5 }}>
+                                        Запуск за <span style={{ color: T.green }}>3 дня</span>
+                                    </h2>
+                                </div>
+                            </Reveal>
+
+                            <div className="g3" style={{ gap: 20 }}>
+                                {[
+                                    {
+                                        step: "01",
+                                        title: "Заявка + разбор",
+                                        desc: "Оставляете заявку — созваниваемся на 15 минут. Разбираем каналы, объём, процессы.",
+                                        time: "День 1",
+                                        color: "#8b5cf6",
+                                        icon: MessageCircle,
+                                    },
+                                    {
+                                        step: "02",
+                                        title: "Настройка платформы",
+                                        desc: "Подключаем мессенджеры, настраиваем AI-агента, загружаем базу знаний и скрипты.",
+                                        time: "День 2",
+                                        color: "#60a5fa",
+                                        icon: Settings,
+                                    },
+                                    {
+                                        step: "03",
+                                        title: "Запуск и обучение",
+                                        desc: "Тестируем, обучаем команду, запускаем. Поддержка — на связи.",
+                                        time: "День 3",
+                                        color: "#22c55e",
+                                        icon: Zap,
+                                    },
+                                ].map((item, i) => {
+                                    const Icon = item.icon;
+                                    return (
+                                        <Reveal key={i} delay={i * .08}>
+                                            <div className="card-h" style={{
+                                                background: "var(--card-bg)", border: "1px solid var(--card-bd)",
+                                                borderRadius: 20, padding: "32px 28px", height: "100%",
+                                                display: "flex", flexDirection: "column", position: "relative",
+                                            }}>
+                                                {/* Step number */}
+                                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                                                    <div style={{
+                                                        width: 52, height: 52, borderRadius: 14,
+                                                        background: item.color + "10", border: `1.5px solid ${item.color}25`,
+                                                        display: "flex", alignItems: "center", justifyContent: "center",
+                                                    }}>
+                                                        <Icon size={22} color={item.color} />
+                                                    </div>
+                                                    <span style={{ fontFamily: MONO, fontSize: "2rem", fontWeight: 800, color: item.color + "15", lineHeight: 1 }}>{item.step}</span>
+                                                </div>
+
+                                                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: 8 }}>{item.title}</h3>
+                                                <p style={{ fontSize: ".85rem", color: T.gr, lineHeight: 1.6, flex: 1 }}>{item.desc}</p>
+
+                                                <div style={{ marginTop: 16, fontFamily: MONO, fontSize: ".65rem", color: item.color, fontWeight: 600 }}>{item.time}</div>
+
+                                                {/* Connector line (except last) */}
+                                                {i < 2 && (
+                                                    <div className="step-connector" style={{
+                                                        position: "absolute", top: "50%", right: -12,
+                                                        width: 24, height: 2, background: `linear-gradient(90deg, ${item.color}30, transparent)`,
+                                                        zIndex: 2,
+                                                    }} />
+                                                )}
+                                            </div>
+                                        </Reveal>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </section>
 
@@ -2549,7 +2431,21 @@ export default function App() {
                         </div>
                     </section>
 
-                    <div className="blur-band"><div className="blur-band-line" /></div>
+                    {/* ─── Mini CTA after pricing ─── */}
+                    <div style={{ padding: "36px 0", background: "linear-gradient(135deg, rgba(139,92,246,.04), rgba(34,197,94,.02))", borderTop: "1px solid var(--bd)", borderBottom: "1px solid var(--bd)" }}>
+                        <div className="w" style={{ textAlign: "center" }}>
+                            <div style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: 6 }}>Не уверены какой план подходит?</div>
+                            <div style={{ fontSize: ".85rem", color: T.gr, marginBottom: 16 }}>Расскажите про бизнес — подберём оптимальный вариант</div>
+                            <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+                                <a href="https://wa.me/77056162603" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#25D366", color: "#fff", padding: "11px 24px", borderRadius: 8, fontWeight: 600, fontSize: ".88rem" }}>
+                                    <MessageCircle size={14} />WhatsApp
+                                </a>
+                                <a href="#cta" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "11px 24px", borderRadius: 8, border: "1px solid " + T.bd, color: T.wt, fontWeight: 500, fontSize: ".88rem", background: "var(--surf)" }}>
+                                    Оставить заявку
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* ════════════════════════════════════
              SECTION: FAQ
