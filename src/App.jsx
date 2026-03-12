@@ -91,7 +91,7 @@ const CSS = `
   --sec-glow: radial-gradient(ellipse at 50% 0%, rgba(139,92,246,.04), transparent 70%);
 
   /* Chatwoot mockup */
-  --cw-sidebar: #0e0e1a;
+  --cw-sidebar: #1b1340;
   --cw-sidebar-icon: rgba(255,255,255,.45);
   --cw-sidebar-active: rgba(255,255,255,.9);
   --cw-sidebar-hover: rgba(255,255,255,.08);
@@ -303,6 +303,22 @@ section { contain: layout style; }
 .foot-link:hover { color: #fff !important; }
 .cta-btn-h { transition: opacity .2s, transform .2s; }
 .cta-btn-h:hover { opacity: .9; transform: translateY(-1px); }
+
+/* ─── Gradient Blur Band ─── */
+.blur-band {
+  height: 120px; position: relative; z-index: 2; pointer-events: none; overflow: hidden;
+  margin-top: -60px; margin-bottom: -60px;
+}
+.blur-band::before {
+  content: ''; position: absolute; inset: 0;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  mask: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  -webkit-mask: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+}
+.blur-band-line {
+  position: absolute; top: 50%; left: 5%; right: 5%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--bd), rgba(139,92,246,.2), var(--bd), transparent);
+}
 
 /* ─── Section Backgrounds ─── */
 .sec-alt {
@@ -2210,6 +2226,8 @@ export default function App() {
                         </div>
                     </section>
 
+                    <div className="blur-band"><div className="blur-band-line" /></div>
+
                     {/* ════════════════════════════════════
              SECTION: ЧТО УМЕЕТ ИИ-АГЕНТ
              ════════════════════════════════════ */}
@@ -2447,6 +2465,8 @@ export default function App() {
                         </div>
                     </section>
 
+                    <div className="blur-band"><div className="blur-band-line" /></div>
+
                     {/* ════════════════════════════════════
              SECTION: СОБИРАЕМ ПОД ВАС
              ════════════════════════════════════ */}
@@ -2467,6 +2487,8 @@ export default function App() {
                             </Reveal>
                         </div>
                     </section>
+
+                    <div className="blur-band"><div className="blur-band-line" /></div>
 
                     {/* ════════════════════════════════════
              SECTION: PRICING
@@ -2526,6 +2548,8 @@ export default function App() {
                             </div>
                         </div>
                     </section>
+
+                    <div className="blur-band"><div className="blur-band-line" /></div>
 
                     {/* ════════════════════════════════════
              SECTION: FAQ
